@@ -1,8 +1,158 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: Montserrat, Sans-Serif;
 }
 
+
+/*TITLE IN LAYOUT*/
+
+h1 a {
+    color: black;
+    text-decoration: none;
+    padding-left: 5px;
+}
+
+
+/*SETS UP NAVBAR*/
+
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+/*SETS BORDER FOR EACH PAGE*/
+
+.login-wrapper,
+.register-wrapper,
+.profile-wrapper,
+.scoreboard-wrapper {
+    position: absolute;
+    width: 80%;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-style: solid;
+    text-align: center;
+    padding-bottom: 32%;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.login-input {
+    padding: 2%;
+}
+
+.login-input-field {
+    width: 35%;
+    height: 20px;
+}
+
+
+/*Sets tag defaults*/
+
+abbr,
+address,
+article,
+aside,
+audio,
+b,
+blockquote,
+body,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+p,
+pre,
+q,
+samp,
+section,
+small,
+span,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+ul,
+var,
+video {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-weight: 400;
+    line-height: 1.5em;
+    vertical-align: baseline;
 }

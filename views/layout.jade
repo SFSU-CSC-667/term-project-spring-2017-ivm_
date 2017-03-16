@@ -1,7 +1,23 @@
+
+//- This document is extended to every page
+//- it conatins the menu and title elements that are static among the pages
 doctype html
 html
   head
-    title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    h1
+      a(href="/") Tank City
+    div
+      .nav-bar
+        ul
+          li 
+            a(href="/") Home
+          li 
+            a(href="/profile") Profile
+          li 
+            a(href="/scoreboard") Scoreboard
+          li 
+            a(href="/register") Register
+    //- logic to check cookie if user is logged in
     block content
