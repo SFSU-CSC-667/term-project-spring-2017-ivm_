@@ -58,6 +58,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# ignore jetbrain .idea files
 .idea/*
 
 # ignore Visual Studio Code file
