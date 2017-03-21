@@ -54,7 +54,7 @@ CREATE TABLE Chat(
   player_id INTEGER,
   message VARCHAR(255),
   created_at TIMESTAMP,
-  PRIMARY KEY(session_id),
+  PRIMARY KEY(chat_id),
   FOREIGN KEY (game_id) REFERENCES Game(game_id),
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
 );
