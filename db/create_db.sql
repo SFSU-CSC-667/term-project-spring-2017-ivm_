@@ -12,6 +12,12 @@ postgres doesn't seem to recognize AUTO_INCREMENT, so player_id is SERIAL instea
 SERIAL data type is an alias for: BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
 source: https://dev.mysql.com/doc/refman/5.7/en/numeric-type-overview.html
 */
+
+DROP TABLE Player;
+DROP TABLE Game;
+DROP TABLE Tank;
+DROP TABLE Chat;
+
 CREATE TABLE Player (
   player_id SERIAL,
   wins INTEGER DEFAULT 0,
