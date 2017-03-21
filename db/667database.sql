@@ -1,4 +1,10 @@
 /*
+  Instruction for running sql files on psql:
+  1. Open the database using command:  psql databasename
+  2. In psql shell, use the command: \i 667database.sql , this will make the tables
+*/
+
+/*
 first name, last name, password and email are required fields and cannot be null.
 all usernames and emails must be unique, so the same email can't have 2 or more accounts
 and the same username can't be used by 2 or more users.
@@ -17,8 +23,11 @@ CREATE TABLE Player (
   PRIMARY KEY (player_id)
 );
 
+/*
+  the game_id=1 refers to the lobby, and this record will have player_id1=1 and player_id2=1.
+*/
 CREATE TABLE Game (
-  game_id INTEGER,
+  game_id SERIAL,
   player1_id INTEGER,
   player2_id INTEGER,
   score VARCHAR(16),
@@ -29,24 +38,21 @@ CREATE TABLE Game (
 );
 
 /*
- power column renamed to tank_power b/c power is a key word.
+ tank_id will be the same as the game_id in which the game the tank is played.
 */
 CREATE TABLE Tank (
-  tank_id INTEGER,
-  game_id INTEGER,
+  tank_id BIGINT,
   coordinate_x REAL,
   coordinate_y REAL,
   angle REAL,
   tank_power REAL,
   PRIMARY KEY(tank_id),
-  FOREIGN KEY(game_id) REFERENCES Game(game_id)
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id)
 );
 
 /*
-TIMESTAMP might be too much since it has day, month, year, seconds, hour etc...
-game_id=0 means the message is sent to the lobby chat..
-if we want game_id auto-incremented, set auto-increment of
-only 1 player_id here, and it corresponds to message sent from that user to which game.
+  game_id refers to which game the chat is referring to, and
+  game_id=1 means the message is sent to the lobby chat.
 */
 CREATE TABLE Chat(
   chat_id INTEGER,
