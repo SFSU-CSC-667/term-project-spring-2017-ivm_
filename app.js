@@ -11,7 +11,6 @@ var profile = require('./routes/profile');
 var scoreboard = require('./routes/scoreboard');
 var register = require('./routes/register');
 
-
 var app = express();
 
 // view engine setup
