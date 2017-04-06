@@ -2,10 +2,18 @@
   "name": "term-project-spring-2017-ivm",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "7.7.3"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "run-db": "./server/models/db.js"
   },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
   "dependencies": {
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",

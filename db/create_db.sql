@@ -53,7 +53,7 @@ CREATE TABLE Tank (
   angle REAL,
   tank_power REAL,
   PRIMARY KEY(tank_id),
-  FOREIGN KEY(tank_id) REFERENCES Game(game_id)
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
 );
 
 /*
@@ -67,6 +67,6 @@ CREATE TABLE Chat(
   message VARCHAR(255),
   created_at TIMESTAMP,
   PRIMARY KEY(chat_id),
-  FOREIGN KEY (game_id) REFERENCES Game(game_id),
+  FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
 );
