@@ -13,12 +13,7 @@ SERIAL data type is an alias for: BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
 source: https://dev.mysql.com/doc/refman/5.7/en/numeric-type-overview.html
 */
 
-DROP TABLE Player;
-DROP TABLE Game;
-DROP TABLE Tank;
-DROP TABLE Chat;
-
-CREATE TABLE Player (
+CREATE TABLE IF NOT EXISTS Player (
   player_id SERIAL,
   wins INTEGER DEFAULT 0,
   first_name VARCHAR(16) NOT NULL,
@@ -32,7 +27,7 @@ CREATE TABLE Player (
 /*
   the game_id=1 refers to the lobby, and this record will have player_id1=1 and player_id2=1.
 */
-CREATE TABLE Game (
+CREATE TABLE IF NOT EXISTS Game (
   game_id SERIAL,
   player1_id INTEGER,
   player2_id INTEGER,
@@ -46,7 +41,7 @@ CREATE TABLE Game (
 /*
  tank_id will be the same as the game_id in which the game the tank is played.
 */
-CREATE TABLE Tank (
+CREATE TABLE IF NOT EXISTS Tank (
   tank_id BIGINT,
   coordinate_x REAL,
   coordinate_y REAL,
@@ -60,7 +55,7 @@ CREATE TABLE Tank (
   game_id refers to which game the chat is referring to, and
   game_id=1 means the message is sent to the lobby chat.
 */
-CREATE TABLE Chat(
+CREATE TABLE IF NOT EXISTS Chat(
   chat_id INTEGER,
   game_id INTEGER,
   player_id INTEGER,
