@@ -3,7 +3,24 @@
 extend layout
 
 block content
-  div 
+  div
     .register-wrapper
       title= title
       h1 Register Screen
+      form(method='POST' action='/register')
+        div.form-group
+          label(for='first_name') First Name:
+          input#first_name.form-control(type='text', placeholder='first name' name='first_name')
+        div.form-group
+          label(for='last_name') Last Name:
+          input#last_name.form-control(type='text', placeholder='last name' name='last_name')
+        div.form-group
+          label(for='username') Username:
+          input#username.form-control(type='text', placeholder='username' name='username')
+        div.form-group
+          label(for='email') Email:
+          input#email.form-control(type='email', placeholder='name@email.com' name='email')
+        div.form-group
+          label(for='password') Password:
+          input#password.form-control(type='password' name='password')
+        button.btn.btn-primary(type='submit') Sign up
