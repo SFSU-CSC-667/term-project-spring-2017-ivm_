@@ -23,4 +23,8 @@ block content
         div.form-group
           label(for='password') Password:
           input#password.form-control(type='password' name='password')
+        div.form-group
+          label(for='passwordConfirm') Confirm Password:
+          input#passwordConfirm.form-control(type='password' name='passwordConfirm')
         button.btn.btn-primary(type='submit') Sign up
+      p(style={color:'red'}) #{invalid_registration}

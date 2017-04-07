@@ -20,25 +20,29 @@ var query = function(sql){
             if(err) {
                 return console.error('error running query', err);
             }
-            console.log(result);
         });
     });
 };
 
 var query = function(sql, data){
+
     pool.connect(function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
         }
 
-        client.query(sql, data, function(err, result) {
-            done(err);
+        if(typeof data !== 'function'){
+          client.query(sql, data, function(err, result) {
+              done(err);
 
-            if(err) {
-                return console.error('error running query', err);
-            }
-            console.log(result);
-        });
+              if(err) {
+                  return console.error('error running query', err);
+              }
+          });
+        // if data argument is a callback function, use that function for the query.
+        } else {
+          client.query(sql, data);
+        }
     });
 }
 
