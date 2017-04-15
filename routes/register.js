@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('.././server/models/db.js');
+var player = require('../model/player.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('register', { title: 'Register', invalid_registration: '' });
@@ -9,6 +9,20 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     const user = req.body;
+    if(user.passwordConfirm !== user.password) {
+      res.render('register', { title: 'Register', invalid_registration: ' Passwords did not match. ' });
+    } else {
+      player.registerNewPlayer(res, req, function(status){
+        if(status){
+          res.redirect('../?registration=complete');
+        } else {
+          // if registration is successful, go back to the homepage, and the url will have a query string registration=complete
+          // in index.js, having this query string will print 'Registration Successful' in the rendered page.
+          res.render('register', { title: 'Register', invalid_registration: ' Username or email already taken. ' });
+        }
+      });
+    }
+    /*const user = reqBody.body;
     // if any of the fields in the submitted form is blank, redirect to the same page but with an error message.
     if(user.passwordConfirm !== user.password) {
       res.render('register', { title: 'Register', invalid_registration: ' Passwords did not match. ' });
@@ -28,7 +42,7 @@ router.post('/', function(req, res, next) {
                   res.redirect('../?registration=complete');
                 }
               });
-    }
+    }*/
 });
 
 module.exports = router;
