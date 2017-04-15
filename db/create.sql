@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS Player (
   password VARCHAR(24) NOT NULL,
   username VARCHAR(16) UNIQUE NOT NULL,
   email VARCHAR(40) UNIQUE NOT NULL,
+  token VARCHAR(64) UNIQUE,
   PRIMARY KEY (player_id)
 );
 
