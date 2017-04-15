@@ -1,18 +1,17 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var Strategy = require('passport-http-bearer').Strategy;
-var db = require('.././server/models/db.js');
+var sb = require('.././model/scoreboard.js');
 
-/* GET home page. */
-router.get('/', passport.authenticate('bearer', { session: true }),function(req, res, next) {
-    db.query('SELECT first_name, wins FROM Player;', function(error, result){
+/* GET scoreboard page. */
+router.get('/',function(req, res, next) {
+    sb.getScores(function(result, error){
         if (error){
-            res.render('scoreboard', { title: 'Scoreboard' });
-            return;
+            console.log("error: " + error.statusCode);
         }
-        res.render('scoreboard', { title: 'Scoreboard' });
+        console.log("my board: " + result);
     });
+
+    res.render('scoreboard', { title: 'Scoreboard' });
 });
 
 module.exports = router;
