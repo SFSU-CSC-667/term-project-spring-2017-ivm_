@@ -4,12 +4,12 @@
   2. In psql shell, use the command: \i create.sql , this will make the tables
 */
 
-/* Uncomment if you need these tables dropped before recreating them.
-DROP TABLE Tank;
+/*Uncomment if you need these tables dropped before recreating them.*/
+/* DROP TABLE Tank;
 DROP TABLE Chat;
-DROP TABLE Game;
-DROP TABLE Player;
-*/
+DROP TABLE Game; */
+/* DROP TABLE Player;*/
+
 
 
 /*
@@ -38,28 +38,39 @@ CREATE TABLE IF NOT EXISTS Player (
 */
 CREATE TABLE IF NOT EXISTS Game (
   game_id SERIAL,
-  player1_id INTEGER,
-  player2_id INTEGER,
   score VARCHAR(16),
-  turn INTEGER,
   PRIMARY KEY(game_id),
-  FOREIGN KEY (player1_id) REFERENCES Player(player_id),
-  FOREIGN KEY (player2_id) REFERENCES Player(player_id)
+);
+
+CREATE TABLE IF NOT EXISTS Tank (
+  tank_id SERIAL,
+  shot_id BIGINT,
+  coordinate_x REAL,
+  coordinate_y REAL,
+  PRIMARY KEY(tank_id),
+);
+
+
+CREATE TABLE IF NOT EXISTS Shot (
+  tank_id BIGINT,
+  angle REAL,
+  tank_power REAL,
+  FOREIGN KEY(tank_id) REFERENCES Tank(tank_id) ON DELETE CASCADE
 );
 
 /*
- tank_id will be the same as the game_id in which the game the tank is played.
+  when game is deleted, the corresponding row is deleted here.
 */
-CREATE TABLE IF NOT EXISTS Tank (
+CREATE TABLE IF NOT EXISTS GameUser (
+  gameuser_id SERIAL;
+  game_id BIGINT,
+  player_id BIGINT,
   tank_id BIGINT,
-  coordinate_x REAL,
-  coordinate_y REAL,
-  angle REAL,
-  tank_power REAL,
-  PRIMARY KEY(tank_id),
-  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
+  PRIMARY KEY(gameuser_id),
+  FOREIGN KEY(player_id) REFERENCES Player(player_id),
+  FOREIGN KEY(game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
+  FOREIGN KEY(tank_id) REFERENCES Tank(tank_id)
 );
-
 /*
   game_id refers to which game the chat is referring to, and
   game_id=1 means the message is sent to the lobby chat.
