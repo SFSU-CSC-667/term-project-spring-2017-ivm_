@@ -6,3 +6,14 @@ block content
   .profile-wrapper
     title= title
     h1 Profile
+    div
+      table
+        tbody
+          each val in query_rows
+            tr
+              td= val.username
+              td= val.first_name
+              td= val.last_name
+              td= val.email
+          else
+            li No values

@@ -1,8 +1,16 @@
 /*
   Instruction for running sql files on psql:
   1. Open the database using command:  psql databasename
-  2. In psql shell, use the command: \i 667database.sql , this will make the tables
+  2. In psql shell, use the command: \i create.sql , this will make the tables
 */
+
+/* Uncomment if you need these tables dropped before recreating them.
+DROP TABLE Tank;
+DROP TABLE Chat;
+DROP TABLE Game;
+DROP TABLE Player;
+*/
+
 
 /*
 first name, last name, password and email are required fields and cannot be null.
@@ -48,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Tank (
   angle REAL,
   tank_power REAL,
   PRIMARY KEY(tank_id),
-  FOREIGN KEY(tank_id) REFERENCES Game(game_id)
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
 );
 
 /*
@@ -62,6 +70,6 @@ CREATE TABLE IF NOT EXISTS Chat(
   message VARCHAR(255),
   created_at TIMESTAMP,
   PRIMARY KEY(chat_id),
-  FOREIGN KEY (game_id) REFERENCES Game(game_id),
+  FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
 );
