@@ -6,3 +6,12 @@ block content
   .scoreboard-wrapper
     title= title
     h1 Scoreboard
+    div
+      table
+        tbody
+          each val in scores
+            tr
+              td= val.first_name
+              td= val.wins
+          else
+            li No values
