@@ -1,0 +1,25 @@
+
+//- this file is the nonlogged in landing page
+//- logic will probably need to change
+extends layout
+
+block content
+    div
+        .login-wrapper
+            title= title
+            h1.login-page-header Welcome to Tank City
+            p.underline Sign in
+            form(method='POST' action='/')
+              div
+                  .login-input
+                      label Username:
+                      input(type="text", name="username").login-input-field
+              div
+                  .login-input
+                      label Password:
+                      input(type="password", name="password").login-input-field
+                  .login-input
+                      input(type="submit", value="submit").login-input-field
+            div
+                p #{register_message}
+                p #{failureFlash}
