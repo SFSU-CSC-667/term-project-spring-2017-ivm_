@@ -48,14 +48,15 @@ module.exports = function(app, passport) {
   passport.use(new LocalStrategy(
     {
       usernameField: 'username',
-      passwordField: 'password'
+      passwordField: 'password',
+       passReqToCallback : true
     },
-    function(username, password, cb) {
+    function(req, username, password, cb) {
       //process.nextTick(function() {
         player.findByUsername(username, function(err, user) {
             if (err) { console.log("ER"); return cb(err); }
-            if (!user) { console.log('here');return cb(null, false); }
-            if (user.password != password) { console.log('passwords not eq');return cb(null, false/*, {message: 'incorrect password'}*/); }
+            if (!user) { console.log('here');return cb(null, false/*,req.flash('loginMessage', 'Oops! invalid user.')*/); }
+            if (user.password != password) { console.log('passwords not eq');return cb(null, false /*,req.flash('loginMessage', 'Oops! Wrong password.')*/); }
             console.log('good@#!!!!#@!$');
             return cb(null, user);
           });
@@ -98,7 +99,7 @@ module.exports = function(app, passport) {
   router.post('/', passport.authenticate('local', {
                                       successRedirect: '/profile',
                                      failureRedirect: '/',
-                                      failureFlash: true}));
+                                      failureFlash: 'Username or password invalid'}));
 
   // replaces exports.router = router;
   return router;

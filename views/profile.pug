@@ -7,6 +7,8 @@ block content
     title= title
     h1 Profile
     div
+      //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})" in profile.js)
+      p Welcome #{userName}
       table
         tbody
           each val in query_rows
