@@ -16,6 +16,7 @@ var app = express();
 
 //added 4/20/17 to allow passport-local and sessions
 var passport = require('passport');
+require('./server/models/passport.js')(passport);
 
 // "resave: true" means that the session will always be saved back to the session store,
 // even if the session wasn't modified during the request.
@@ -28,22 +29,22 @@ app.use(passport.session());
 app.use(flash());
 
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
+//
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
 // var index = require('./routes/index')(app, passport);
 
 //log-in function
-exports.isLoggedIn = function(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-    res.redirect('/');
-}
+// exports.isLoggedIn = function(req, res, next){
+//   if(req.isAuthenticated()){
+//     return next();
+//   }
+//     res.redirect('/');
+// }
 
 
 
