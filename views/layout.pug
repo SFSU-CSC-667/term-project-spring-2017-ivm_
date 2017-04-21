@@ -7,19 +7,18 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
   body
-<<<<<<< HEAD
+
     h1
       a(href="/") Tank City
     div
       .nav-bar
         ul
-=======
 
     div(class='navbar navbar-default navbar-fixed-top' style='background-image: url(/images/skyline.png); background-repeat: repeat-x')
       div.container-fluid
         img(src='/images/logo.png' height='100px')
         ul(style='background-color: #003311')
->>>>>>> ivan
+
           li
             a(href="/") Home
           li
@@ -30,6 +29,7 @@ html
             a(href="/register") Register
           li
             a(href="/lobby") Lobby
+
           - if(userName !== '') {
               li(style = "margin-left: 45%")
                 a Welcome #{userName}
@@ -40,12 +40,11 @@ html
     //- logic to check cookie if user is logged in
     block content
 
-<<<<<<< HEAD
-    script(src='/socket.io/socket.io.js')
-=======
-
   footer.footer(style = "position: relative; margin-bottom: 0")
     div.container-fluid
       br
       p(style='padding-left:10px') CSC667 Term Project - Tank City - [ Alex | Ivan | Maroun | Vivian ]
->>>>>>> ivan
+
+
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/main.js')

@@ -7,12 +7,13 @@ const init = function( app, server ){
 
     io.on('connection', function(socket){
 
-        console.log('a user connected');
+        console.log('USER_CONNECTED_TO_CHAT');
 
         socket.on('disconnect', function(){
-            console.log('user disconnected');
+            console.log('USER_DISCONNECTED_FROM_CHAT');
         })
 
+        // this is for testing - will be changed
         socket.on("user_message", function(data){
             io.emit("user_message", data)
         })
