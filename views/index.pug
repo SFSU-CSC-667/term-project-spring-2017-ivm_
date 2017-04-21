@@ -9,13 +9,17 @@ block content
             title= title
             h1.login-page-header Welcome to Tank City
             p.underline Sign in
-            div
-                .login-input
-                    input(type="text", placeholder="Email").login-input-field
-            div
-                .login-input
-                    input(type="password", placeholder="Password").login-input-field
-
-
+            form(method='POST' action='/')
+              div
+                  .login-input
+                      label Username:
+                      input(type="text", name="username").login-input-field
+              div
+                  .login-input
+                      label Password:
+                      input(type="password", name="password").login-input-field
+                  .login-input
+                      input(type="submit", value="submit").login-input-field
             div
                 p #{register_message}
+                p #{failureFlash}
