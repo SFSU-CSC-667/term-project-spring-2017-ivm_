@@ -11,7 +11,7 @@ html
     div
       .nav-bar
         ul
-          li 
+          li
             a(href="/") Home
           li 
             a(href="/profile") Profile
@@ -23,3 +23,5 @@ html
             a(href="/lobby") Lobby
     //- logic to check cookie if user is logged in
     block content
+
+    script(src='/socket.io/socket.io.js')
