@@ -81,3 +81,22 @@ exports.getAll = function(callBack){
     res.render('profile', {query_rows: result.rows});
   });
 }*/
+
+exports.updateUserProfile = function(user, updateComplete) {
+    db.query('UPDATE Player ' +
+             'SET first_name=\'' + user.firstName + '\''
+            + ' last_name=\'' + user.lastName + '\''
+            + ' username=\'' + user.username + '\''
+            + ' email=\'' + user.email + + '\''
+            + ' password=\'' + user.password + '\''
+            + ' WHERE player_id=' + user.id, function (error, result) {
+
+        if (error){
+            console.log("Error update user profile: " + error);
+        }
+
+        updateComplete(error, result);
+    })
+}
+
+
