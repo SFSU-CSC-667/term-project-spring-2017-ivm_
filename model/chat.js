@@ -1,6 +1,6 @@
 var db = require('.././server/models/db.js');
 
-//1
+// 1
 exports.getLobbyChats = function(dataStream){
     db.query('SELECT player_id, message FROM Chat WHERE game_id=' + 1 + ';', function(error, result){
 
