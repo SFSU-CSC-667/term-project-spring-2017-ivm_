@@ -5,10 +5,12 @@
 */
 
 /*Uncomment if you need these tables dropped before recreating them.*/
+/*
 DROP TABLE Tank;
 DROP TABLE Chat;
 DROP TABLE Game;
 DROP TABLE Player;
+*/
 
 /*
 first name, last name, password and email are required fields and cannot be null.
