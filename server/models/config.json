@@ -1,0 +1,22 @@
+{
+  "development": {
+    "username": "ivanyu",
+       "password": "ivanyu",
+       "database": "667testdb",
+       "host": "127.0.0.1",
+       "port": "5432",
+       "dialect": "postgres",
+       "max": 10,
+       "idleTimeoutMillis": 30000
+  },
+  "production": {
+    "username": "IVM_",
+    "password": "IVM_",
+    "database": "TankCity",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres",
+    "max": 10,
+    "idleTimeoutMillis": 30000
+  }
+}

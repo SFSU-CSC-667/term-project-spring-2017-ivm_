@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "run-db": "./server/models/db.js"
+    "db": "./db/init.js"
   },
   "keywords": [
     "node",
@@ -16,14 +16,22 @@
   ],
   "dependencies": {
     "body-parser": "~1.16.0",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
-    "express": "~4.14.1",
-    "jade": "~1.11.0",
+    "express": "~4.15.1",
     "morgan": "~1.7.0",
     "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^6.1.0",
-    "pg-promise": "^5.6.4",
-    "serve-favicon": "~2.3.2"
+    "pug": "^2.0.0-beta11",
+    "serve-favicon": "~2.3.2",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
