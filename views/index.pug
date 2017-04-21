@@ -1,10 +1,9 @@
-
 //- this file is the nonlogged in landing page
 //- logic will probably need to change
 extends layout
 
 block content
-    div(class='container' style='padding-top: 200px')
+    div(class='container' style='padding-top: 100px')
       div.jumbotron(style='text-align:center')
         body
             title= title
@@ -26,6 +25,8 @@ block content
                 div
                   br
                   a(href="/register") New User? Register here!
+                img(src='/images/tank_ani.gif')
+
               //div
                   .login-input
                       label Username:
