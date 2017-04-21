@@ -5,10 +5,10 @@
 */
 
 /*Uncomment if you need these tables dropped before recreating them.*/
-/* DROP TABLE Tank;
+DROP TABLE Tank;
 DROP TABLE Chat;
-DROP TABLE Game; */
-/* DROP TABLE Player;*/
+DROP TABLE Game;
+DROP TABLE Player;
 
 
 
@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS Player (
   password VARCHAR(24) NOT NULL,
   username VARCHAR(16) UNIQUE NOT NULL,
   email VARCHAR(40) UNIQUE NOT NULL,
-  token VARCHAR(64) UNIQUE,
   PRIMARY KEY (player_id)
 );
 
@@ -39,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Player (
 CREATE TABLE IF NOT EXISTS Game (
   game_id SERIAL,
   score VARCHAR(16),
-  PRIMARY KEY(game_id),
+  PRIMARY KEY(game_id)
 );
 
 CREATE TABLE IF NOT EXISTS Tank (
@@ -47,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Tank (
   shot_id BIGINT,
   coordinate_x REAL,
   coordinate_y REAL,
-  PRIMARY KEY(tank_id),
+  PRIMARY KEY(tank_id)
 );
 
 
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Shot (
   when game is deleted, the corresponding row is deleted here.
 */
 CREATE TABLE IF NOT EXISTS GameUser (
-  gameuser_id SERIAL;
+  gameuser_id SERIAL,
   game_id BIGINT,
   player_id BIGINT,
   tank_id BIGINT,
