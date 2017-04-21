@@ -49,8 +49,10 @@ exports.findByUsername = function(username, callBack){
               // if(result.rows.length!== 1 || err) return callBack(null);
               // else return callBack(result.rows[0]); // else return the 1 and only row
               if(err){ console.log("player.js error");return callBack(err);}
+              // callBack(0,..) means that no error occurred.
               else if(result.rows.length!== 1){ return callBack(0, null);}
-              else return callBack(1, result.rows[0]);
+              // 0 as first argument to callback means no error occurred.
+              else{ console.log("findname here"); return callBack(0, result.rows[0]);}
             });
 }
 
@@ -58,8 +60,9 @@ exports.findByEmail = function(username, callBack){
     db.query('SELECT * FROM Player WHERE email = \'' + email + '\';',
             function(err, result){
               if(err) return callBack(err);
-              else if(result.rows.length!== 1) return callBack(null);
-              else return callBack(result.rows[0]); // else return the 1 and only row
+              // first argument as 0 means no error
+              else if(result.rows.length!== 1) return callBack(0, null);
+              else return callBack(0, result.rows[0]); // else return the 1 and only row
             });
 }
 
