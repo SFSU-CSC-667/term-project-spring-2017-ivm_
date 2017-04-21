@@ -1,6 +1,3 @@
-
-
-
 /*passport.use(new Strategy(
   function(token, done) {
     player.loginPlayer(token, function (err, user) {
@@ -21,7 +18,7 @@ module.exports = function(app, passport) {
 
   // //var Strategy = require('passport-http-bearer').Strategy;
   // var Strategy = require('passport-http').BasicStrategy;
-  var LocalStrategy = require('passport-local').Strategy;
+  // var LocalStrategy = require('passport-local').Strategy;
   var player = require('../model/player.js');
   //
   // passport.serializeUser(function(user, cb) {
@@ -45,22 +42,24 @@ module.exports = function(app, passport) {
         return cb(null, user);
       });
     }));*/
-  passport.use(new LocalStrategy(
-    {
-      usernameField: 'username',
-      passwordField: 'password'
-    },
-    function(username, password, cb) {
-      //process.nextTick(function() {
-        player.findByUsername(username, function(err, user) {
-            if (err) { console.log("ER"); return cb(err); }
-            if (!user) { console.log('here');return cb(null, false); }
-            if (user.password != password) { console.log('passwords not eq');return cb(null, false/*, {message: 'incorrect password'}*/); }
-            console.log('good@#!!!!#@!$');
-            return cb(null, user);
-          });
-      //});
-      }));
+    // uncomment this 4/20/17
+  // passport.use(new LocalStrategy(
+  //   {
+  //     usernameField: 'username',
+  //     passwordField: 'password',
+  //      passReqToCallback : true
+  //   },
+  //   function(req, username, password, cb) {
+  //     //process.nextTick(function() {
+  //       player.findByUsername(username, function(err, user) {
+  //           if (err) { console.log("ER"); return cb(err); }
+  //           if (!user) { console.log('here');return cb(null, false/*,req.flash('loginMessage', 'Oops! invalid user.')*/); }
+  //           if (user.password != password) { console.log('passwords not eq');return cb(null, false /*,req.flash('loginMessage', 'Oops! Wrong password.')*/); }
+  //           console.log('good@#!!!!#@!$');
+  //           return cb(null, user);
+  //         });
+  //     //});
+  //     }));
 
 
 
@@ -70,9 +69,9 @@ module.exports = function(app, passport) {
     // the registration=complete query string is a result of completing registration,
     // which takes the visitor back to the home page with the 'Registration Successful!' message.
       if(req.query.registration === 'complete'){
-        res.render('index', { title: 'Tank City', register_message: 'Registration Successful!' });
+        res.render('index', { title: 'Tank City', register_message: 'Registration Successful!', userName: '' });
       }else {
-        res.render('index', { title: 'Tank City', register_message: '' });
+        res.render('index', { title: 'Tank City', register_message: '', userName: '' });
       }
   });
 
@@ -96,9 +95,17 @@ module.exports = function(app, passport) {
 
   // passport = app.passport;
   router.post('/', passport.authenticate('local', {
-                                      successRedirect: '/profile',
-                                     failureRedirect: '/',
-                                      failureFlash: true}));
+    successRedirect: '/profile',
+    failureRedirect: '/',
+    failureFlash: 'Username or password invalid'})
+  );
+
+ router.get('/logout', function(req, res){
+   req.logout();
+   res.redirect('/');
+ })
+
+
 
   // replaces exports.router = router;
   return router;

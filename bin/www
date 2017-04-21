@@ -4,22 +4,24 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('term-project-spring-2017-ivm:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('term-project-spring-2017-ivm:server');
+const http = require('http');
+const socket = require('../socket/index.js');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
+socket.init(app, server);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -10,8 +10,6 @@ DROP TABLE Chat;
 DROP TABLE Game;
 DROP TABLE Player;
 
-
-
 /*
 first name, last name, password and email are required fields and cannot be null.
 all usernames and emails must be unique, so the same email can't have 2 or more accounts
@@ -54,6 +52,8 @@ CREATE TABLE IF NOT EXISTS Shot (
   tank_id BIGINT,
   angle REAL,
   tank_power REAL,
+  PRIMARY KEY(tank_id),
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
   FOREIGN KEY(tank_id) REFERENCES Tank(tank_id) ON DELETE CASCADE
 );
 
