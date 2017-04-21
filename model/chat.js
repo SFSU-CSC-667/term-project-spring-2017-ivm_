@@ -12,8 +12,8 @@ exports.getLobbyChats = function(dataStream){
     })
 };
 
-exports.getAllChatsWithId = function(cid, dataStream){
-    db.query('SELECT * FROM Chat WHERE chat_id=' + cid, function(error, result){
+exports.getAllChatsWithGameId = function(gid, dataStream){
+    db.query('SELECT * FROM Chat WHERE game_id=' + gid, function(error, result){
 
         if (error){
             console.log('getChatById error: ' + error);
@@ -22,4 +22,16 @@ exports.getAllChatsWithId = function(cid, dataStream){
         dataStream(error, result);
     });
 };
+
+exports.insertMessageForGameId = function(gid, pid, message, updateComplete){
+    db.query('INSERT INTO Chat (game_id, player_id, message) VALUES (\''+ gid + ' ' + pid + ' ' + message + ');',
+        function(error, result){
+
+        if (error){
+            console.log("Error insertMessageForGameId: " + error);
+        }
+
+        updateComplete(error, result);
+    });
+}
 

@@ -1,6 +1,3 @@
-
-
-
 /*passport.use(new Strategy(
   function(token, done) {
     player.loginPlayer(token, function (err, user) {
