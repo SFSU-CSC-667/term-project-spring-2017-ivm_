@@ -4,20 +4,35 @@
 extends layout
 
 block content
-    div
-        .login-wrapper
+    div(class='container' style='padding-top: 200px')
+      div.jumbotron(style='text-align:center')
+        body
             title= title
-            h1.login-page-header Welcome to Tank City
+            h2.login-page-header Welcome, Guest!
             p.underline Sign in
-            form(method='POST' action='/')
-              div
+            div(style='margin:auto; width: 50%')
+              form(method='POST' action='/')
+                div(class='input-group input-group-lg' id='login-box')
+                  span.input-group-addon(id='sizing-addon1')
+                    span(class='glyphicon glyphicon-user' aria-hidden='true')
+                  input.form-control(type='text' placeholder='Username', name='username')
+                br
+                div(class='input-group input-group-lg' id='login-box')
+                  span.input-group-addon(id='sizing-addon1')
+                    span(class='glyphicon glyphicon-lock' aria-hidden='true')
+                  input.form-control(type='password' placeholder='Password', name='password')
+                br
+                button(class='btn btn-primary' id='login-box' style='width:20%' type='submit' value='submit') Submit
+
+              //div
                   .login-input
                       label Username:
                       input(type="text", name="username").login-input-field
-              div
+              //div
                   .login-input
                       label Password:
                       input(type="password", name="password").login-input-field
+              //div
                   .login-input
                       input(type="submit", value="submit").login-input-field
             div
