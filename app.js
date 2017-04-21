@@ -10,9 +10,9 @@ var bodyParser = require('body-parser');
 var profile = require('./routes/profile');
 var scoreboard = require('./routes/scoreboard');
 var register = require('./routes/register');
+var lobby = require('./routes/lobby');
 
 var app = express();
-
 
 //added 4/20/17 to allow passport-local
 var passport = require('passport');
@@ -38,13 +38,11 @@ exports.isLoggedIn = function(req, res, next){
 }
 
 var index = require('./routes/index')(app, passport);
-
 // var index = require('./routes/index')(app, passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 
 // app.use(flash());
 
@@ -58,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This is where the routing happens
 app.use('/', index);
+app.use('/lobby', lobby);
 app.use('/profile', profile);
 app.use('/scoreboard', scoreboard);
 app.use('/register', register);
