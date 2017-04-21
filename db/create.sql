@@ -54,7 +54,12 @@ CREATE TABLE IF NOT EXISTS Shot (
   tank_id BIGINT,
   angle REAL,
   tank_power REAL,
+<<<<<<< HEAD:db/create_db.sql
+  PRIMARY KEY(tank_id),
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
+=======
   FOREIGN KEY(tank_id) REFERENCES Tank(tank_id) ON DELETE CASCADE
+>>>>>>> b3f06e3967cafe8741f47402373b7df23e2bcc49:db/create.sql
 );
 
 /*
