@@ -1,6 +1,3 @@
-
-
-
 /*passport.use(new Strategy(
   function(token, done) {
     player.loginPlayer(token, function (err, user) {
@@ -72,9 +69,9 @@ module.exports = function(app, passport) {
     // the registration=complete query string is a result of completing registration,
     // which takes the visitor back to the home page with the 'Registration Successful!' message.
       if(req.query.registration === 'complete'){
-        res.render('index', { title: 'Tank City', register_message: 'Registration Successful!' });
+        res.render('index', { title: 'Tank City', register_message: 'Registration Successful!', userName: '' });
       }else {
-        res.render('index', { title: 'Tank City', register_message: '' });
+        res.render('index', { title: 'Tank City', register_message: '', userName: '' });
       }
   });
 

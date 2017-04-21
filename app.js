@@ -10,6 +10,7 @@ var flash = require('connect-flash');
 // var profile = require('./routes/profile');
 var scoreboard = require('./routes/scoreboard');
 var register = require('./routes/register');
+var lobby = require('./routes/lobby');
 var session = require('express-session');
 var app = express();
 
@@ -74,6 +75,7 @@ var profile = require('./routes/profile')(app, passport);
 
 // This is where the routing happens
 app.use('/', index);
+app.use('/lobby', lobby);
 app.use('/profile', profile);
 app.use('/scoreboard', scoreboard);
 app.use('/register', register);
