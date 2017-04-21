@@ -10,7 +10,7 @@ html
       a(href="/") Tank City
     div
       .nav-bar
-        ul
+        ul(id = "list")
           li
             a(href="/") Home
           li
@@ -19,5 +19,12 @@ html
             a(href="/scoreboard") Scoreboard
           li
             a(href="/register") Register
+          li(style = "margin-left: 50%")
+            a(id = "welcome") Welcome
+          li
+            a(id = "logout")
+
+
+
     //- logic to check cookie if user is logged in
     block content
