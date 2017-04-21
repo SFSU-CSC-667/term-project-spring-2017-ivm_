@@ -63,3 +63,6 @@ typings/
 
 # ignore Visual Studio Code file
 .vscode
+
+# ignore database config file
+server/models/config.json
