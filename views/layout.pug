@@ -29,9 +29,11 @@ html
             a(href="/register") Register
           li
             a(href="/lobby") Lobby
+          li
+            a(href="/game/1") Game
 
           - if(userName !== '') {
-              li(style = "margin-left: 45%")
+              li(style = "margin-left: 40%")
                 a Welcome #{userName}
               li
                 a(href = "/logout") Logout
