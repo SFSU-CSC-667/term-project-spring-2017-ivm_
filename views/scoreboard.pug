@@ -3,15 +3,16 @@
 extends layout
 
 block content
-  .scoreboard-wrapper
-    title= title
-    h1 Scoreboard
-    div
-      table.scoreboard-table
-        tbody
-          each val in scores
-            tr.score-table-element
-              td= val.first_name
-              td= val.wins
-          else
-            li No values
+  div.container
+      div.jumbotron(style='text-align:center')
+        body
+          title= title
+          h2 Scoreboard
+            table.scoreboard-table
+              tbody
+                each val in scores
+                  tr.score-table-element
+                    td= val.first_name
+                    td= val.wins
+                else
+                  li No values
