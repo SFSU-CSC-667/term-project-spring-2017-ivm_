@@ -3,20 +3,38 @@
 extends layout
 
 block content
-  .profile-wrapper
-    title= title
-    h1 Profile
-    div
-      //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})" in profile.js)
-      p Welcome #{userName}
-      table
-        tbody
-          each val in query_rows
-            tr
-              td= val.username
-              td= val.first_name
-              td= val.last_name
-              td= val.email
-          else
-            li No values
-      a(href="/logout") Logout
+  script(src='/model/player.js')
+  div.container
+    div(class='jumbotron container-fluid' style='text-align: center')
+      body
+        title= title
+        div
+          h2 PROFILE
+          p Welcome, #{userName}!
+        div
+          img(src='/images/prof-icon.png' style='height: 200px; padding-bottom: 10px;')
+          br
+          div.col-md-4
+            p Name:
+            p Email:
+          div.col-md-4
+            p
+            p
+          div.col-md-4
+            p
+              button(class='btn btn-default' style='padding: 2px 11px;') EDIT
+            p
+              button(class='btn btn-default' style='padding: 2px 11px;') EDIT
+          //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})"
+            in profile.js)
+          //p
+          //table
+            tbody
+              each val in query_rows
+                  td= val.username
+                  td= val.first_name
+                  td= val.last_name
+                  td= val.email
+              else
+                li No values
+      //a(href="/logout") Logout
