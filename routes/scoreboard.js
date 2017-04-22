@@ -3,32 +3,41 @@ var router = express.Router();
 var sb = require('.././model/scoreboard.js');
 
 /* GET scoreboard page. */
-router.get('/',function(req, res, next) {
-    if (!req.isAuthenticated()){
+router.get('/', function(req, res, next) {
+    if (!req.isAuthenticated()) {
         res.render('index', { error: 'Log in to view scoreboard' })
         return
     }
 
-    sb.getScores(function(result, error){
-        if (error){
+    sb.getScores(function(result, error) {
+        if (error) {
             console.log("error: " + error.statusCode);
             res.render('scoreboard', { title: 'Scoreboard' });
         }
 
         logScoreboard(result.rows);
-        res.render('scoreboard', { scores: result.rows });
+
+        let scores = result.rows.sort(function(a, b) {
+            return b.wins - a.wins;
+        });
+
+        res.render('scoreboard', { scores: scores });
     });
 });
 
-function logScoreboard(scores){
+function logScoreboard(scores) {
     console.log("==========================================");
     console.log("============= ( SCOREBOARD ) =============");
     console.log("==========================================");
 
     console.log("Name\t\t\tWins");
 
-    for (var s = 0; s < scores.length; s++) {
-        console.log(scores[s]["first_name"] + "\t\t\t" + scores[s]["wins"]);
+    let score = scores.sort(function(a, b) {
+        return b.wins - a.wins;
+    });
+
+    for (var s = 0; s < score.length; s++) {
+        console.log(score[s]["first_name"] + "\t\t\t" + score[s]["wins"]);
     }
 
     console.log("==========================================");
