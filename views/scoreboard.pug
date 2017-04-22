@@ -7,10 +7,10 @@ block content
     title= title
     h1 Scoreboard
     div
-      table
+      table.scoreboard-table
         tbody
           each val in scores
-            tr
+            tr.score-table-element
               td= val.first_name
               td= val.wins
           else
