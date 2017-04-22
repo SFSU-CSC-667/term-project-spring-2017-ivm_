@@ -8,7 +8,7 @@ var config = require(__dirname + '/config.json')[env];
 
 if(process.env.DATABASE_URL) {
   const configParameters = require('url').parse(process.env.DATABASE_URL);
-  const credentials = params.auth.split(':');
+  const credentials = configParameters.auth.split(':');
   console.log("******config updated*****+++!@#!#");
   config = {
     user: credentials[0],
