@@ -14,9 +14,21 @@ exports.getShotByTankId = function(res, req, callBack) {
   });
 }
 
-exports.updatShot = function(shot, callBack) {
+exports.insertShot = function(shot, callBack){
+    db.query('INSERT INTO Shot (tank_id, angle, tank_power) VALUES (' + shot.tank_id + ', ' + shot.angle + ', ' + shot.tank_power + ');',
+        function(error, result){
+
+        if (error){
+            console.log("Error insertMessageForGameId: " + error);
+        }
+
+        updateComplete(error, result);
+    });
+}
+
+exports.updateShot = function(shot, callBack) {
   db.query('UPDATE Shot SET angle = ' + shot.angle
-         + ', power = ' + shot.power
+         + ', tank_power = ' + shot.tank_power
          + ' WHERE tank_id = ' + shot.tank_id + ';'
   ,
   function(err, result){
