@@ -13,9 +13,9 @@ const init = function( app, server ){
             console.log('USER_DISCONNECTED_FROM_CHAT');
         })
 
-        // this is for testing - will be changed
-        socket.on("user_message", function(data){
-            io.emit("user_message", data)
+        socket.on("user_message", function(msg){
+            console.log('user_message: ' + msg);
+            io.emit("user_message", msg)
         })
 
     })
