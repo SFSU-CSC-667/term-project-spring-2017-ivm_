@@ -17,7 +17,7 @@ var app = express();
 
 //added 4/20/17 to allow passport-local and sessions
 var passport = require('passport');
-require('./server/models/passport.js')(passport);
+require('./server/passport.js')(passport);
 
 // "resave: true" means that the session will always be saved back to the session store,
 // even if the session wasn't modified during the request.
@@ -72,6 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var index = require('./routes/index')(app, passport);
 var profile = require('./routes/profile')(app, passport);
+var game = require('./routes/game')(app, passport);
 
 // This is where the routing happens
 app.use('/', index);
@@ -79,6 +80,7 @@ app.use('/lobby', lobby);
 app.use('/profile', profile);
 app.use('/scoreboard', scoreboard);
 app.use('/register', register);
+app.use('/game', game);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
