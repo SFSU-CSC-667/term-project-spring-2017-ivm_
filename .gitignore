@@ -66,6 +66,3 @@ typings/
 
 # ignore database config file
 server/models/config.json
-
-# ignore personal config.json file
-/server/models/config.json
