@@ -1,9 +1,9 @@
 module.exports = function(app, passport){
 
-  var express = require('express');
-  var router = express.Router();
-  var user = require('.././user.js');
-  var db = require('.././server/models/db.js');
+    var express = require('express');
+    var router = express.Router();
+    var user = require('.././user.js');
+    var db = require('../server/db.js');
 
   router.get('/', user.isLoggedIn, function(req, res, next) {
       // allows all users to be rendered in profile.pug
