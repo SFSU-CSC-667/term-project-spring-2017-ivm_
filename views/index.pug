@@ -1,15 +1,16 @@
-
 //- this file is the nonlogged in landing page
 //- logic will probably need to change
 extends layout
 
 block content
-    div(class='container' style='padding-top: 200px')
+    div.container
       div.jumbotron(style='text-align:center')
         body
             title= title
             h2.login-page-header Welcome, Guest!
             p.underline Sign in
+            span.label-danger #{error}
+
             div(style='margin:auto; width: 50%')
               form(method='POST' action='/')
                 div(class='input-group input-group-lg' id='login-box')
@@ -26,6 +27,8 @@ block content
                 div
                   br
                   a(href="/register") New User? Register here!
+                img(src='/images/tank_ani.gif')
+
               //div
                   .login-input
                       label Username:
@@ -40,3 +43,6 @@ block content
             div
                 p #{register_message}
                 p #{failureFlash}
+
+
+

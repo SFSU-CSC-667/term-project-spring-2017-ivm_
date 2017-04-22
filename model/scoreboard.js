@@ -1,4 +1,4 @@
-var db = require('.././server/models/db.js');
+var db = require('../server/db.js');
 
 exports.getScores = function(dataReady){
     db.query('SELECT first_name, wins FROM Player;', function(error, result){
@@ -8,5 +8,3 @@ exports.getScores = function(dataReady){
         dataReady(result, error);
     });
 };
-
-

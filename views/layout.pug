@@ -6,45 +6,36 @@ html
   head
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet")
+    script(src='//code.jquery.com/jquery.min.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js')
   body
-
-    h1
-      a(href="/") Tank City
-    div
-      .nav-bar
-        ul
-
-    div(class='navbar navbar-default navbar-fixed-top' style='background-image: url(/images/skyline.png); background-repeat: repeat-x')
-      div.container-fluid
-        img(src='/images/logo.png' height='100px')
-        ul(style='background-color: #003311')
-
+    div(class='navbar navbar-default navbar-fixed-top')
+      div.navbar-header
+        button(type='button' class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false")
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        ul(class='nav navbar-nav navbar-left' style='padding-left:10px')
+          a(href="/")
+            img(src='/images/logo.png' height='90px')
+      div(class='navbar-collapse collapse')
+        ul(class='nav navbar-nav navbar-right' style='padding-right:30px')
           li
-            a(href="/") Home
+            a(href="/profile") PROFILE
           li
-            a(href="/profile") Profile
+            a(href="/scoreboard") SCOREBOARD
           li
-            a(href="/scoreboard") Scoreboard
+            a(href="/register") REGISTER
           li
-            a(href="/register") Register
-          li
-            a(href="/lobby") Lobby
+            a(href="/lobby") LOBBY
 
           - if(userName !== '') {
-              li(style = "margin-left: 45%")
-                a Welcome #{userName}
               li
-                a(href = "/logout") Logout
+                a(href = "/logout") LOGOUT
           - }
 
-    //- logic to check cookie if user is logged in
     block content
-
-  footer.footer(style = "position: relative; margin-bottom: 0")
-    div.container-fluid
-      br
-      p(style='padding-left:10px') CSC667 Term Project - Tank City - [ Alex | Ivan | Maroun | Vivian ]
-
 
     script(src='/socket.io/socket.io.js')
     script(src='/js/main.js')

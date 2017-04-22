@@ -4,7 +4,7 @@
 module.exports = function(passport){
 
   var LocalStrategy = require('passport-local').Strategy;
-  var player = require('../.././model/player.js');
+  var player = require('../model/player.js');
 
   passport.serializeUser(function(user, done) {
     done(null, user);

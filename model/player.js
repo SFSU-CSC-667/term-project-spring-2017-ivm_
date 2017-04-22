@@ -1,8 +1,6 @@
-var db = require('.././server/models/db.js');
+var db = require('../server/db.js');
 var passport = require('passport');
 var Strategy = require('passport-http-bearer').Strategy;
-
-
 
 exports.registerNewPlayer = function(res, reqBody, callBack) {
   const user = reqBody.body;
@@ -98,5 +96,3 @@ exports.updateUserProfile = function(user, updateComplete) {
         updateComplete(error, result);
     })
 }
-
-
