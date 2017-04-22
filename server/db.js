@@ -41,7 +41,7 @@ var query = function(sql){
 
 var query = function(sql, data){
 
-    pool.connect(process.env.DATABASE_URL, function(err, client, done) {
+    pool.connect(function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
         }
