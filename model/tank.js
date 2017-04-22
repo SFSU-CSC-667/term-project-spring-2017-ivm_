@@ -9,7 +9,7 @@ exports.getTankById = function(res, req, callBack) {
   function(err, result){
     // if(result.rows.length!== 1 || err) return callBack(null);
     // else return callBack(result.rows[0]); // else return the 1 and only row
-    if(err){ console.log("player.js error"); return callBack(err);}
+    if(err){ console.log("tank.js error"); return callBack(err);}
     // callBack(0,..) means that no error occurred.
     else if(result.rows.length!== 1){ return callBack(0, null);}
     // 0 as first argument to callback means no error occurred.
