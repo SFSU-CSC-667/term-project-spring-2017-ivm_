@@ -9,6 +9,8 @@ block content
             title= title
             h2.login-page-header Welcome, Guest!
             p.underline Sign in
+            span.label-danger #{error}
+
             div(style='margin:auto; width: 50%')
               form(method='POST' action='/')
                 div(class='input-group input-group-lg' id='login-box')
