@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Shot (
   angle REAL,
   tank_power REAL,
   PRIMARY KEY(tank_id),
-  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE
+  FOREIGN KEY(tank_id) REFERENCES Game(game_id) ON DELETE CASCADE,
   FOREIGN KEY(tank_id) REFERENCES Tank(tank_id) ON DELETE CASCADE
 );
 

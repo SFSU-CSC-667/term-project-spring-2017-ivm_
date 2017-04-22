@@ -5,22 +5,19 @@ block content
     br
     br
     br
-    br
-    br
-    h1 Basic Chat App
-
+    h1 #{title}
+    h2(id="username") #{user.username}
+    h3(id="userid") #{user.email}
+    body
     #chat-area
         .row
-            .messages.col-lg-6.well.well-sm
+            .messages.col-lg-3.well.well-lg
         .row
             .col-lg-6
                 .input-group
-                    input.form-control(type='text', placeholder='Message...')
+                    input.form-control(type='text', placeholder='Enter message' id='user-message-input')
                     span.input-group-btn
-                        button.btn.btn-default(type='button') Send
-
-    form.form-inline#initial-form
-        .form-group
-            label(for='who-are-you') Who are you?
-            input#who-are-you.form-control(type='text', placeholder='Anonymous')
-        button.btn.btn-primary(type='submit') Start Chatting
+                        button.btn.btn-default(class='btn btn-primary' id='send-message' style='width: 200px' type='submit' value='submit') Send
+    br
+    br
+    br
