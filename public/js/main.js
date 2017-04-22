@@ -1,3 +1,4 @@
+var chats = require('.././model/chat.js');
 var socket = io();
 
 $( "#send-message" ).click(function() {
