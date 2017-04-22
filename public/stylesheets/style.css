@@ -51,28 +51,16 @@ li a:hover {
     background-color: #4CAF50;
 }
 
-
-/*SETS BORDER FOR EACH PAGE*/
-
-.login-wrapper,
-.register-wrapper,
-.profile-wrapper,
-.scoreboard-wrapper {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    /*border-style: solid;*/
-    text-align: center;
-    padding-top: 200px;
-    margin-bottom: 5%;
-}
-
 .scoreboard-table {
+    font-size: 21px;
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-    border: solid;
+}
+
+td {
+    padding: 15 px;
 }
 
 

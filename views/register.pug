@@ -3,28 +3,30 @@
 extend layout
 
 block content
-  div
-    .register-wrapper
-      title= title
-      h1 Register Screen
-      form(method='POST' action='/register')
-        div.form-group
-          label(for='first_name') First Name:
-          input#first_name.form-control(type='text', placeholder='first name' name='first_name' required=true)
-        div.form-group
-          label(for='last_name') Last Name:
-          input#last_name.form-control(type='text', placeholder='last name' name='last_name' required=true)
-        div.form-group
-          label(for='username') Username:
-          input#username.form-control(type='text', placeholder='username' name='username' required=true)
-        div.form-group
-          label(for='email') Email:
-          input#email.form-control(type='email', placeholder='name@email.com' name='email' required=true)
-        div.form-group
-          label(for='password') Password:
-          input#password.form-control(type='password' name='password' required=true)
-        div.form-group
-          label(for='passwordConfirm') Confirm Password:
-          input#passwordConfirm.form-control(type='password' name='passwordConfirm' required=true)
-        button.btn.btn-primary(type='submit') Sign up
-      p(style={color:'red'}) #{invalid_registration}
+  div.container
+      div.jumbotron(style='text-align:center')
+        body
+          title= title
+          h2 Register
+          br
+          form(method='POST' action='/register')
+            div.form-group
+              label(for='first_name') First Name:
+              input#first_name.form-control(type='text', placeholder='first name' name='first_name' required=true)
+            div.form-group
+              label(for='last_name') Last Name:
+              input#last_name.form-control(type='text', placeholder='last name' name='last_name' required=true)
+            div.form-group
+              label(for='username') Username:
+              input#username.form-control(type='text', placeholder='username' name='username' required=true)
+            div.form-group
+              label(for='email') Email:
+              input#email.form-control(type='email', placeholder='name@email.com' name='email' required=true)
+            div.form-group
+              label(for='password') Password:
+              input#password.form-control(type='password' name='password' required=true)
+            div.form-group
+              label(for='passwordConfirm') Confirm Password:
+              input#passwordConfirm.form-control(type='password' name='passwordConfirm' required=true)
+            button.btn.btn-primary(type='submit') Sign up
+            p(style={color:'red'}) #{invalid_registration}
