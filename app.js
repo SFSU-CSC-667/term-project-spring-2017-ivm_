@@ -17,7 +17,7 @@ var app = express();
 
 //added 4/20/17 to allow passport-local and sessions
 var passport = require('passport');
-require('./server/models/passport.js')(passport);
+require('./server/passport.js')(passport);
 
 // "resave: true" means that the session will always be saved back to the session store,
 // even if the session wasn't modified during the request.

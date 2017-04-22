@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 'use strict'
 
-var db = require('.././server/models/db.js');
+var db = require('../server/db.js');
 var fs = require('fs');
 
 var sql = fs.readFileSync('db/create.sql').toString();

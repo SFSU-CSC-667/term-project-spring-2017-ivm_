@@ -1,6 +1,5 @@
-var db = require('.././server/models/db.js');
+var db = require('../server/db.js');
 
-// 1
 exports.getLobbyChats = function(dataStream){
     db.query('SELECT player_id, message FROM Chat WHERE game_id=' + 1 + ';', function(error, result){
 
@@ -34,4 +33,3 @@ exports.insertMessageForGameId = function(gid, pid, message, updateComplete){
         updateComplete(error, result);
     });
 }
-
