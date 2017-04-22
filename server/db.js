@@ -6,6 +6,20 @@ const pg = require('pg');
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/config.json')[env];
 
+if(process.env.DATABASE_URL) {
+  const configParameters = require('url').parse(process.env.DATABASE_URL);
+  const credentials = params.auth.split(':');
+  config = {
+    user: credentials[0],
+    password: credentials[1],
+    host: configParameters.hostname,
+    port: configParameters.port,
+    database: configParameters.pathname.split('/')[1],
+    ssl: true
+  }
+}
+
+
 const pool = new pg.Pool(config);
 
 var query = function(sql){
