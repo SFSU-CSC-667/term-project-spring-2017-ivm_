@@ -10,7 +10,7 @@ html
     script(src='//code.jquery.com/jquery.min.js')
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js')
   body
-    div(class='navbar navbar-default navbar-fixed-top' style='background-image: url(/images/skyline.png); background-repeat: repeat-x')
+    div(class='navbar navbar-default navbar-fixed-top')
       div.navbar-header
         button(type='button' class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false")
           span.icon-bar
@@ -32,19 +32,11 @@ html
 
           - if(userName !== '') {
               li
-                a Welcome #{userName}
-              li
                 a(href = "/logout") LOGOUT
           - }
 
     //- logic to check cookie if user is logged in
     block content
-
-  footer.footer(style = "position: relative; margin-bottom: 0")
-    div.container-fluid
-      br
-      p(style='padding-left:10px') CSC667 Term Project - Tank City - [ Alex | Ivan | Maroun | Vivian ]
-
 
     script(src='/socket.io/socket.io.js')
     script(src='/js/main.js')
