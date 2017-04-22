@@ -4,7 +4,7 @@ html {
     padding-top: 200px;
     width: 100%;
     min-height: 100%;
-    font-family:"Arial Black", Gadget, sans-serif;
+    font-family: "Arial Black", Gadget, sans-serif;
 }
 
 
@@ -58,12 +58,42 @@ li a:hover {
 .register-wrapper,
 .profile-wrapper,
 .scoreboard-wrapper {
-    width: 80%;
+    width: 50%;
     margin-left: auto;
-    margin-right:auto;
-    /*border-style: solid; */
+    margin-right: auto;
+    /*border-style: solid;*/
     text-align: center;
     padding-top: 200px;
+    margin-bottom: 5%;
+}
+
+.scoreboard-table {
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border: solid;
+}
+
+
+/*hover to have the row change color*/
+
+
+/*tr:hover {
+    background-color: #00b33c
+}*/
+
+
+/*Have every even row be a different color*/
+
+
+/*tr:nth-child(even) {
+    background-color: #f2f2f2
+}*/
+
+.score-table-element {
+    padding: 10000 px;
+    text-align: center;
 }
 
 .underline {
