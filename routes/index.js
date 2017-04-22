@@ -95,7 +95,7 @@ module.exports = function(app, passport) {
 
   // passport = app.passport;
   router.post('/', passport.authenticate('local', {
-    successRedirect: '/profile',
+    successRedirect: '/lobby',
     failureRedirect: '/',
     failureFlash: 'Username or password invalid'})
   );
