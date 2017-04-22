@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// var chats = require('../.././model/chat.js');
-=======
->>>>>>> maroun
 var socket = io();
 
 $( "#send-message" ).click(function() {
@@ -12,10 +8,6 @@ $( "#send-message" ).click(function() {
 });
 
 socket.on('user_message', function( message ){
-<<<<<<< HEAD
-    $( '.messages' ).append( $('#username').text() + ": " + message + '<br />')
-});
-=======
   $( '.messages' ).append( message + '<br />')
 });
->>>>>>> maroun
+
