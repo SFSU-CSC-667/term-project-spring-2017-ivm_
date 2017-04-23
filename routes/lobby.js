@@ -25,19 +25,6 @@ router.get('/', function(req, res, next) {
     } else {
         res.render('index', { error: 'Log in to start game!' });
     }
-
-    // sb.getScores(function(result, error) {
-    //     if (error) {
-    //         console.log("error: " + error.statusCode);
-    //         res.render('lobby', { title: 'Lobby', scores: scores, user: req.user });
-    //     }
-
-    //     let scores = result.rows.sort(function(a, b) {
-    //         return b.wins - a.wins;
-    //     });
-
-    //     res.render('lobby', { scores: scores, user: req.user });
-    // });
 });
 
 router.post('/', function(req, res, next) {
