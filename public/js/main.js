@@ -11,5 +11,5 @@ $( ".send-message" ).click(function() {
 });
 
 socket.on('user_message', function( message ){
-  $( '.messages' ).append( message + '<br />')
+  $( '#messages').append( "<tr><td>" + message + "</td></tr>" + '<br />')
 });
