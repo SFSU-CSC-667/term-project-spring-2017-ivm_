@@ -5,14 +5,16 @@
 */
 
 /*Uncomment if you need these tables dropped before recreating them.*/
-/*
-DROP TABLE Tank;
-DROP TABLE Chat;
-DROP TABLE Game;
-DROP TABLE Player;
-*/
+
+DROP TABLE Game CASCADE;
+DROP TABLE Player CASCADE;
+DROP TABLE Tank CASCADE;
+DROP TABLE GameUser CASCADE;
+DROP TABLE Chat CASCADE;
+
 
 /*
+
 first name, last name, password and email are required fields and cannot be null.
 all usernames and emails must be unique, so the same email can't have 2 or more accounts
 and the same username can't be used by 2 or more users.
@@ -77,11 +79,12 @@ CREATE TABLE IF NOT EXISTS GameUser (
   game_id=1 means the message is sent to the lobby chat.
 */
 CREATE TABLE IF NOT EXISTS Chat(
-  chat_id INTEGER,
+  chat_id SERIAL,
   game_id INTEGER,
   player_id INTEGER,
   message VARCHAR(255),
-  created_at TIMESTAMP,
+  username VARCHAR(16),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(chat_id),
   FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
