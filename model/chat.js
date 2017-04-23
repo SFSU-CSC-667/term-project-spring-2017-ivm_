@@ -1,7 +1,7 @@
 var db = require('../server/db.js');
 
 exports.getLobbyChats = function(dataStream){
-    db.query('SELECT player_id, message FROM Chat WHERE game_id=' + 1 + ';', function(error, result){
+    db.query('SELECT username, message FROM Chat WHERE game_id=' + 0 + ' ORDER BY created_at DESC;', function(error, result){
 
         if (error){
             console.log("getLobbyChats error: " + error);
@@ -22,8 +22,8 @@ exports.getAllChatsWithGameId = function(gid, dataStream){
     });
 };
 
-exports.insertMessageForGameId = function(gid, pid, message, updateComplete){
-    db.query('INSERT INTO Chat (game_id, player_id, message) VALUES (' + gid + ', ' + pid + ', ' + '\'' + message + '\'' + ');',
+exports.insertMessageForGameId = function(gid, pid, username, message, updateComplete){
+    db.query('INSERT INTO Chat (game_id, player_id, username, message) VALUES (' + gid + ', ' + pid + ', ' + '\'' + username + '\'' + ', ' + '\'' + message + '\'' + ');',
         function(error, result){
 
         if (error){
@@ -34,8 +34,9 @@ exports.insertMessageForGameId = function(gid, pid, message, updateComplete){
     });
 }
 
-exports.insertMessageForLobby = function(pid, message, updateComplete){
-    this.insertMessageForGameId(0, pid, message, function(error, result){
+exports.insertMessageForLobby = function(pid, username, message, updateComplete){
+    this.insertMessageForGameId(0, pid, username, message, function(error, result){
         updateComplete(error, result)
     })
 }
+

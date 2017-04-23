@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS Chat(
   game_id INTEGER,
   player_id INTEGER,
   message VARCHAR(255),
+  username VARCHAR(16),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(chat_id),
   FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
