@@ -30,3 +30,30 @@ block content
                 input.form-control(type='text', placeholder='Enter message' id='user-message-input')
                 span.input-group-btn
                     button.btn.btn-default(class='btn btn-primary' id='send-message' style='width: 100px' type='submit' value='submit') Send
+
+//- Marouns code
+//-     br
+//-     br
+//-     br
+//-     br
+//-     h1 #{title}
+//-     h2(id="username") #{user.username}
+//-     h3(id="userid") #{user.player_id}
+
+//-     body
+//-         table(id="messages")
+//-             tbody
+//-                 each chat in chats
+//-                     tr
+//-                         - var msg = chat.username + ": " + chat.message
+//-                         td= msg
+//-     #chat-area
+//-         form(action="/lobby" method="post")
+//-                 .col-lg-6
+//-                     .input-group
+//-                         input.form-control(class='user-message-input' type='text', placeholder='Enter message' name="msg")
+//-                         span.input-group-btn
+//-                             button.btn.btn-default(class='btn btn-primary send-message' name="send-btn" style='width: 200px' type='submit' value='submit') Send
+//-     br
+//-     br
+//-     br

@@ -1,25 +1,41 @@
 var express = require('express');
 var router = express.Router();
 var sb = require('.././model/scoreboard.js');
+var sb = require('.././model/chat.js');
+
 
 router.get('/', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        sb.getLobbyChats(function(error, result) {
+            if (error) {
+                console.log("Error loading lobby chats: " + error.statusCode)
+            }
+            res.render('lobby', { title: 'Tank City Lobby', user: req.user, chats: result.rows.reverse() });
+        })
+    } else {
+        res.render('index', { error: 'Log in to start game!' });
+    }
+});
 
-    if (!req.isAuthenticated()) {
-        res.render('index', { title: 'Home', error: "Must be logged in" });
+sb.getScores(function(result, error) {
+    if (error) {
+        console.log("error: " + error.statusCode);
+        res.render('lobby', { title: 'Lobby', scores: scores, user: req.user });
     }
 
-    sb.getScores(function(result, error) {
-        if (error) {
-            console.log("error: " + error.statusCode);
-            res.render('lobby', { title: 'Lobby', scores: scores, user: req.user });
-        }
-
-        let scores = result.rows.sort(function(a, b) {
-            return b.wins - a.wins;
-        });
-
-        res.render('lobby', { scores: scores, user: req.user });
+    let scores = result.rows.sort(function(a, b) {
+        return b.wins - a.wins;
     });
+
+    res.render('lobby', { scores: scores, user: req.user });
+});
+router.post('/', function(req, res, next) {
+    sb.insertMessageForLobby(req.user.player_id, req.user.username, req.body.message, function(error, result) {
+        if (error) {
+            console.log("Error inserting message for lobby: " + error.statusCode)
+        }
+        console.log("lobby chat logged")
+    })
 });
 
 module.exports = router;
