@@ -94,7 +94,8 @@ h2.tank-city-talks-title {
 }
 
 div.messages {
-    margin-bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     position: relative;
     min-width: 100%;
     padding-left: auto;
@@ -102,6 +103,19 @@ div.messages {
     border: 0px;
     height: 100px;
     overflow: scroll;
+}
+
+.lobby-message {
+    padding-top: 0px;
+    padding-bottom: 2.5px;
+    padding-left: 10px;
+    margin: 0px;
+}
+
+.lobby-message-username {
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
 }
 
 

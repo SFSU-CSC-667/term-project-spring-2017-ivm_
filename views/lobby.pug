@@ -22,46 +22,18 @@ block content
             div.game-section
               img.game-section-image(src='/images/logo.png')
             div.profile-stats-portion
-              h2.profile-stats-title #{user.first_name}
-          
+              h2.profile-stats-title #{user.first_name}          
           div.tank-city-talks
             h2.tank-city-talks-title Tank City Talks
-            //- .messages.col-lg-3.well.well-lg
-            table(id="messages")
-            tbody
-                each chat in chats
-                    tr
-                        - var msg = chat.username + ": " + chat.message
-                        td= msg
+            div.messages
+              table(id="messages")
+                tbody
+                  each chat in chats
+                      tr
+                        td.lobby-message-username= chat.username + ":"
+                        td.lobby-message= chat.message
             form(action="/lobby" method="post")
               .input-group
                   input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
                   span.input-group-btn
                       button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
-
-//- Marouns code
-//-     br
-//-     br
-//-     br
-//-     br
-//-     h1 #{title}
-//-     h2(id="username") #{user.username}
-//-     h3(id="userid") #{user.player_id}
-
-//-     body
-//-         table(id="messages")
-//-             tbody
-//-                 each chat in chats
-//-                     tr
-//-                         - var msg = chat.username + ": " + chat.message
-//-                         td= msg
-//-     #chat-area
-//-         form(action="/lobby" method="post")
-//-                 .col-lg-6
-//-                     .input-group
-//-                         input.form-control(class='user-message-input' type='text', placeholder='Enter message' name="msg")
-//-                         span.input-group-btn
-//-                             button.btn.btn-default(class='btn btn-primary send-message' name="send-btn" style='width: 200px' type='submit' value='submit') Send
-//-     br
-//-     br
-//-     br

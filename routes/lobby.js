@@ -37,3 +37,8 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+function updateScroll() {
+    var element = document.getElementById("messages");
+    element.scrollTop = element.scrollHeight;
+}
