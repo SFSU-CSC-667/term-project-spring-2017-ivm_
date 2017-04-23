@@ -10,14 +10,15 @@ block content
     h3(id="userid") #{user.player_id}
     body
     #chat-area
-        .row
-            .messages.col-lg-3.well.well-lg
-        .row
-            .col-lg-6
-                .input-group
-                    input.form-control(type='text', placeholder='Enter message' id='user-message-input')
-                    span.input-group-btn
-                        button.btn.btn-default(class='btn btn-primary' id='send-message' style='width: 200px' type='submit' value='submit') Send
+        form(action="/lobby" method="post")
+            .row
+                .messages.col-lg-3.well.well-lg
+            .row
+                .col-lg-6
+                    .input-group
+                        input.form-control(class='user-message-input' type='text', placeholder='Enter message' name="msg")
+                        span.input-group-btn
+                            button.btn.btn-default(class='btn btn-primary send-message' name="send-btn" style='width: 200px' type='submit' value='submit') Send
     br
     br
     br
