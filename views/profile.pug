@@ -3,7 +3,8 @@
 extends layout
 
 block content
-  script(src='/model/player.js')
+  script(src='js/profile.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
   div.container
     div(class='jumbotron container-fluid' style='text-align: center')
       body
@@ -14,17 +15,17 @@ block content
         div
           img(src='/images/prof-icon.png' style='height: 200px; padding-bottom: 10px;')
           br
-          div.col-md-4
-            p Name:
-            p Email:
-          div.col-md-4
-            p #{name}
-            p #{email}
-          div.col-md-4
-            p
-              button(class='btn btn-default' style='padding: 2px 11px;') EDIT
-            p
-              button(class='btn btn-default' style='padding: 2px 11px;') EDIT
+          div
+            form(method='POST' action='/profile')
+              p(id='a') First Name: #{firstName}
+              p(id='b') Last Name: #{lastName} #{innerHTML}
+              p(id='c') Password: #{password} #{innerHTML}
+              p(id='d') Email: #{email} #{innerHTML}
+              p
+                button(id='button' type= 'button' onclick='editButton()'
+                       class='btn btn-default' style='padding: 2px 11px;') EDIT
+                button(id='button2' type= 'submit'
+                       class='btn btn-default' style='padding: 2px 11px; display:none') SAVE
           //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})"
             in profile.js)
           //p

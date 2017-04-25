@@ -2,8 +2,6 @@ var db = require('.././server/models/db.js');
 var passport = require('passport');
 var Strategy = require('passport-http-bearer').Strategy;
 
-
-
 exports.registerNewPlayer = function(res, reqBody, callBack) {
   const user = reqBody.body;
   // if any of the fields in the submitted form is blank, redirect to the same page but with an error message.
@@ -85,11 +83,10 @@ exports.getAll = function(callBack){
 exports.updateUserProfile = function(user, updateComplete) {
     db.query('UPDATE Player ' +
              'SET first_name=\'' + user.firstName + '\''
-            + ' last_name=\'' + user.lastName + '\''
-            + ' username=\'' + user.username + '\''
-            + ' email=\'' + user.email + + '\''
-            + ' password=\'' + user.password + '\''
-            + ' WHERE player_id=' + user.id, function (error, result) {
+            + ', last_name=\'' + user.lastName + '\''
+            + ', email=\'' + user.email + '\''
+            + ', password=\'' + user.password + '\''
+            + ' WHERE player_id=' + user.id + ';', function (error, result) {
 
         if (error){
             console.log("Error update user profile: " + error);
@@ -98,5 +95,4 @@ exports.updateUserProfile = function(user, updateComplete) {
         updateComplete(error, result);
     })
 }
-
 
