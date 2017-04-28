@@ -1,7 +1,7 @@
 /**
  * Created by Maroun on 3/18/17.
  */
-var db = require('.././server/models/db.js');
+var db = require('.././server/db.js');
 
 exports.getTankById = function(res, req, callBack) {
   var tank = req.body;
