@@ -5,7 +5,7 @@ module.exports = function(app, passport){
   var user = require('.././user.js');
   var db = require('.././server/db.js');
 
-  router.get('/:id', user.isLoggedIn, function(req, res, next) {
+  router.get('/:id', /*user.isLoggedIn,*/ function(req, res, next) {
       // allows all users to be rendered in profile.pug
       // var result = db.query('SELECT * FROM Player;', function(err, result){
       //   if(err) console.log(err);
@@ -13,5 +13,19 @@ module.exports = function(app, passport){
       // });
       res.render('game');
   });
+
+  router.get('/', /*user.isLoggedIn,*/ function(req, res, next) {
+
+      // allows all users to be rendered in profile.pug
+      // var result = db.query('SELECT * FROM Player;', function(err, result){
+      //   if(err) console.log(err);
+      //   res.render('profile', {query_rows: result.rows, userName: req.user.username});
+      // });
+      res.redirect('/game/2');
+  });
+
+  router.post('/', user.isLoggedIn, function(req, res){
+
+  })
   return router;
 }
