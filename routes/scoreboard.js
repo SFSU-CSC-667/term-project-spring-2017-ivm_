@@ -15,11 +15,11 @@ router.get('/', function(req, res, next) {
             res.render('scoreboard', { title: 'Scoreboard' });
         }
 
-        logScoreboard(result.rows);
-
         let scores = result.rows.sort(function(a, b) {
             return b.wins - a.wins;
         });
+
+        logScoreboard(scores);
 
         res.render('scoreboard', { scores: scores });
     });
@@ -32,12 +32,8 @@ function logScoreboard(scores) {
 
     console.log("Name\t\t\tWins");
 
-    let score = scores.sort(function(a, b) {
-        return b.wins - a.wins;
-    });
-
-    for (var s = 0; s < score.length; s++) {
-        console.log(score[s]["first_name"] + "\t\t\t" + score[s]["wins"]);
+    for (var s = 0; s < scores.length; s++) {
+        console.log(scores[s]["first_name"] + "\t\t\t" + scores[s]["wins"]);
     }
 
     console.log("==========================================");
