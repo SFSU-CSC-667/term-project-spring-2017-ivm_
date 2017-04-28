@@ -7,6 +7,7 @@ module.exports = function(app, passport) {
     var db = require('.././server/models/db.js');
     var userID = 0;
 
+
     router.get('/', user.isLoggedIn, function (req, res, next) {
         // allows all users to be rendered in profile.pug
         var result = db.query('SELECT * FROM Player WHERE username = \'' + req.user.username + '\';', function (err, result) {
@@ -17,8 +18,7 @@ module.exports = function(app, passport) {
                 firstName: req.user.first_name,
                 lastName: req.user.last_name,
                 email: req.user.email,
-                password: req.user.password,
-                player_id: req.user.id
+                password: req.user.password
             });
         });
     });
@@ -27,8 +27,16 @@ module.exports = function(app, passport) {
         req.body.id = userID;
         const user = req.body;
         console.log(user);
-        player.updateUserProfile(user, function(error, result){
-            res.render('profile');
+        process.nextTick(function() {
+            player.updateUserProfile(user, function (error, result) {
+                res.render('profile', {
+                    query_rows: result.rows, userName: req.user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: user.password
+                });
+            });
         });
     });
 

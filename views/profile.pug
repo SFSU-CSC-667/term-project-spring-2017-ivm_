@@ -16,11 +16,11 @@ block content
           img(src='/images/prof-icon.png' style='height: 200px; padding-bottom: 10px;')
           br
           div
-            form(method='POST' action='/profile')
+            form(method='POST' action='/profile' style='width: 70%; margin: auto;')
               p(id='a') First Name: #{firstName}
-              p(id='b') Last Name: #{lastName} #{innerHTML}
-              p(id='c') Password: #{password} #{innerHTML}
-              p(id='d') Email: #{email} #{innerHTML}
+              p(id='b') Last Name: #{lastName}
+              p(id='c') Password: #{password}
+              p(id='d') Email: #{email}
               p
                 button(id='button' type= 'button' onclick='editButton()'
                        class='btn btn-default' style='padding: 2px 11px;') EDIT
