@@ -1,6 +1,7 @@
 extends layout
 
 block content
+<<<<<<< HEAD
     br
     br
     br
@@ -26,3 +27,41 @@ block content
     br
     br
     br
+=======
+    div.container
+      body
+        //- Hidden user id behind web elements so we can access users id
+        p.hidden #{user.player_id}!
+        p.hidden #{user.username}
+        title Tank City: Lobby
+        div.fake-jumbotron-div
+          div.game-portion-of-screen
+            div.highscore-table-portion
+              h2 Scoreboard
+              table.scoreboard-table-lobby
+                tbody
+                  each val in scores
+                    tr.score-table-element-lobby
+                      td= val.first_name
+                      td= val.wins
+                  else
+                    li No values
+            div.game-section
+              img.game-section-image(src='/images/logo.png')
+            div.profile-stats-portion
+              h2.profile-stats-title #{user.first_name}          
+          div.tank-city-talks
+            h2.tank-city-talks-title Tank City Talks
+            div.messages
+              table(id="messages")
+                tbody
+                  each chat in chats
+                      tr
+                        td.lobby-message-username= chat.username + ":"
+                        td.lobby-message= chat.message
+            form(action="/lobby" method="post")
+              .input-group
+                  input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+                  span.input-group-btn
+                      button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
+>>>>>>> development

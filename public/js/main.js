@@ -12,4 +12,9 @@ $( ".send-message" ).click(function() {
 
 socket.on('user_message', function( message ){
   $( '#messages').append( "<tr><td>" + message + "</td></tr>" + '<br />')
+<<<<<<< HEAD
 });
+=======
+});
+
+>>>>>>> development
