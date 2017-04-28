@@ -1,10 +1,10 @@
 {
     "development": {
-        "username": "Vivian",
-        "password": "Vivian",
-        "database": "Vivian",
+        "username": "alex",
+        "password": "alex",
+        "database": "alex",
         "host": "127.0.0.1",
-        "port": "5432",
+        "port": "5433",
         "dialect": "postgres",
         "max": 10,
         "idleTimeoutMillis": 30000
