@@ -89,3 +89,5 @@ CREATE TABLE IF NOT EXISTS Chat(
   FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
 );
+
+INSERT INTO Game(score) VALUES("Game Lobby");
