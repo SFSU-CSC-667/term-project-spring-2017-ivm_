@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
+var matterjs = require('matter-js');
 // Sets up to route to proper locations
 // var index = require('./routes/index');
 // var profile = require('./routes/profile');
@@ -69,6 +70,9 @@ app.use(cookieParser());
 
 // app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// used to access matter.js, will be accessed as: script(src = '/scripts/')
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
 var index = require('./routes/index')(app, passport);
 var profile = require('./routes/profile')(app, passport);

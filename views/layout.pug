@@ -17,13 +17,8 @@ html
           span.icon-bar
           span.icon-bar
         ul(class='nav navbar-nav navbar-left' style='padding-left:10px')
-          - if(userName !== '') {
-              a(href = "/lobby")
-                img(src='/images/logo.png' height='90px')
-          - } else {
-              a(href="/")
-                img(src='/images/logo.png' height='90px')
-          - }
+          a(href="/")
+            img(src='/images/logo.png' height='90px')
       div(class='navbar-collapse collapse')
         ul(class='nav navbar-nav navbar-right' style='padding-right:30px')
           li
@@ -41,7 +36,8 @@ html
               li
                 a(href = "/logout") LOGOUT
           - }
-
+          li
+            a(href = '/game') Game
     block content
 
     script(src='/socket.io/socket.io.js')

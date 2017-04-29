@@ -1,4 +1,4 @@
-var db = require('.././server/models/db.js');
+var db = require('.././server/db.js');
 
 exports.getShotByTankId = function(res, req, callBack) {
   var shot = req.body;
