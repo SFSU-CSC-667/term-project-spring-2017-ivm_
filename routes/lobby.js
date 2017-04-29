@@ -3,6 +3,7 @@ var router = express.Router();
 var sb = require('.././model/scoreboard.js');
 var cb = require('.././model/chat.js');
 
+
 router.get('/', function(req, res, next) {
     if (req.isAuthenticated()) {
         sb.getScores(function(result, error) {

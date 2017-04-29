@@ -21,7 +21,6 @@ exports.getAllChatsWithGameId = function(gid, dataStream){
         dataStream(error, result);
     });
 };
-
 exports.insertMessageForGameId = function(gid, pid, username, message, updateComplete){
     db.query('INSERT INTO Chat (game_id, player_id, username, message) VALUES (' + gid + ', ' + pid + ', ' + '\'' + username + '\'' + ', ' + '\'' + message + '\'' + ');',
         function(error, result){
@@ -32,12 +31,6 @@ exports.insertMessageForGameId = function(gid, pid, username, message, updateCom
 
             updateComplete(error, result);
         });
-}
-
-exports.insertMessageForLobby = function(pid, username, message, updateComplete){
-    this.insertMessageForGameId(0, pid, username, message, function(error, result){
-        updateComplete(error, result)
-    })
 }
 
 exports.insertMessageForLobby = function(pid, username, message, updateComplete){
