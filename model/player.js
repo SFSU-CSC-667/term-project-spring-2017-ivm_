@@ -1,4 +1,4 @@
-var db = require('.././server/models/db.js');
+var db = require('.././server/db.js');
 var passport = require('passport');
 var Strategy = require('passport-http-bearer').Strategy;
 

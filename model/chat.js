@@ -21,6 +21,7 @@ exports.getAllChatsWithGameId = function(gid, dataStream){
         dataStream(error, result);
     });
 };
+
 exports.insertMessageForGameId = function(gid, pid, username, message, updateComplete){
     db.query('INSERT INTO Chat (game_id, player_id, username, message) VALUES (' + gid + ', ' + pid + ', ' + '\'' + username + '\'' + ', ' + '\'' + message + '\'' + ');',
         function(error, result){

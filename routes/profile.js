@@ -4,7 +4,7 @@ module.exports = function(app, passport) {
     var router = express.Router();
     var user = require('.././user.js');
     var player = require('../model/player.js');
-    var db = require('.././server/models/db.js');
+    var db = require('.././server/db.js');
     var userID = 0;
 
 
