@@ -1,3 +1,13 @@
+/*passport.use(new Strategy(
+  function(token, done) {
+    player.loginPlayer(token, function (err, user) {
+      if (err) { console.log("err"); return done(err); }
+      if (!user) { console.log("!user"); return done(null, false); }
+      console.log("done");
+      return done(null, user, { scope: 'all' });
+    });
+  }
+));*/
 //var app = require('.././app.js');
 module.exports = function(app, passport) {
 
@@ -16,8 +26,6 @@ module.exports = function(app, passport) {
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    // the registration=complete query string is a result of completing registration,
-    // which takes the visitor back to the home page with the 'Registration Successful!' message.
       if(req.query.registration === 'complete'){
         res.render('index', { title: 'Tank City', register_message: 'Registration Successful!', userName: '' });
       }else {
@@ -58,5 +66,4 @@ module.exports = function(app, passport) {
 
   // replaces exports.router = router;
   return router;
-  //exports.router = router;
 }

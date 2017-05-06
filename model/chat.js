@@ -39,6 +39,3 @@ exports.insertMessageForLobby = function(pid, username, message, updateComplete)
         updateComplete(error, result)
     })
 }
-
-
-

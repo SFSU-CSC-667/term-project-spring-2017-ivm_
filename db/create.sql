@@ -11,7 +11,10 @@ DROP TABLE Player CASCADE;
 DROP TABLE Tank CASCADE;
 DROP TABLE GameUser CASCADE;
 DROP TABLE Chat CASCADE;
+<<<<<<< HEAD
+=======
 
+>>>>>>> development
 
 /*
 
