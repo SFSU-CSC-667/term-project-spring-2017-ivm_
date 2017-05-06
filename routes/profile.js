@@ -7,7 +7,6 @@ module.exports = function(app, passport) {
     var db = require('.././server/db.js');
     var userID = 0;
 
-
     router.get('/', user.isLoggedIn, function (req, res, next) {
         // allows all users to be rendered in profile.pug
         var result = db.query('SELECT * FROM Player WHERE username = \'' + req.user.username + '\';', function (err, result) {
@@ -42,14 +41,3 @@ module.exports = function(app, passport) {
 
   return router;
 }
-
-// this checks if the user is logged in, if not, it redirects to homepage.
-// function isLoggedIn(req, res, next) {
-//
-//     if (req.isAuthenticated()){
-//         console.log(req.user.username);
-//         return next();
-//     }
-//
-//     res.redirect('/');
-// }
