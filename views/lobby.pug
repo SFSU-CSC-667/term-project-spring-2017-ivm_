@@ -3,6 +3,7 @@ extends layout
 block content
     div.container
       body
+        a(href = "../game") Start Game
         //- Hidden user id behind web elements so we can access users id
         p.hidden #{user.player_id}!
         p.hidden #{user.username}
@@ -22,7 +23,7 @@ block content
             div.game-section
               img.game-section-image(src='/images/logo.png')
             div.profile-stats-portion
-              h2.profile-stats-title #{user.first_name}          
+              h2.profile-stats-title #{user.first_name}
           div.tank-city-talks
             h2.tank-city-talks-title Tank City Talks
             div.messages

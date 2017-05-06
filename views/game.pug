@@ -1,4 +1,25 @@
 extends layout
 
 block content
-  canvas(width="300px" height="400px")
+
+  div.jumbotron(style = "text-align: center;")
+    //-canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin: 10%;")
+  script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
+  script(src = "/js/tankgame.js")
+
+  div.tank-city-talks
+    p.hidden #{user.player_id}!
+    p.hidden #{user.username}
+    h2.tank-city-talks-title Tank City Talks
+    div.messages
+      table(id="messages")
+        tbody
+          each chat in chats
+            tr
+              td.lobby-message-username= chat.username + ":"
+              td.lobby-message= chat.message
+    form(action="/game" method="post")
+      .input-group
+        input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+        span.input-group-btn
+          button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send

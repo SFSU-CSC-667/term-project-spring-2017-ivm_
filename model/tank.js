@@ -1,7 +1,7 @@
 /**
  * Created by Maroun on 3/18/17.
  */
-var db = require('.././server/models/db.js');
+var db = require('.././server/db.js');
 
 exports.getTankById = function(res, req, callBack) {
   var tank = req.body;
@@ -30,5 +30,19 @@ exports.updateTank = function(tank, callBack) {
     else if(result.rows.length!== 1){ return callBack(0, null);}
     // 0 as first argument to callback means no error occurred.
     else{ return callBack(err, result);}
+  });
+}
+
+// callBack gets id of new tank
+exports.newTank = function(callBack) {
+  // REMOVE SHOTID FROM DATABASE AND THESE CODES LATER.
+  db.query('INSERT INTO Tank(shot_id, coordinate_x, coordinate_y) VALUES('
+  + 0 +', ' + 25 + ', ' + 0 + ') RETURNING *;', function(err, result){
+    if(err){
+      console.log("error inserting newTank");
+    }else{
+      console.log("new tank created: " +result.rows[0].tank_id);
+      callBack(result.rows[0].tank_id);
+    }
   });
 }

@@ -11,7 +11,10 @@ DROP TABLE Player CASCADE;
 DROP TABLE Tank CASCADE;
 DROP TABLE GameUser CASCADE;
 DROP TABLE Chat CASCADE;
+<<<<<<< HEAD
+=======
 
+>>>>>>> development
 
 /*
 
@@ -90,4 +93,4 @@ CREATE TABLE IF NOT EXISTS Chat(
   FOREIGN KEY (player_id) REFERENCES Player(player_id)
 );
 
-INSERT INTO Game(score) VALUES("Game Lobby");
+INSERT INTO Game(score) VALUES('Game Lobby');
