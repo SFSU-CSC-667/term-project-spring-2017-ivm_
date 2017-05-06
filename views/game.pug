@@ -2,12 +2,12 @@ extends layout
 
 block content
 
-  div.jumbotron(style = "text-align: center;")
-    //-canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin: 10%;")
-  script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
-  script(src = "/js/tankgame.js")
+    div.jumbotron(style = "text-align: center;")
+      //-canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin: 10%;")
+    script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
+    script(src = "/js/tankgame.js")
 
-  div.tank-city-talks
+    div.tank-city-talks
     p.hidden #{user.player_id}!
     p.hidden #{user.username}
     h2.tank-city-talks-title Tank City Talks

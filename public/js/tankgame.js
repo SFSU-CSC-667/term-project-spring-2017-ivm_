@@ -1,48 +1,62 @@
-// var canvas = document.getElementById("gameCanvas");
-// var ctx = canvas.getContext("2d");
-// ctx.moveTo(0,0);
-// ctx.lineTo(200,100);
-// ctx.stroke();
-
-// module aliases
-var Engine = Matter.Engine,
-    Render = Matter.Render,
-    World = Matter.World,
-    Bodies = Matter.Bodies,
-    Composites = Matter.Composites;
-
-// create an engine
-var engine = Engine.create();
-
-// create a renderer
-var render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-      // makes it so the screen takes up entire width of page
-            width: document.documentElement.clientWidth,
-            height: Math.min(document.documentElement.clientHeight, 600),
-            showAngleIndicator: true
-        }
-});
 var pageWidth = document.documentElement.clientWidth;
-// create two boxes and a ground.
+var themeNumber =  Math.floor((Math.random() * 4) + 1);
+var theme = "../images/gameThemes/theme" + themeNumber
+
+var Engine = Matter.Engine,
+    Composites = Matter.Composites,
+    World = Matter.World,
+    Bodies = Matter.Bodies;
+
+var engine = Engine.create(document.body, {
+    render: {
+        options: {
+            wireframes: false,
+            background: theme + "/Full.png",
+            width: pageWidth
+        }
+    }
+});
+
+// create two boxes and a ground
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
-var wheel1 = Bodies.circle(400, 200, 10);
-var wheel2 = Bodies.circle(400, 200, 10);
-var scale = 0.9;
-var tank1 = Composites.car(150, 100, 100 * scale, 40 * scale, 30 * scale);
-scale = 0.8;
-var tank2 = Composites.car(300, 300, 100 * scale, 40 * scale, 30 * scale);
-// rectangle are (x, y, width, height).. position x and y in matter-js are the CENTER of the body
-var ground = Bodies.rectangle(pageWidth/2, 610, pageWidth, 60, { isStatic: true });
+var ground = Bodies.rectangle(67*2, 610, 391, 67, {
+    isStatic: true,
+    render: {
+        sprite: {
+            texture: theme + '/platform.png'
+        }
+    }
+})
 
+var ground2 = Bodies.rectangle(67*4, 610, 391, 67, {
+    isStatic: true,
+    render: {
+        sprite: {
+            texture: theme + '/platform.png'
+        }
+    }
+})
+
+var ground3 = Bodies.rectangle(67*8, 610, 391, 67, {
+    isStatic: true,
+    render: {
+        sprite: {
+            texture: theme + '/platform.png'
+        }
+    }
+})
+var ground4 = Bodies.rectangle(67*16, 610, 391, 67, {
+    isStatic: true,
+    render: {
+        sprite: {
+            texture: theme + '/platform.png'
+        }
+    }
+})
 // add all of the bodies to the world
-World.add(engine.world, [boxA, wheel1,wheel2, boxB, tank1, tank2, ground]);
+World.add(engine.world, [boxA, boxB, ground, ground2, ground3, ground4]);
 
 // run the engine
 Engine.run(engine);
 
-// run the renderer
-Render.run(render);
