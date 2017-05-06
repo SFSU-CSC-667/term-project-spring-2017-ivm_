@@ -15,6 +15,7 @@ module.exports = function(app, passport){
         if (error) {
             console.log("Error loading game chat: " + error.statusCode)
         }
+        //res.render('game');
         res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
   });
