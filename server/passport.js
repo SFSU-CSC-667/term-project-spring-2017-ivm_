@@ -24,8 +24,8 @@ module.exports = function(passport){
       //process.nextTick(function() {
         player.findByUsername(username, function(err, user) {
             if (err) { console.log(err); return cb(err); }
-            if (!user) { console.log('here');return cb(null, false/*,req.flash('loginMessage', 'Oops! invalid user.')*/); }
-            if (user.password != password) { console.log('passwords not eq');return cb(null, false /*,req.flash('loginMessage', 'Oops! Wrong password.')*/); }
+            if (!user) { return cb(null, false, {message: 'Oops! invalid user.'}); }
+            if (user.password != password) { return cb(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); }
             console.log('good@#!!!!#@!$');
             return cb(null, user);
           });
