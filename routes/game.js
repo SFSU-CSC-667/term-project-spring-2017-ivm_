@@ -9,7 +9,7 @@ module.exports = function(app, passport){
   var user = require('.././user.js');
   var shot = require('.././model/shot.js')
 
-  router.get('/:id', user.isLoggedIn, function(req, res, next) {
+  router.get('/:id', /*user.isLoggedIn,*/ function(req, res, next) {
       res.render('game');
   });
 
