@@ -32,3 +32,17 @@ exports.updateTank = function(tank, callBack) {
     else{ return callBack(err, result);}
   });
 }
+
+// callBack gets id of new tank
+exports.newTank = function(callBack) {
+  // REMOVE SHOTID FROM DATABASE AND THESE CODES LATER.
+  db.query('INSERT INTO Tank(shot_id, coordinate_x, coordinate_y) VALUES('
+  + 0 +', ' + 25 + ', ' + 0 + ') RETURNING *;', function(err, result){
+    if(err){
+      console.log("error inserting newTank");
+    }else{
+      console.log("new tank created: " +result.rows[0].tank_id);
+      callBack(result.rows[0].tank_id);
+    }
+  });
+}
