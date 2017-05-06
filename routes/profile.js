@@ -7,10 +7,6 @@ module.exports = function(app, passport) {
     var db = require('.././server/db.js');
     var userID = 0;
 
-    const express = require('express');
-    const router = express.Router();
-    const user = require('.././user.js');
-
     router.get('/', user.isLoggedIn, function (req, res, next) {
         // allows all users to be rendered in profile.pug
         var result = db.query('SELECT * FROM Player WHERE username = \'' + req.user.username + '\';', function (err, result) {
