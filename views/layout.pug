@@ -34,6 +34,12 @@ html
             a(href="/register") REGISTER
           li
             a(href="/lobby") LOBBY
+          - if(userName !== '') {
+              li
+                a Welcome #{userName}
+              li
+                a(href = "/logout") LOGOUT
+          - }
           li
             a(href = '/game') GAME
     block content

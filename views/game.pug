@@ -53,3 +53,20 @@ block content
 
     // run the renderer
     Render.run(render);
+
+  div.tank-city-talks
+   p.hidden #{user.player_id}!
+   p.hidden #{user.username}
+   h2.tank-city-talks-title Tank City Talks
+   div.messages
+     table(id="messages")
+       tbody
+         each chat in chats
+           tr
+             td.lobby-message-username= chat.username + ":"
+             td.lobby-message= chat.message
+   form(action="/game" method="post")
+     .input-group
+       input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+       span.input-group-btn
+         button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send

@@ -4,13 +4,19 @@ module.exports = function(app, passport){
   var router = express.Router();
   //var user = require('.././model/user.js');
   var db = require('.././server/db.js');
+  var cb = require('.././model/chat.js');
   var game = require('.././model/game.js')
   var tank = require('.././model/tank.js')
   var user = require('.././user.js');
   var shot = require('.././model/shot.js')
 
   router.get('/:id', /*user.isLoggedIn,*/ function(req, res, next) {
-      res.render('game');
+    cb.getLobbyChats(function(error, result) {
+        if (error) {
+            console.log("Error loading game chat: " + error.statusCode)
+        }
+        res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+    })
   });
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
