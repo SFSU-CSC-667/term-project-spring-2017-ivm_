@@ -33,7 +33,7 @@ function createGround() {
     var groundCount = 1;
 
     while (groundLeftOver >= 0) {
-        World.add(engine.world, Bodies.rectangle((391/2) * groundCount , 610, groundWidth, groundHeight, {
+        World.add(engine.world, Bodies.rectangle((391/2) * groundCount , 570, groundWidth, groundHeight, {
             isStatic: true,
             render: {
                 sprite: {
