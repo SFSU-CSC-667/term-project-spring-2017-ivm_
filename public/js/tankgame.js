@@ -4,6 +4,18 @@
 // ctx.lineTo(200,100);
 // ctx.stroke();
 
+const KEY_W = 87;
+const KEY_A = 65;
+const KEY_S = 83;
+const KEY_D = 68;
+const KEY_SPACE = 32;
+const KEY_SHIFT = 16;
+
+var playerOnFloor = false;
+
+var mouseIsDown = false;
+var mp;
+var keys = [];
 // module aliases
 var Engine = Matter.Engine,
     Render = Matter.Render,
@@ -20,18 +32,18 @@ var render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-      // makes it so the screen takes up entire width of page
-            width: document.documentElement.clientWidth,
-            height: Math.min(document.documentElement.clientHeight, 600),
-            showAngleIndicator: true
-        }
+        // makes it so the screen takes up entire width of page
+        width: document.documentElement.clientWidth,
+        height: Math.min(document.documentElement.clientHeight, 600),
+        showAngleIndicator: true
+    }
 });
 
 Bodies.rectangle(0, 0, 100, 100, {
     render: {
-         fillStyle: 'red',
-         strokeStyle: 'blue',
-         lineWidth: 3
+        fillStyle: 'red',
+        strokeStyle: 'blue',
+        lineWidth: 3
     }
 });
 
@@ -51,18 +63,20 @@ scale = 0.8;
 var tank2 = Composites.car(300, 300, 100 * scale, 40 * scale, 30 * scale);
 */
 
-var player1Tank = Bodies.rectangle(50,235,100,20,{density:0.002, friction:0});
-var player1Turret = Bodies.rectangle(50,215,80,20,{density:0.002, friction:0});
-var player1rifle = Bodies.rectangle(100,215,100,10,{density:0.002, friction:0});
-var player1Wheel = Bodies.circle(10,250,10,{density:0, friction:0});
-var player1Wheel2 = Bodies.circle(90,250,10,{density:0, friction:0});
- var player = Body.create({
-            parts: [player1Tank, player1Turret, player1rifle, player1Wheel, player1Wheel2],
-            friction:0
+var player1Tank = Bodies.rectangle(50, 235, 100, 20, { density: 0.002, friction: 0 });
+var player1Turret = Bodies.rectangle(50, 215, 80, 20, { density: 0.002, friction: 0 });
+var player1rifle = Bodies.rectangle(100, 215, 100, 10, { density: 0.002, friction: 0 });
+var player1Wheel = Bodies.circle(10, 250, 10, { density: 0, friction: 0 });
+var player1Wheel2 = Bodies.circle(90, 250, 10, { density: 0, friction: 0 });
+var player = Body.create({
+    parts: [player1Tank, player1Turret, player1rifle, player1Wheel, player1Wheel2],
+    friction: 0
 });
+
+
 //Matter.Body.setVelocity(player, 0);
 // rectangle are (x, y, width, height).. position x and y in matter-js are the CENTER of the body
-var ground = Bodies.rectangle(pageWidth/2, 600, pageWidth, 60, { isStatic: true });
+var ground = Bodies.rectangle(pageWidth / 2, 600, pageWidth, 60, { isStatic: true });
 
 // add all of the bodies to the world
 World.add(engine.world, [player, /* boxA, wheel1,wheel2, boxB, pyramid, tank1, tank2,*/ ground]);
