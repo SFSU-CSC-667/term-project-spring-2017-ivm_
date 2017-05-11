@@ -1,5 +1,5 @@
 var pageWidth = document.documentElement.clientWidth;
-var themeNumber =  Math.floor((Math.random() * 4) + 1);
+var themeNumber =  getRandomInt(1, 4);
 var theme = "../images/gameThemes/theme" + themeNumber
 
 var Engine = Matter.Engine,
@@ -17,46 +17,56 @@ var engine = Engine.create(document.body, {
     }
 });
 
+
 // create two boxes and a ground
 var boxA = Bodies.rectangle(400, 200, 80, 80);
-var boxB = Bodies.rectangle(450, 50, 80, 80);
-var ground = Bodies.rectangle(67*2, 610, 391, 67, {
-    isStatic: true,
-    render: {
-        sprite: {
-            texture: theme + '/platform.png'
-        }
-    }
-})
+var boxB = Bodies.rectangle(750, 50, 80, 80);
 
-var ground2 = Bodies.rectangle(67*4, 610, 391, 67, {
-    isStatic: true,
-    render: {
-        sprite: {
-            texture: theme + '/platform.png'
-        }
-    }
-})
-
-var ground3 = Bodies.rectangle(67*8, 610, 391, 67, {
-    isStatic: true,
-    render: {
-        sprite: {
-            texture: theme + '/platform.png'
-        }
-    }
-})
-var ground4 = Bodies.rectangle(67*16, 610, 391, 67, {
-    isStatic: true,
-    render: {
-        sprite: {
-            texture: theme + '/platform.png'
-        }
-    }
-})
 // add all of the bodies to the world
-World.add(engine.world, [boxA, boxB, ground, ground2, ground3, ground4]);
+World.add(engine.world, [boxA, boxB]);
+
+var groundWidth = 391;
+var groundHeight = 67;
+
+function createGround() {
+    var groundLeftOver = pageWidth * 2;
+    var groundCount = 1;
+
+    while (groundLeftOver >= 0) {
+        World.add(engine.world, Bodies.rectangle((391/2) * groundCount , 610, groundWidth, groundHeight, {
+            isStatic: true,
+            render: {
+                sprite: {
+                    texture: theme + '/platform.png'
+                }
+            }
+        }))
+        groundLeftOver -= groundWidth;
+        groundCount++;
+    }
+}
+
+function createObstacles(){
+    const centerHeight = getRandomInt(500, 610);
+
+    var centerObstacle = Bodies.rectangle(pageWidth/2 - 40, centerHeight, 80, 210, {
+        isStatic: true,
+        render: {
+            sprite: {
+                texture: theme + '/obstacle.png'
+            }
+        }
+    })
+
+    World.add(engine.world, centerObstacle)
+}
+
+createGround();
+createObstacles();
 
 // run the engine
 Engine.run(engine);
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
