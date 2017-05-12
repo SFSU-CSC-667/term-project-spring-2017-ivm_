@@ -30,13 +30,36 @@ var pyramid = Composites.pyramid(500, 300, 9, 10, 0, 0, function(x, y) {
     return Bodies.rectangle(x, y, 25, 40);
 });
 
-var player1Tank = Bodies.rectangle(50,235,100,25,{density:0.002, friction:0});
-var player1Base = Bodies.rectangle(50,215,60,25,{density:0.002, friction:0});
+var player1Tank = Bodies.rectangle(50,235,100,25,{
+    label : "player1",
+    density:0.002,
+    friction:0
+});
 
-var player1Turret = Bodies.circle(50,215,20, {density:0.002, friction:0});
-var player1rifle = Bodies.rectangle(100,215,10,10,{density:0.002, friction:0});
+var player1Base = Bodies.rectangle(50,215,60,25,{
+    label : "player1",
+    density:0.002,
+    friction:0
+});
 
-var sensor1 = Bodies.rectangle(150,215,49,10, {density:0, friction:0, isSensor: true});
+var player1Turret = Bodies.circle(50,215,20, {
+    label : "player1",
+    density:0.002,
+    friction:0
+});
+
+var player1rifle = Bodies.rectangle(100,215,10,10,{
+    label : "player1",
+    density:0.002,
+    friction:0
+});
+
+var sensor1 = Bodies.rectangle(150,215,49,10, {
+    label : "player1",
+    density:0,
+    friction:0,
+    isSensor: true
+});
 
 var player1rifleBody = Body.create({parts: [ player1rifle,player1Turret], friction:0, isSensor: true});
 player1rifleBody.render.fillStyle = 'DarkGreen';
@@ -44,9 +67,11 @@ player1rifleBody.render.fillStyle = 'DarkGreen';
 var player1Wheel = Bodies.circle(10,250,10,{density:0, friction:0});
 var player1Wheel2 = Bodies.circle(90,250,10,{density:0, friction:0, opacity: 0.5});
 var player = Body.create({
+            label : "player1",
             parts: [player1Tank,  player1Base,player1rifleBody,  player1Wheel, player1Wheel2],
             friction:0
 });
+
 player1Base.render.fillStyle = player1Tank.render.fillStyle = 'green';
 player1Wheel.render.fillStyle = player1Wheel2.render.fillStyle = 'black';
 
@@ -83,6 +108,7 @@ function createGround() {
     while (groundLeftOver >= 0) {
         World.add(engine.world, Bodies.rectangle((391/2) * groundCount , 570, groundWidth, groundHeight, {
             isStatic: true,
+            label: "ground " + groundCount,
             render: {
                 sprite: {
                     texture: theme + '/platform.png'
@@ -99,6 +125,7 @@ function createObstacles(){
 
     var centerObstacle = Bodies.rectangle(pageWidth/2 - 40, centerHeight, 80, 210, {
         isStatic: true,
+        label: "obstacle",
         render: {
             sprite: {
                 texture: theme + '/obstacle.png'
@@ -114,16 +141,19 @@ function shootTank(){
     var yc = player1rifleBody.position.y
 
     var cannonBall = Bodies.circle(xc, yc, 10, {
+        label : "cannon ball",
         frictionAir : 0.019,
         friction : 0,
         restitution : 0,
         inertia : Infinity,
-        mass : 10
+        mass : 10,
+        mask : 1
     });
     World.add(engine.world, cannonBall)
 
     Body.applyForce(cannonBall, player1rifleBody.position, {x : cos, y : sin})
 }
+
 
 $(document).click(function(event) {
     if (event.button == 0) {
@@ -137,6 +167,33 @@ function getRandomInt(min, max) {
 
 createGround();
 createObstacles();
+
+Events.on(engine, 'collisionActive', function(e) {
+    var i, pair, length = e.pairs.length;
+    console.log(e.pairs.length)
+
+    for(i = 0; i < length; i++) {
+        pair = e.pairs[i];
+
+         if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player1'){
+            World.remove(engine.world, pair.bodyA)
+            console.log("player1")
+            break;
+        }else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player1'){
+             World.remove(engine.world, pair.bodyB)
+             console.log("player1")
+             break;
+         }else if((pair.bodyA.label === 'cannon ball')) {
+             World.remove(engine.world, pair.bodyA)
+             console.log("cannon ball A " + pair.bodyA.label + " " + pair.bodyB.label)
+             break;
+         }else if (pair.bodyB.label === 'cannon ball'){
+             World.remove(engine.world, pair.bodyB)
+             console.log("cannon ball B " + pair.bodyA.label + " " + pair.bodyB.label)
+             break;
+         }
+    }
+});
 
 // add all of the bodies to the world
 World.add(engine.world, [player, sensor1]);
