@@ -6,7 +6,7 @@ block content
         a(href = "../game") Start Game
         //- Hidden user id behind web elements so we can access users id
         p.hidden #{user.player_id}!
-        p.hidden #{user.username}
+        p(id="username").hidden #{user.username}
         title Tank City: Lobby
         div.fake-jumbotron-div
           div.game-portion-of-screen
