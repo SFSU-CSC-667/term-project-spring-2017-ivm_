@@ -43,6 +43,16 @@ const init = function( app, server ){
           console.log("GAME STARTS NOW");
           io.to(data.game).emit("gameStart", data);
         })
+
+        socket.on('shoot', function(data){
+          console.log(data.user + "shoots");
+          io.to(data.game).emit("shootFromOpposingPlayer", data);
+        })
+
+        socket.on('sendAngle', function(data){
+          //console.log(data.user + " rotates by " + data.angle);
+          io.to(data.game).emit("animateOpponentAngle", data);
+        })
     })
 }
 // const game = function(gameId) {

@@ -108,7 +108,11 @@ socket.on('gameStart', function(data){
 
 // sets the index of opponent
 function determineOpposingPlayer(){
-  opposingPlayer = players[players.indexOf[playerId]] == 0 ? 1 : 0;
+  // for(var i = 0; i< players.length; i++){
+  //   document.getElementById("check").innerHTML +=  players[i] + " joined, ";
+  // }
+  opposingPlayer = players.indexOf(playerId) === 0 ? 1 : 0;
+  //document.getElementById("check").innerHTML += " OPPONENT: " + opposingPlayer;
 }
 
 const startGame = function(){
@@ -283,9 +287,9 @@ var ground2 = Bodies.rectangle(67*4, 610, 391, 67, {
 // var pyramid = Composites.pyramid(500, 300, 9, 10, 0, 0, function(x, y) {
 //     return Bodies.rectangle(x, y, 25, 40);
 // });
-
+var barrelAngle;
 function initializeTanks(){
-
+  barrelAngle = 0;
   // create tank for player 1
   player1Tank = Bodies.rectangle(50,235,100,25,{
       label : "player1",
@@ -406,11 +410,17 @@ function initializeTanks(){
       //Body.setPosition(player1rifleBody, {x: point.x + (dx * cos - dy * sin),
         //                      y: point.y + (dx * sin + dy * cos) } );
       // first player's tank barrel moves to angle relative to the right side, which it points to
-      if(players.indexOf(playerId) === 0)
-        Body.setAngle(rifles[players.indexOf(playerId)], Matter.Vector.angle(rifles[players.indexOf(playerId)].position, event.mouse.position));
-      else
+      if(players.indexOf(playerId) === 0){
+        barrelAngle = Matter.Vector.angle(rifles[players.indexOf(playerId)].position, event.mouse.position);
+        Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
+        //Body.setAngle(rifles[players.indexOf(playerId)], Matter.Vector.angle(rifles[players.indexOf(playerId)].position, event.mouse.position));
+      }else{
+
         //second player's tank barrel moves to angle relative to left side, which it points to
-        Body.setAngle(rifles[players.indexOf(playerId)], Matter.Vector.angle(event.mouse.position, rifles[players.indexOf(playerId)].position));
+        barrelAngle = Matter.Vector.angle(event.mouse.position, rifles[players.indexOf(playerId)].position);
+        Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
+        //Body.setAngle(rifles[players.indexOf(playerId)], Matter.Vector.angle(event.mouse.position, rifles[players.indexOf(playerId)].position));
+      }
       //Body.applyForce(player1rifleBody, {x: 50, })
       // Body.setPosition(player1rifleBody, {x: player1rifleBody.position.x - event.mouse.position ,
       //                         y: player1rifleBody.position.y - event.mouse.position
@@ -424,9 +434,21 @@ function initializeTanks(){
       //Matter.Body.setAngle(player1rifleBody, targetAngle - player1rifleBody.angle);
 
 
-
+      //socket.emit("sendAngle", {game: $("#gameid").text(), user: playerId, angle: barrelAngle});
       mouseIsDown = false;
   });
+
+  // setInterval(sendBarrelAngle, 4000);
+  // function sendBarrelAngle(){
+  //   socket.emit("sendAngle", {game: $("#gameid").text(), user: playerId, angle: barrelAngle});
+  // }
+
+// doesn't work currently
+  socket.on("animateOpponentAngle", function(data){
+      document.getElementById("check").innerHTML += "OPP: " + data.user + " & OPPANGLE: " + data.angle +" | ";
+      if(parseInt(data.user) !== opposingPlayer)
+        Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
+  })
 
   // $(document).click(function(event) {
   //     if (event.button == 0) {
@@ -447,6 +469,11 @@ function initializeTanks(){
   //     mouseIsDown = false;
   // });
 } //end initializeTanks()
+
+// socket.on("shootFromOpposingPlayer", function(data){
+//
+// });
+
 
 var mouseConstraint = MouseConstraint.create(engine);
 MouseConstraint.create(engine);
@@ -521,14 +548,48 @@ function shootTank(){
     World.add(engine.world, cannonBall)
 
     Body.applyForce(cannonBall, rifles[players.indexOf(playerId)].position, {x : cos, y : sin})
+
+
+    socket.emit("shoot", {game: $("#gameid").text(), user: playerId, cos: cos, sin: sin, xc: rifles[players.indexOf(playerId)].position.x, yc: rifles[players.indexOf(playerId)].position.y, angle: barrelAngle});
 }
 
 
 $(document).click(function(event) {
+    //document.getElementById("check").innerHTML += "| EVENT BUTTON: " + event.button + " | ";
     if (event.button == 0) {
         shootTank()
     }
 });
+
+
+socket.on("shootFromOpposingPlayer", function(data){
+  //document.getElementById("check").innerHTML += "animateOpponentShot(" + data.user+","+data.cos+","+data.sin+","+data.xc+","+data.yc+")";
+  Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
+  animateOpponentShot(data.user, data.cos, data.sin, data.xc, data.yc);
+});
+
+function animateOpponentShot(userId, cos, sin, xc, yc){
+  if(userId == players[opposingPlayer]){
+
+    // var xc = player1rifleBody.position.x
+    // var yc = player1rifleBody.position.y
+    //document.getElementById("check").innerHTML += "HIT!!!!";
+    cannonBall = Bodies.circle(xc, yc, 10, {
+        label : "cannon ball",
+        frictionAir : 0.019,
+        friction : 0,
+        restitution : 0,
+        inertia : Infinity,
+        mass : 10,
+        mask : 1
+    });
+    World.add(engine.world, cannonBall)
+
+    Body.applyForce(cannonBall, rifles[players.indexOf(userId)].position, {x : cos, y : sin})
+  }
+}
+
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
