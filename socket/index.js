@@ -38,6 +38,11 @@ const init = function( app, server ){
           console.log('ready to go ' + data);
           io.to(data.game).emit("anotherPlayerJoins", data);
         })
+
+        socket.on('startGame', function(data){
+          console.log("GAME STARTS NOW");
+          io.to(data.game).emit("gameStart", data);
+        })
     })
 }
 // const game = function(gameId) {

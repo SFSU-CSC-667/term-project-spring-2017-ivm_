@@ -20,7 +20,7 @@ module.exports = function(app, passport){
         game.loadGame(req.params.id, function(gameUsers) {
           console.log("req.params: " + req.params);
           // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length});
+          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows.reverse()});
         });
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
