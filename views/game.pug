@@ -4,9 +4,21 @@ block content
   div.jumbotron(style = "text-align: center;")
     //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
   script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
+  p.hidden(id = "numberPlayers") #{numberPlayers}
+  - var players = "";
+  - var playerId = user.player_id;
+  - var gameId = game.id;
+  p.hidden(id = "userid") #{user.player_id}
+  p.hidden(id = "gameid") #{game.id}
+  script(src='/socket.io/socket.io.js')
   script(src = "/js/tankgame.js")
+  div(id = "players") Players:
+    each gameUser in gameUsers
+      p= gameUser.player_id
+  p Num: #{numberPlayers}
 
-
+  div(id="check")
+//-
   div.tank-city-talks
    p.hidden #{user.player_id}!
    p.hidden #{user.username}

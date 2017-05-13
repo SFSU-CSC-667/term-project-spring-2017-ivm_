@@ -1,8 +1,8 @@
 var db = require('.././server/db.js');
 
-exports.getShotByTankId = function(res, req, callBack) {
-  var shot = req.body;
-  db.query('SELECT * FROM Shot WHERE tank_id = ' + shot.tank_id + ';',
+exports.getShotByTankId = function(tankId, callBack) {
+  //var shot = req.body;
+  db.query('SELECT * FROM Shot WHERE tank_id = ' + tankId + ';',
   function(err, result){
     // if(result.rows.length!== 1 || err) return callBack(null);
     // else return callBack(result.rows[0]); // else return the 1 and only row

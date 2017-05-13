@@ -9,14 +9,20 @@ module.exports = function(app, passport){
   var tank = require('.././model/tank.js')
   var user = require('.././user.js');
   var shot = require('.././model/shot.js')
+  // used to pass game id in /game/:id
+  var gameNumber;
 
-  router.get('/:id', /*user.isLoggedIn,*/ function(req, res, next) {
+  router.get('/:id', user.isLoggedIn, function(req, res, next) {
     cb.getLobbyChats(function(error, result) {
         if (error) {
             console.log("Error loading game chat: " + error.statusCode)
         }
-        //res.render('game');
-        res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+        game.loadGame(req.params.id, function(gameUsers) {
+          console.log("req.params: " + req.params);
+          // game.id in game.pug will get the id of the game, through req.params.
+          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length});
+        });
+        //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
   });
 
@@ -36,6 +42,7 @@ module.exports = function(app, passport){
                   game.enterGame( req.user.player_id, gameAvailable, tankMade,
                   function(gameEntered){
                     if(gameEntered){
+                      gameNumber = gameAvailable;
                       res.redirect('/game/' + gameAvailable);
                     }else{
                       console.log("fail to enter game in routes");
@@ -56,6 +63,7 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
+                    gameNumber = gameAvailable;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");

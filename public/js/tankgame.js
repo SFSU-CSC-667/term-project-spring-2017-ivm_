@@ -1,3 +1,91 @@
+// var gameSocket = require('../socket/index.js')
+// const tankTable = require('../.././model/tank.js');
+// const shotTable = require('../.././model/tank.js');
+var socket = io();
+var players = [];
+var i =0;
+// socket.game($("#gameid").text());
+// sends user information and joins socket room associated with game id (req.params.id)
+socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text()});
+
+var players = [];
+
+socket.on('gameEnter', function (data) {
+    //console.log("Client user id: " + data.user + " has entered game " + data.game);
+    //var numberOfPlayers = $("#numberPlayers").text();
+    //var numberOfPlayers = parseInt(numberOfPlayers) + 1;
+    //$("#numberPlayers").text(parseInt($("#numberPlayers").text()) + 1);
+    var numberOfPlayers = parseInt($("#numberPlayers").text());
+    $("#numberPlayers").text(data.numberPlayers);
+    if(numberOfPlayers !== parseInt($("#numberPlayers").text())){
+      // document.createElement("P");
+      // var t = document.createTextNode("This is a paragraph.")
+      document.getElementById("players").appendChild(document.createElement("P").appendChild(document.createTextNode(data.user)));
+    }
+    // only the 2nd player will enter this block.
+    if(numberOfPlayers > 1){
+      console.log("HERE AT NUMPLAYERS===2");
+      document.getElementById("check").innerHTML += "... OK";
+      $('#players').find('p').each(function(){
+        players.push($(this).text());
+        document.getElementById("check").innerHTML += $(this).text() + " got pushed | ";
+      });
+      for(i = 0; i < players.length; i++) {
+        document.getElementById("check").innerHTML += players[i] + " in player | ";
+      }
+      // sends message to other player
+      socket.emit('playerJoins', {game: $("#gameid").text() ,msg: 'ready to start Game!', playerArray: players});
+    }
+      //$("#players").text(data.user);
+    //}else{
+      //document.getElementById("players").appendChild(document.createElement("P").appendChild(document.createTextNode(data.user)));
+      // $("#players").text($("#players").text() + " " + data.user);
+    //}
+    document.getElementById("check").innerHTML += "user id: " + data.user + " has entered game " + data.game +" ! NumPlayers: " + $("#numberPlayers").text() + "(" + $("#players").text() +")";
+});
+
+// only first player gets here. CONTINUE HERE
+if(parseInt($("#numberPlayers").text()) === 1) {
+  // finally, after 2nd player joins, this gets executed.
+  socket.on('anotherPlayerJoins', function(data) {
+    // console.log('i incremented ' + i);
+    // if(++i == 2){
+    //   console.log('inside another player joibs. msg: ' + data);
+    //   $('#players').find('p').each(function(){
+    //     players.push($(this).text());
+    //     console.log($(this).text() + " got pushed");
+    //   });
+    // }
+    // player 1's array becomes player 2's array
+    players = data.playerArray;
+    //CONTINUE HERE: START THE GAME
+    document.getElementById("check").innerHTML += "DADADDSADSA";
+    for(i = 0; i < players.length; i++) {
+      document.getElementById("check").innerHTML += players[i] + " in player | ";
+    }
+    //CONTINUE HERE. NEED TO: IMPORT TANK, SHOT AND GAME MODELS. NEED TO FIND A WAY TO SEND PLAYERS FROM 2ND PLAYER TO 1ST PLAYERS
+    // CURRENT IMPLEMENTATION: 2ND PLAYER HAS BOTH IDS STORED IN PLAYERS[]
+  });
+} else {
+    //socket.emit('playerJoins', {game: $("#gameid").text() ,msg: 'ready to start Game!', playerArray: players});
+}
+
+setInterval(printPlayers, 5000);
+
+function printPlayers(){
+  for(i = 0; i < players.length; i++) {
+    document.getElementById("check").innerHTML += players[i] + " in player | ";
+  }
+}
+
+
+
+
+
+const startGame = function(){
+
+}
+
 var pageWidth = document.documentElement.clientWidth;
 var themeNumber =  Math.floor((Math.random() * 4) + 1);
 var theme = "../images/gameThemes/theme" + themeNumber
@@ -45,20 +133,9 @@ var pyramid = Composites.pyramid(500, 300, 9, 10, 0, 0, function(x, y) {
     return Bodies.rectangle(x, y, 25, 40);
 });
 var pageWidth = document.documentElement.clientWidth;
-// create two boxes and a ground.
-/*var boxA = Bodies.rectangle(400, 550, 80, 80, {isStatic: true});
-var boxB = Bodies.rectangle(450, 50, 80, 80);
-var wheel1 = Bodies.circle(400, 200, 10);
-var wheel2 = Bodies.circle(400, 200, 10);
-var scale = 0.9;
-var tank1 = Composites.car(150, 100, 100 * scale, 40 * scale, 30 * scale, {isStatic: true});
-scale = 0.8;
-var tank2 = Composites.car(300, 300, 100 * scale, 40 * scale, 30 * scale);
-*/
 
 var player1Tank = Bodies.rectangle(50,235,100,25,{density:0.002, friction:0});
- var player1Base = Bodies.rectangle(50,215,60,25,{density:0.002, friction:0});
-//var player1Base = Bodies.polygon(50,215,3,30,{density:0.002, friction:0, angle: 0});
+var player1Base = Bodies.rectangle(50,215,60,25,{density:0.002, friction:0});
 var player1Turret = Bodies.circle(50,215,20, {density:0.002, friction:0});
 var player1rifle = Bodies.rectangle(100,215,10,10,{density:0.002, friction:0});
 
