@@ -55,3 +55,16 @@
     exports.enterGame = function(playerId, gameId, tankId, callBack) {
       newGameUser( playerId, gameId, tankId, callBack);
     }
+
+    exports.loadGame = function(gameId, callBack) {
+      db.query('SELECT * FROM GameUser WHERE game_id = ' + gameId + ";", function(err, result){
+        callBack(result);
+      })
+    }
+
+    exports.getTankByPlayerAndGame = function(gameId, playerId, callBack) {
+      db.query('SELECT tank_id FROM GameUser WHERE game_id = ' + gameId + " AND player_id = " + playerId + ";",
+                function(err, result){
+                  callBack(result.rows[0]);
+                });
+    }
