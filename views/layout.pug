@@ -30,12 +30,15 @@ html
             a(href="/profile") PROFILE
           li
             a(href="/scoreboard") SCOREBOARD
-          li
-            a(href="/register") REGISTER
-          li
-            a(href="/lobby") LOBBY
-          li
-            a(href = '/game') GAME
+          - if(userName !== '') {
+              li
+                a(href="/lobby") LOBBY
+              li
+                a(href = "/logout") LOGOUT
+          - }else{
+              li
+                a(href="/register") REGISTER
+          - }
     block content
 
     script(src='/socket.io/socket.io.js')
