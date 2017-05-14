@@ -33,7 +33,7 @@ block content
                       tr
                         td.lobby-message-username= chat.username + ":"
                         td.lobby-message= chat.message
-            form(action="/lobby" method="post")
+            form
               .input-group
                   input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
                   span.input-group-btn
