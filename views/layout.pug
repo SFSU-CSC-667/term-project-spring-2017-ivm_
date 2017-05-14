@@ -17,7 +17,7 @@ html
           span.icon-bar
           span.icon-bar
         ul(class='nav navbar-nav navbar-left' style='padding-left:10px')
-          - if(userName !== '') {
+          - if(userName !== '' && userName !== undefined) {
               a(href = "/lobby")
                 img(src='/images/logo.png' height='90px')
           - } else {
@@ -30,7 +30,7 @@ html
             a(href="/profile") PROFILE
           li
             a(href="/scoreboard") SCOREBOARD
-          - if(userName !== '') {
+          - if(userName !== '' && userName !== undefined) {
               li
                 a(href="/lobby") LOBBY
               li
