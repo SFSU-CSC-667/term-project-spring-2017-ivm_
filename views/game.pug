@@ -20,7 +20,7 @@ block content
   div(id="check")
   div.tank-city-talks
     p.hidden #{user.player_id}!
-    p.hidden #{user.username}
+    p(id="username").hidden #{user.username}
     h2.tank-city-talks-title Tank City Talks
     div.messages
       table(id="game-messages")

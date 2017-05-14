@@ -26,6 +26,8 @@ $( ".game-send-message" ).click(function() {
     return false;
 });
 
-socket.on('updateGameChatHistory', function( message ){
-    $( '#game-messages').append( "<tr><td>" + message + "</td></tr>" + '<br />')
+socket.on('game_user_message', function( message ){
+    if (message["game"] === $('#gameid').text()){
+        $( '#game-messages').append( "<tr><td>" + message["message"] + "</td></tr>" + '<br />')
+    }
 });
