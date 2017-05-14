@@ -72,6 +72,7 @@ function printPlayers(){
 socket.on('gameStart', function(data){
   determineOpposingPlayer();
   initializeTanks();
+  $('#loadingDiv').hide()
 });
 
 // sets the index of opponent
