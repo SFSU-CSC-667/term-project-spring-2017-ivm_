@@ -409,9 +409,5 @@ Events.on(engine, 'collisionActive', function(e) {
     }
 });
 
-$(window).on('beforeunload', function(){
-    return 'Are you sure you want to exit game?';
-});
-
 // run the engine
 Engine.run(engine);
