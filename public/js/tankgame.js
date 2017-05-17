@@ -96,9 +96,7 @@ function determineOpposingPlayer() {
 
 const startGame = function() {
     setInterval(changeTurn, 20000);
-    if ($("#userid").text() == players[i]) {
-
-    }
+    if ($("#userid").text() == players[i]) {}
 }
 
 var pageWidth = document.documentElement.clientWidth;
@@ -253,6 +251,7 @@ function initializeTanks() {
 
     World.add(engine.world, [player, sensor1]);
     World.add(engine.world, [player2, sensor2]);
+
     window.addEventListener("keydown", function(event) {
         if (event.defaultPrevented) {
             return; // Do nothing if the event was already processed
@@ -347,7 +346,6 @@ function createGround() {
 
 function createObstacles() {
     const centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
-
     var centerObstacle = Bodies.rectangle(pageWidth / 2 - 40, centerHeight, 80, 210, {
         isStatic: true,
         label: "obstacle",
@@ -366,6 +364,7 @@ var cannonBall;
 function shootTank() {
     var xc = rifles[players.indexOf(playerId)].position.x
     var yc = rifles[players.indexOf(playerId)].position.y
+
     cannonBall = Bodies.circle(xc, yc, 10, {
         label: "cannon ball",
         frictionAir: 0.019,
@@ -378,6 +377,24 @@ function shootTank() {
     World.add(engine.world, cannonBall)
     Body.applyForce(cannonBall, rifles[players.indexOf(playerId)].position, { x: cos, y: sin })
     socket.emit("shoot", { game: $("#gameid").text(), user: playerId, cos: cos, sin: sin, xc: rifles[players.indexOf(playerId)].position.x, yc: rifles[players.indexOf(playerId)].position.y, angle: barrelAngle });
+}
+
+function moveTankLeft() {
+    let force = (-0.0004 * player.mass);
+    let localPlayer = tanks[players.indexOf(playerId)];
+    let localPleyerRifelBody = rifles[players.indexOf(playerId)];
+    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
+    Body.applyForce(localPleyerRifelBody, localPleyerRifelBody.position, { x: force, y: 0, friction: 0 });
+    socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
+}
+
+function moveTankRight() {
+    let force = (0.0004 * player.mass);
+    let localPlayer = tanks[players.indexOf(playerId)];
+    let localPleyerRifelBody = rifles[players.indexOf(playerId)];
+    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
+    Body.applyForce(localPleyerRifelBody, localPleyerRifelBody.position, { x: force, y: 0, friction: 0 });
+    socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
 }
 
 $(document).click(function(event) {
