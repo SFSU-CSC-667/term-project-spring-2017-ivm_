@@ -23,6 +23,17 @@ socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numb
 
 var players = [];
 
+// //added 5/17
+// socket.on('disconnect', function(){
+//
+//     socket.emit('leftGame', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text()})
+// });
+
+
+
+
+
+
 socket.on('gameEnter', function (data) {
 
     var numberOfPlayers = parseInt($("#numberPlayers").text());
@@ -73,6 +84,7 @@ socket.on('gameStart', function(data){
   determineOpposingPlayer();
   initializeTanks();
   $('#loadingDiv').hide()
+
 });
 
 // sets the index of opponent
@@ -113,6 +125,17 @@ var engine = Engine.create(document.body, {
             height: pageHeight
         }
     }
+});
+
+socket.on('otherPlayerLeft', function(data){
+  document.getElementById("check").innerHTML += data.user + " has left the game";
+  //document.getElementById("check").innerHTML += data.user + " has left the game";
+  // if(data.user === playerId){
+  //   document.getElementById('deleteGameForm').submit();
+  // } else {
+  //   document.getElementById("check").innerHTML += data.user + " has left the game";
+  // }
+  Matter.World.remove(engine.world, [tanks[players.indexOf(data.user)]])
 });
 
 var mouseConstraint = MouseConstraint.create(engine);

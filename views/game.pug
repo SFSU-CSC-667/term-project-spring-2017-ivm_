@@ -38,3 +38,8 @@ block content
         input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
         span.input-group-btn
           button.btn.btn-default(class='btn btn-primary game-send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
+
+    form( id= "deleteGameForm" action="/game" method="delete").hidden
+      input(id = 'playerDelete' name = 'playerId' value = "#{user.player_id}").hidden
+      input(id = 'gameUserDelete' name = 'gameId' value = "#{game.id}").hidden
+      input(id = 'delete-button' type = 'submit' value='submit').hidden
