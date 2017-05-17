@@ -57,6 +57,7 @@ var query = function(sql, data){
         // if data argument is a callback function, use that function for the query.
         } else {
           client.query(sql, data);
+            done()
         }
     });
 }
