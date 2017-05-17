@@ -2,7 +2,6 @@ module.exports = function(app, passport){
 
   var express = require('express');
   var router = express.Router();
-  //var user = require('.././model/user.js');
   var db = require('.././server/db.js');
   var cb = require('.././model/chat.js');
   var game = require('.././model/game.js')
@@ -11,6 +10,7 @@ module.exports = function(app, passport){
   var shot = require('.././model/shot.js')
   // used to pass game id in /game/:id
   var gameNumber;
+  var chats = [];
 
   router.get('/:id', user.isLoggedIn, function(req, res, next) {
     cb.getLobbyChats(function(error, result) {
@@ -20,7 +20,7 @@ module.exports = function(app, passport){
         game.loadGame(req.params.id, function(gameUsers) {
           console.log("req.params: " + req.params);
           // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows.reverse()});
+          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows});
         });
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
@@ -82,8 +82,24 @@ module.exports = function(app, passport){
       });
   });
 
-  router.post('/', /*user.isLoggedIn*/ function(req, res){
+    router.post('/', function(req, res, next) {
+        cb.insertMessageForGameId(thisGameID, req.user.player_id, req.user.username, req.body.message, function(error, result) {
+            if (error) {
+                console.log("Error inserting message for game chat: " + error.statusCode)
+            }
+        })
+    });
 
-  })
+    function loadData(game_id, callback){
+        cb.getAllChatsWithGameId(game_id, function (error, result) {
+            if (error) {
+                console.log("Error loading game chat: " + error.statusCode)
+            }
+            chats = result.rows;
+        });
+        callback()
+    }
+
+
   return router;
 }

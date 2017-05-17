@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Player (
 );
 
 /*
-  the game_id=1 refers to the lobby, and this record will have player_id1=1 and player_id2=1.
+  the game_id=0 refers to the lobby, and this record will have player_id1=1 and player_id2=1.
 */
 CREATE TABLE IF NOT EXISTS Game (
   game_id SERIAL,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS GameUser (
 );
 /*
   game_id refers to which game the chat is referring to, and
-  game_id=1 means the message is sent to the lobby chat.
+  game_id=0 means the message is sent to the lobby chat.
 */
 CREATE TABLE IF NOT EXISTS Chat(
   chat_id SERIAL,

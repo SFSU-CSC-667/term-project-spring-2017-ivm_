@@ -18,6 +18,12 @@ const init = function( app, server ){
             io.emit("user_message", msg)
         })
 
+        // for game - server
+        socket.on("game_user_message", function(msg) {
+            console.log('GAME_user_message: ' + msg);
+            io.emit("game_user_message", msg)
+        })
+
         // socket.on("gamePlayer",function(user){
         //    console.log('gamePlayer: ' + req.user.username);
         //    io.emit("gamePlayer", {user: req.user})

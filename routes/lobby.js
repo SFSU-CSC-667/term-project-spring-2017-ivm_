@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const cb = require('.././model/chat.js');
+const sb = require('.././model/scoreboard.js');
 
 var chats = [];
 var scores = [];
@@ -14,14 +15,19 @@ router.get('/', function(req, res, next) {
             }
             chats = result.rows.reverse()
 
+            sb.getScores(function(result, error) {
+                if (error) {
+                    console.log("error: " + error.statusCode);
+                }
 
-        if (scores.length > 0){
-            res.render('lobby', { title: 'Tank City Lobby', scores: scores, user: req.user, chats: chats });
-        }else{
-            loadData(function(){
+                let scores = result.rows.sort(function(a, b) {
+                    return b.wins - a.wins;
+                });
+
+                this.scores = scores
+
                 res.render('lobby', { title: 'Tank City Lobby', scores: scores, user: req.user, chats: chats });
-            })
-        }
+            });
         })
     } else {
         res.render('index', { error: 'Log in to start game!' });
@@ -39,27 +45,9 @@ router.post('/', function(req, res, next) {
     })
 });
 
-
-function updateScroll() {
-    var element = document.getElementById("messages");
+function updateScroll(elementId) {
+    var element = document.getElementById(elementId);
     element.scrollTop = element.scrollHeight;
-}
-
-function loadData(callback){
-    const sb = require('.././model/scoreboard.js');
-
-    sb.getScores(function(result, error) {
-        if (error) {
-            console.log("error: " + error.statusCode);
-        }
-
-        let scores = result.rows.sort(function(a, b) {
-            return b.wins - a.wins;
-        });
-
-        this.scores = scores
-    });
-    callback()
 }
 
 module.exports = router;
