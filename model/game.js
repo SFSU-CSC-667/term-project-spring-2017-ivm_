@@ -72,8 +72,8 @@
 
 
     // 5/17 added
-    exports.deleteGameUserById = function(gameId, callBack){
-      db.query('DELETE FROM GameUser WHERE game_id = ' + gameId + ';', function(err, result){
+    exports.deleteGameUserByPlayerIdAndGameId = function(gameId, playerId, callBack){
+      db.query('DELETE FROM GameUser WHERE game_id = ' + gameId + ' AND player_id = ' + playerId +';', function(err, result){
         if(err){
           callBack(err);
         } else{
@@ -85,9 +85,23 @@
     exports.deleteGameById = function(gameId, callBack){
       db.query('DELETE FROM Game WHERE game_id = ' + gameId + ';', function(err, result){
         if(err){
+          console.log("ERROR INSIDE deleteGameById");
           callBack(err);
         } else{
-          console.log("game_user deleted");
+          console.log("game deleted");
+          callBack(0);
+        }
+      });
+    }
+
+    exports.getGameUserById = function(gameId, callBack){
+      db.query('SELECT * FROM GameUser WHERE game_id = ' + gameId + ';', function(err, result){
+        if(err){
+          console.log("ERROR INSIDE getGameUserById");
+          callBack(err);
+        }else{
+          console.log("rs: " + result.rows.length);
+          callBack(result);
         }
       });
     }

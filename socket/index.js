@@ -1,3 +1,6 @@
+
+var gameRoutes = require('.././routes/game.js');
+var game = require('.././model/game.js');
 const socketIo = new require( 'socket.io' )
 
 const init = function( app, server ){
@@ -35,6 +38,56 @@ const init = function( app, server ){
 
         socket.on("game", function(data){
           socket.join(data.game);
+
+          // allows users to disconnect from room
+          socket.on('disconnect', function(){
+            console.log("USER DISCONNECTED FROM ROOM " + data.game );
+            io.to(data.game).emit("otherPlayerLeft", data);
+
+
+            game.getGameUserById(data.game, function(gameAcquired){
+              console.log("inside socket getGameUserById");
+              if(gameAcquired.rows.length === 1){
+                game.deleteGameById(data.game, function(anyError){
+                  if(anyError){
+                    console.log("ERROR DELETING GAME")
+                  } else {
+                    console.log("DELETED GAME " + data.game )
+                  }
+                  socket.leave(data.game);
+                });
+              } else {
+                game.deleteGameUserByPlayerIdAndGameId(data.game, data.user, function(err, result){
+                  console.log('game has been deleted');
+                })
+                console.log("DELETED GAME USER " + data.game  + " only.")
+                socket.leave(data.game);
+              }
+
+            })
+            //socket.leave(data.game);
+            console.log(data.game + " game deleted")
+            //next();
+            //gameRoutes.deleteGame();
+                // $.post({
+                //   url: "/game",
+                //   type: "DELETE",
+                //   data: {
+                //       "playerId": data.user,
+                //       "gameId": data.game
+                //   }
+                // });
+                //socket.emit("leaveGame", {data});
+                //$.post( "/gameDelete", data);
+            //window.location.href = 'game/';
+            // $.ajax({
+            //     url: urlCall + '?' + $.param({"Id": Id, "bolDeleteReq" : bolDeleteReq}),
+            //     type: 'DELETE',
+            //     success: callback || $.noop,
+            //     error: errorCallback || $.noop
+            // });
+
+           });
           console.log("userid: " + data.user + "enters game " + data.game +" through socket");
           console.log("room " + data.game + " joined" )
           io.to(data.game).emit("gameEnter", data);
