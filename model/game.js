@@ -55,3 +55,53 @@
     exports.enterGame = function(playerId, gameId, tankId, callBack) {
       newGameUser( playerId, gameId, tankId, callBack);
     }
+
+    exports.loadGame = function(gameId, callBack) {
+      db.query('SELECT * FROM GameUser WHERE game_id = ' + gameId + ";", function(err, result){
+        callBack(result);
+      })
+    }
+
+    exports.getTankByPlayerAndGame = function(gameId, playerId, callBack) {
+      db.query('SELECT tank_id FROM GameUser WHERE game_id = ' + gameId + " AND player_id = " + playerId + ";",
+                function(err, result){
+                  callBack(result.rows[0]);
+                });
+    }
+
+
+
+    // 5/17 added
+    exports.deleteGameUserByPlayerIdAndGameId = function(gameId, playerId, callBack){
+      db.query('DELETE FROM GameUser WHERE game_id = ' + gameId + ' AND player_id = ' + playerId +';', function(err, result){
+        if(err){
+          callBack(err);
+        } else{
+          console.log("game_user deleted");
+        }
+      });
+    }
+
+    exports.deleteGameById = function(gameId, callBack){
+      db.query('DELETE FROM Game WHERE game_id = ' + gameId + ';', function(err, result){
+        if(err){
+          console.log("ERROR INSIDE deleteGameById");
+          callBack(err);
+        } else{
+          console.log("game deleted");
+          callBack(0);
+        }
+      });
+    }
+
+    exports.getGameUserById = function(gameId, callBack){
+      db.query('SELECT * FROM GameUser WHERE game_id = ' + gameId + ';', function(err, result){
+        if(err){
+          console.log("ERROR INSIDE getGameUserById");
+          callBack(err);
+        }else{
+          console.log("rs: " + result.rows.length);
+          callBack(result);
+        }
+      });
+    }
