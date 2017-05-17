@@ -53,6 +53,11 @@ const init = function( app, server ){
           //console.log(data.user + " rotates by " + data.angle);
           io.to(data.game).emit("animateOpponentAngle", data);
         })
+
+        //added 5/17
+        socket.on('leftGame',function(data){
+            io.to(data.game).emit("removePlayer", data);
+        });
     })
 }
 // const game = function(gameId) {

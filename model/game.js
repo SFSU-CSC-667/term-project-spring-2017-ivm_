@@ -68,3 +68,26 @@
                   callBack(result.rows[0]);
                 });
     }
+
+
+
+    // 5/17 added
+    exports.deleteGameUserById = function(gameId, callBack){
+      db.query('DELETE FROM GameUser WHERE game_id = ' + gameId + ';', function(err, result){
+        if(err){
+          callBack(err);
+        } else{
+          console.log("game_user deleted");
+        }
+      });
+    }
+
+    exports.deleteGameById = function(gameId, callBack){
+      db.query('DELETE FROM Game WHERE game_id = ' + gameId + ';', function(err, result){
+        if(err){
+          callBack(err);
+        } else{
+          console.log("game_user deleted");
+        }
+      });
+    }

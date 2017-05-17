@@ -25,6 +25,17 @@ socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numb
 
 var players = [];
 
+//added 5/17
+socket.on('disconnect', function(){
+    socket.emit('leftGame', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text()})
+});
+
+socket.on('removePlayer', function(data){
+
+});
+
+
+
 socket.on('gameEnter', function (data) {
     //console.log("Client user id: " + data.user + " has entered game " + data.game);
     //var numberOfPlayers = $("#numberPlayers").text();
