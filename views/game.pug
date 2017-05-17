@@ -1,4 +1,45 @@
 extends layout
 
 block content
-  canvas(width="300px" height="400px")
+  div(id="loadingDiv" style="background: red; margin-top: 91px;")
+    div.loader
+    p(style="text-align: center; color: white;") Waiting for other player
+    //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
+
+  p.hidden(id = "numberPlayers") #{numberPlayers}
+  - var players = "";
+  - var playerId = user.player_id;
+  - var gameId = game.id;
+  p.hidden(id = "userid") #{user.player_id}
+  p.hidden(id = "gameid") #{game.id}
+  script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
+  script(src='/socket.io/socket.io.js')
+  script(src = "/js/tankgame.js")
+
+  div(id = "players") Players:
+    each gameUser in gameUsers
+      p= gameUser.player_id
+  p Num: #{numberPlayers}
+
+  div(id="check")
+  div.tank-city-talks
+    p.hidden #{user.player_id}!
+    p(id="username").hidden #{user.username}
+    div.messages
+      table(id="game-messages")
+        tbody
+          each chat in chats
+            tr
+              td.lobby-message-username= chat.username + ":"
+              td.lobby-message= chat.message
+              td.hidden= chat.game_id
+    form(action="/game" method="post")
+      .input-group
+        input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+        span.input-group-btn
+          button.btn.btn-default(class='btn btn-primary game-send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
+
+    form( id= "deleteGameForm" action="/game" method="delete").hidden
+      input(id = 'playerDelete' name = 'playerId' value = "#{user.player_id}").hidden
+      input(id = 'gameUserDelete' name = 'gameId' value = "#{game.id}").hidden
+      input(id = 'delete-button' type = 'submit' value='submit').hidden

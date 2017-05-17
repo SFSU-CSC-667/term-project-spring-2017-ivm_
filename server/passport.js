@@ -1,6 +1,3 @@
-
-
-
 module.exports = function(passport){
 
   var LocalStrategy = require('passport-local').Strategy;
@@ -21,15 +18,24 @@ module.exports = function(passport){
        passReqToCallback : true
     },
     function(req, username, password, cb) {
-      //process.nextTick(function() {
         player.findByUsername(username, function(err, user) {
-            if (err) { console.log(err); return cb(err); }
-            if (!user) { console.log('here');return cb(null, false/*,req.flash('loginMessage', 'Oops! invalid user.')*/); }
-            if (user.password != password) { console.log('passwords not eq');return cb(null, false /*,req.flash('loginMessage', 'Oops! Wrong password.')*/); }
+            if (err) {
+                console.log(err);
+                return cb(err);
+            }
+
+            if (!user) {
+                console.log('here');
+                return cb(null, false);
+            }
+
+            if (user.password != password) {
+                console.log('passwords not eq');
+                return cb(null, false );
+            }
+
             console.log('good@#!!!!#@!$');
             return cb(null, user);
           });
-      //});
       }));
-
 }

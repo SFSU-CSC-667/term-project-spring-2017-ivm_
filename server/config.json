@@ -1,13 +1,13 @@
 {
     "development": {
-        "username": "alex",
-        "password": "alex",
-        "database": "alex",
-        "host": "127.0.0.1",
-        "port": "5433",
-        "dialect": "postgres",
-        "max": 10,
-        "idleTimeoutMillis": 30000
+       "username": "ivanyu",
+       "password": "ivanyu",
+       "database": "667testdb",
+       "host": "127.0.0.1",
+       "port": "5432",
+       "dialect": "postgres",
+       "max": 10000,
+       "idleTimeoutMillis": 30000
     },
     "production": {
         "username": "IVM_",
@@ -16,7 +16,7 @@
         "host": "127.0.0.1",
         "port": "5432",
         "dialect": "postgres",
-        "max": 10,
+        "max": 10000,
         "idleTimeoutMillis": 30000
     }
 }

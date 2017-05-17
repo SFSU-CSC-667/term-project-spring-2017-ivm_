@@ -5,7 +5,7 @@ block content
       body
         //- Hidden user id behind web elements so we can access users id
         p.hidden #{user.player_id}!
-        p.hidden #{user.username}
+        p(id="username").hidden #{user.username}
         title Tank City: Lobby
         div.fake-jumbotron-div
           div.game-portion-of-screen
@@ -20,20 +20,19 @@ block content
                   else
                     li No values
             div.game-section
-              img.game-section-image(src='/images/logo.png')
+              a(href = "../game")
+                img.game-section-image(src='/images/logo-w-play-btn.png')
             div.profile-stats-portion
-              h2.profile-stats-title #{user.first_name}          
+              h2.profile-stats-title #{user.first_name}
           div.tank-city-talks
             h2.tank-city-talks-title Tank City Talks
-            div.messages
-              table(id="messages")
-                tbody
-                  each chat in chats
-                      tr
-                        td.lobby-message-username= chat.username + ":"
-                        td.lobby-message= chat.message
-            form(action="/lobby" method="post")
+            div(id="messages").messages
+              ul(id="lobby-messages")
+                each chat in chats
+                  li #{chat.username + ": " + chat.message + "\n"}
+                  br
+            form
               .input-group
-                  input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+                  input.form-control(class='user-lobby-input' type='text', placeholder='Enter message' id='user-lobby-input' name='msg')
                   span.input-group-btn
-                      button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
+                      button.btn.btn-default(class='btn btn-primary send-lobby-message' id='send-lobby-message' style='width: 100px' type='submit' value='submit') Send

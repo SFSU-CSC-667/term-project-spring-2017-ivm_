@@ -1,8 +1,8 @@
-var db = require('.././server/models/db.js');
+var db = require('.././server/db.js');
 
-exports.getShotByTankId = function(res, req, callBack) {
-  var shot = req.body;
-  db.query('SELECT * FROM Shot WHERE tank_id = ' + shot.tank_id + ';',
+exports.getShotByTankId = function(tankId, callBack) {
+  //var shot = req.body;
+  db.query('SELECT * FROM Shot WHERE tank_id = ' + tankId + ';',
   function(err, result){
     // if(result.rows.length!== 1 || err) return callBack(null);
     // else return callBack(result.rows[0]); // else return the 1 and only row
@@ -14,7 +14,7 @@ exports.getShotByTankId = function(res, req, callBack) {
   });
 }
 
-exports.insertShot = function(shot, callBack){
+exports.insertShot = function(shot, updateComplete){
     db.query('INSERT INTO Shot (tank_id, angle, tank_power) VALUES (' + shot.tank_id + ', ' + shot.angle + ', ' + shot.tank_power + ');',
         function(error, result){
 
@@ -24,6 +24,14 @@ exports.insertShot = function(shot, callBack){
 
         updateComplete(error, result);
     });
+}
+
+exports.newShot = function(tankId, callBack) {
+  db.query('INSERT INTO Shot (tank_id, angle, tank_power) VALUES (' + tankId + ', ' + 0 + ', ' + 5 + ') RETURNING *;',
+        function(error, result) {
+          if(error) console.log(error);
+          else callBack(result.rows[0]);
+        });
 }
 
 exports.updateShot = function(shot, callBack) {

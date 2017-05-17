@@ -10,6 +10,7 @@ block content
             h2.login-page-header Welcome, Guest!
             p.underline Sign in
             span.label-danger #{error}
+            span.label-danger #{failureFlash}
 
             div(style='margin:auto; width: 50%')
               form(method='POST' action='/')
