@@ -21,6 +21,7 @@ const init = function( app, server ){
             io.emit("user_message", msg)
         })
 
+
         // for game - server
         socket.on("game_user_message", function(msg) {
             console.log('GAME_user_message: ' + msg);
@@ -117,6 +118,11 @@ const init = function( app, server ){
         socket.on('leftGame',function(data){
             io.to(data.game).emit("removePlayer", data);
         });
+
+        socket.on('leaveGame', function(data){
+          socket.leave(data.game);
+        });
+
     })
 }
 // const game = function(gameId) {

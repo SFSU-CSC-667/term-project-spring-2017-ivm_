@@ -74,6 +74,10 @@ module.exports = function(app, passport){
       });
   });
 
+  // router.get('/exitAndJoin', user.isLoggedIn, function(req, res, next){
+  // res.redirect('/game/')
+  // });
+
   router.get('/:id', user.isLoggedIn, function(req, res, next) {
     cb.getLobbyChats(function(error, result) {
         if (error) {
@@ -87,7 +91,7 @@ module.exports = function(app, passport){
           //   next();
           // })
           // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows});
+          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', /*user: req.user,*/ chats: result.rows});
         });
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })

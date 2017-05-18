@@ -26,15 +26,13 @@ block content
               h2.profile-stats-title #{user.first_name}
           div.tank-city-talks
             h2.tank-city-talks-title Tank City Talks
-            div.messages
-              table(id="messages")
-                tbody
-                  each chat in chats
-                      tr
-                        td.lobby-message-username= chat.username + ":"
-                        td.lobby-message= chat.message
+            div(id="messages").messages
+              ul(id="lobby-messages")
+                each chat in chats
+                  li #{chat.username + ": " + chat.message + "\n"}
+                  br
             form
               .input-group
-                  input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg')
+                  input.form-control(class='user-lobby-input' type='text', placeholder='Enter message' id='user-lobby-input' name='msg')
                   span.input-group-btn
-                      button.btn.btn-default(class='btn btn-primary send-message' id='send-btn' style='width: 100px' type='submit' value='submit') Send
+                      button.btn.btn-default(class='btn btn-primary send-lobby-message' id='send-lobby-message' style='width: 100px' type='submit' value='submit') Send

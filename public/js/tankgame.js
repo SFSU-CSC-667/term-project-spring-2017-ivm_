@@ -19,7 +19,7 @@ var opposingPlayer;
 var playerId = $("#userid").text();
 
 // sends user information and joins socket room associated with game id (req.params.id)
-socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text()});
+socket.emit('game', { user: $("#username").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text(), username: $("#userName").text()});
 
 var players = [];
 
@@ -135,7 +135,20 @@ socket.on('otherPlayerLeft', function(data){
   // } else {
   //   document.getElementById("check").innerHTML += data.user + " has left the game";
   // }
+  var disconnectionMessage = document.getElementById("disconnectionMessage");
+  disconnectionMessage.style.display = "";
+  disconnectionMessage.style.top = "0%";
+  disconnectionMessage.style.left = "0%";
+  disconnectionMessage.zIndex = "100";
+  disconnectionMessage.style.width = "100%";
+  disconnectionMessage.style.height = "100%";
+  disconnectionMessage.style.textAlign = "center";
+  disconnectionMessage.innerHTML = '<p style = "position: relative; top: 50%; margin: auto; font-size: 2.5em; font-color: black; width: 60%; height: 70%" />' + data.username + " HAS LEFT THE GAME, CLICK TO RETURN TO LOBBY </p>";
+
+
+  //$("#returnToLobby").val("<div> " +  data.username + " has left the game, click to Return to Lobby" + "</div>");
   Matter.World.remove(engine.world, [tanks[players.indexOf(data.user)]])
+  socket.emit("leaveGame", {user: playerId, game: data.game});//leave(data.game);
 });
 
 var mouseConstraint = MouseConstraint.create(engine);
@@ -408,10 +421,6 @@ Events.on(engine, 'collisionActive', function(e) {
          }
     }
 });
-
-// $(window).on('beforeunload', function(){
-//     return 'Are you sure you want to exit game?';
-// });
 
 // run the engine
 Engine.run(engine);
