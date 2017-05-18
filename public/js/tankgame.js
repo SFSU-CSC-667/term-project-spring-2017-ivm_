@@ -25,17 +25,6 @@ socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numb
 
 var players = [];
 
-// //added 5/17
-// socket.on('disconnect', function(){
-//
-//     socket.emit('leftGame', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text()})
-// });
-
-
-
-
-
-
 socket.on('gameEnter', function(data) {
     $('#game-stats').hide()
     var numberOfPlayers = parseInt($("#numberPlayers").text());
@@ -88,6 +77,12 @@ socket.on('gameStart', function(data) {
     $('#loadingDiv').hide()
     $('#game-stats').show()
 });
+
+function reduceHealthFromPlayer(elementid){
+    var currentHealth = $(elementid).text()
+    var newHealth = currentHealth.slice(0, -1);
+    $(elementid).html(newHealth)
+}
 
 // sets the index of opponent
 function determineOpposingPlayer() {
@@ -473,6 +468,7 @@ Events.on(engine, 'collisionActive', function(e) {
         if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player1') {
             World.remove(engine.world, pair.bodyA)
             console.log("player1")
+             reduceHealthFromPlayer('#leftLabel')
             break;
         } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player1') {
             World.remove(engine.world, pair.bodyB)
