@@ -37,7 +37,7 @@ var players = [];
 
 
 socket.on('gameEnter', function(data) {
-    $('#gameStats').hide()
+    $('#game-stats').hide()
     var numberOfPlayers = parseInt($("#numberPlayers").text());
     $("#numberPlayers").text(data.numberPlayers);
 
@@ -86,7 +86,7 @@ socket.on('gameStart', function(data) {
     determineOpposingPlayer();
     initializeTanks();
     $('#loadingDiv').hide()
-    $('#gameStats').show()
+    $('#game-stats').show()
 });
 
 // sets the index of opponent
