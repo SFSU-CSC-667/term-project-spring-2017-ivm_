@@ -1,9 +1,15 @@
 extends layout
 
 block content
-  div(id="loadingDiv" style="background: red; margin-top: 91px;")
-    div.loader
-    p(style="text-align: center; color: white;") Waiting for other player
+  div( style="margin-top: 91px;")
+    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: red; margin-top: 91px;")
+      div.loader
+      p(style="text-align: center; color: white;") Waiting for other player
+    div(id="game-stats" style="background: #eee; margin-bottom: 0; z-index=5; position: relative;")
+      ul(id="stats-bar" style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333333;")
+        li(style="color: white; padding:16px;") Welcome, #{user.first_name}
+        li(style="color: white; padding:16px;") Score: xx
+        li(style="color: white; padding:16px;") Your turn
     //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
 
   p.hidden(id = "numberPlayers") #{numberPlayers}
