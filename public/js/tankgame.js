@@ -80,6 +80,20 @@ function reduceHealthFromPlayer(elementid){
     $(elementid).html(newHealth)
 }
 
+function gameOver(){
+    World.remove(engine.world, player1Base);
+    World.remove(engine.world, player2Base);
+
+
+}
+
+function winScreen(){
+
+}
+
+function loseScreen(){
+
+}
 // sets the index of opponent
 function determineOpposingPlayer() {
     opposingPlayer = players.indexOf(playerId) === 0 ? 1 : 0;
@@ -472,12 +486,12 @@ Events.on(engine, 'collisionActive', function(e) {
             console.log("player1")
             break;
         }else if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player2') {
-            World.remove(engine.world, pair.bodyA)
+            World.remove(engine.world, pair.bodyB)
             reduceHealthFromPlayer("#right-player-life")
             console.log("player2")
             break;
         } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player2') {
-            World.remove(engine.world, pair.bodyB)
+            World.remove(engine.world, pair.bodyA)
             reduceHealthFromPlayer("#right-player-life")
             console.log("player2")
             break;

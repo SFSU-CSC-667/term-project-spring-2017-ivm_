@@ -21,6 +21,11 @@ block content
   script(src='/socket.io/socket.io.js')
   script(src = "/js/tankgame.js")
 
+  div(id = "players").hidden
+    each gameUser in gameUsers
+      p= gameUser.player_id
+  p.hidden Num: #{numberPlayers}
+
   div(id="check")
   div.tank-city-talks
     p.hidden #{user.player_id}!
