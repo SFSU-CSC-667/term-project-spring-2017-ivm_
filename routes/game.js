@@ -143,6 +143,5 @@ module.exports = function(app, passport){
         callback()
     }
 
-
   return router;
 }

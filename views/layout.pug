@@ -1,6 +1,6 @@
 
 //- This document is extended to every page
-//- it conatins the menu and title elements that are static among the pages
+//- it contains the menu and title elements that are static among the pages
 doctype html
 html
   head
@@ -18,7 +18,7 @@ html
           span.icon-bar
           span.icon-bar
         ul(class='nav navbar-nav navbar-left' style='padding-left:10px')
-          - if(userName !== '' && userName !== undefined) {
+          - if(userName !== '') {
               a(href = "/lobby")
                 img(src='/images/logo.png' height='90px')
           - } else {
@@ -31,7 +31,7 @@ html
             a(href="/profile") PROFILE
           li
             a(href="/scoreboard") SCOREBOARD
-          - if(userName !== '' && userName !== undefined) {
+          - if(userName !== '') {
               li
                 a(href="/lobby") LOBBY
               li
