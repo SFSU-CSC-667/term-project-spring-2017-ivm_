@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  div(id="loadingDiv" style="background: red; margin-top: 91px;")
-    div.loader
-    p(style="text-align: center; color: white;") Waiting for other player
+  div( style="background: red; margin-top: 91px;")
+    div.loading(id="loadingDiv" style="z-index: 1;")
+      div.loader
+      p(style="text-align: center; color: white;") Waiting for other player
     //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
 
   p.hidden(id = "numberPlayers") #{numberPlayers}

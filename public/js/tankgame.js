@@ -272,9 +272,9 @@ function initializeTanks() {
             case "ArrowRight":
                 moveTankRight();
                 break;
-            case " ":
-                shootTank();
-                break;
+                // case " ":
+                //     shootTank();
+                //     break;
             default:
                 return;
         }
