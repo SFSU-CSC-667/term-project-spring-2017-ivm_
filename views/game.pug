@@ -2,16 +2,14 @@ extends layout
 
 block content
   div( style="margin-top: 91px;")
-    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: red; margin-top: 91px;")
+    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: black; margin-top: 91px;")
       div.loader
       p(style="text-align: center; color: white;") Waiting for other player
     div(id="game-stats" style="background: #eee; margin-bottom: 0; z-index=5; position: relative;")
-      ul(id="stats-bar" style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333333;")
-        li(style="color: white; padding:16px;") Welcome, #{user.first_name}
-        li(style="color: white; padding:16px;") Score: xx
-        li(style="color: white; padding:16px;") Your turn
-
-    //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
+      div(id="stats-bar" style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333333;")
+        li(id="left-player-life" style="color: white; padding:16px;").pull-left ===============================================
+        li(style="color: white; padding:16px; margin-left:10%;") Game Starts Now! Shoot to kill!
+        li(id="right-player-life" style="color: white; padding:16px;").pull-right ===============================================
 
   p.hidden(id = "numberPlayers") #{numberPlayers}
   - var players = "";
@@ -22,11 +20,6 @@ block content
   script(src = "/scripts/matter-js/build/matter.js" type="text/javascript")
   script(src='/socket.io/socket.io.js')
   script(src = "/js/tankgame.js")
-
-  div(id = "players") Players:
-    each gameUser in gameUsers
-      p= gameUser.player_id
-  p Num: #{numberPlayers}
 
   div(id="check")
   div.tank-city-talks

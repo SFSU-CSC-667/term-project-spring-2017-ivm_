@@ -31,7 +31,7 @@ socket.on('gameEnter', function(data) {
     $("#numberPlayers").text(data.numberPlayers);
 
     if (numberOfPlayers !== parseInt($("#numberPlayers").text())) {
-        document.getElementById("players").appendChild(document.createElement("P").appendChild(document.createTextNode(data.user)));
+        //document.getElementById("players").appendChild(document.createElement("P").appendChild(document.createTextNode(data.user)));
     }
 
     // only the 2nd player will enter this block.
@@ -45,7 +45,7 @@ socket.on('gameEnter', function(data) {
         socket.emit('playerJoins', { game: $("#gameid").text(), msg: 'ready to start Game!', playerArray: players });
     }
 
-    document.getElementById("check").innerHTML += "user id: " + data.user + " has entered game " + data.game + " ! NumPlayers: " + $("#numberPlayers").text() + "(" + $("#players").text() + ")";
+    //document.getElementById("check").innerHTML += "user id: " + data.user + " has entered game " + data.game + " ! NumPlayers: " + $("#numberPlayers").text() + "(" + $("#players").text() + ")";
 });
 
 // only first player gets here. CONTINUE HERE
@@ -64,10 +64,6 @@ if (parseInt($("#numberPlayers").text()) === 1) {
     });
 } else {
     //socket.emit('playerJoins', {game: $("#gameid").text() ,msg: 'ready to start Game!', playerArray: players});
-}
-
-function printPlayers() {
-    document.getElementById("check").innerHTML += $("#userid").text();
 }
 
 // finally, game starts and tanks are initialized.
@@ -90,8 +86,8 @@ function determineOpposingPlayer() {
 }
 
 const startGame = function() {
-    setInterval(changeTurn, 20000);
-    if ($("#userid").text() == players[i]) {}
+    // setInterval(changeTurn, 20000);
+    // if ($("#userid").text() == players[i]) {}
 }
 
 var pageWidth = document.documentElement.clientWidth;
@@ -123,7 +119,7 @@ var engine = Engine.create(document.body, {
 });
 
 socket.on('otherPlayerLeft', function(data) {
-    document.getElementById("check").innerHTML += data.user + " has left the game";
+    //document.getElementById("check").innerHTML += data.user + " has left the game";
     //document.getElementById("check").innerHTML += data.user + " has left the game";
     // if(data.user === playerId){
     //   document.getElementById('deleteGameForm').submit();
@@ -303,7 +299,7 @@ Events.on(mouseConstraint, 'mousemove', function(event) {
 
 // doesn't work currently
 socket.on("animateOpponentAngle", function(data) {
-    document.getElementById("check").innerHTML += "OPP: " + data.user + " & OPPANGLE: " + data.angle + " | ";
+    //document.getElementById("check").innerHTML += "OPP: " + data.user + " & OPPANGLE: " + data.angle + " | ";
     if (parseInt(data.user) !== opposingPlayer)
         Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
 })
@@ -467,12 +463,23 @@ Events.on(engine, 'collisionActive', function(e) {
 
         if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player1') {
             World.remove(engine.world, pair.bodyA)
+            reduceHealthFromPlayer("#left-player-life")
             console.log("player1")
-             reduceHealthFromPlayer('#leftLabel')
             break;
         } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player1') {
             World.remove(engine.world, pair.bodyB)
+            reduceHealthFromPlayer("#left-player-life")
             console.log("player1")
+            break;
+        }else if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player2') {
+            World.remove(engine.world, pair.bodyA)
+            reduceHealthFromPlayer("#right-player-life")
+            console.log("player2")
+            break;
+        } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player2') {
+            World.remove(engine.world, pair.bodyB)
+            reduceHealthFromPlayer("#right-player-life")
+            console.log("player2")
             break;
         } else if ((pair.bodyA.label === 'cannon ball')) {
             World.remove(engine.world, pair.bodyA)
