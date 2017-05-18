@@ -1,10 +1,15 @@
 extends layout
 
 block content
-  div(id="loadingDiv" style="background: red; margin-top: 91px;")
-    div.loader
-    p(style="text-align: center; color: white;") Waiting for other player
-    //- canvas(id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3; margin-left: 10%;")
+  div( style="margin-top: 91px;")
+    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: black; margin-top: 91px;")
+      div.loader
+      p(style="text-align: center; color: white;") Waiting for other player
+    div(id="game-stats" style="background: #eee; margin-bottom: 0; z-index=5; position: relative;")
+      div(id="stats-bar" style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333333;")
+        li(id="left-player-life" style="color: white; padding:16px;").pull-left ===============================================
+        li(id="gameStatus" style="color: white; padding:16px;") Game Starts Now! Shoot to kill!
+        li(id="right-player-life" style="color: white; padding:16px;").pull-right ===============================================
 
   p.hidden(id = "numberPlayers") #{numberPlayers}
   - var players = "";
@@ -16,10 +21,10 @@ block content
   script(src='/socket.io/socket.io.js')
   script(src = "/js/tankgame.js")
 
-  div(id = "players") Players:
+  div(id = "players").hidden
     each gameUser in gameUsers
       p= gameUser.player_id
-  p Num: #{numberPlayers}
+  p.hidden Num: #{numberPlayers}
 
   div(id="check")
   div.tank-city-talks
