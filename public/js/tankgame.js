@@ -77,23 +77,21 @@ socket.on('gameStart', function(data) {
 function reduceHealthFromPlayer(elementid){
     var currentHealth = $(elementid).text()
     var newHealth = currentHealth.slice(0, -1);
+
+    if (newHealth.length <= 0){
+        gameOver()
+    }
     $(elementid).html(newHealth)
 }
 
 function gameOver(){
-    World.remove(engine.world, player1Base);
-    World.remove(engine.world, player2Base);
-
-
+    World.remove(engine.world, player);
+    World.remove(engine.world, player2);
+    $('#left-player-life').html("")
+    $('#right-player-life').html("")
+    $('#gameStatus').html("GAME OVER!!!")
 }
 
-function winScreen(){
-
-}
-
-function loseScreen(){
-
-}
 // sets the index of opponent
 function determineOpposingPlayer() {
     opposingPlayer = players.indexOf(playerId) === 0 ? 1 : 0;
