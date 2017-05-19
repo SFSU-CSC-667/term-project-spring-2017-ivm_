@@ -18,9 +18,19 @@ module.exports = function(app, passport){
             console.log("Error loading game chat: " + error.statusCode)
         }
         game.loadGame(req.params.id, function(gameUsers) {
-          console.log("req.params: " + req.params);
-          // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows});
+            loadData(gameNumber, function() {
+                console.log("req.params: " + req.params);
+                // game.id in game.pug will get the id of the game, through req.params.
+                res.render('game', {
+                    user: req.user,
+                    game: req.params,
+                    gameUsers: gameUsers.rows,
+                    numberPlayers: gameUsers.rows.length,
+                    title: 'Tank City Talks',
+                    user: req.user,
+                    chats: chats
+                });
+            });
         });
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
@@ -63,7 +73,8 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
-                    gameNumber = gameAvailable;
+                    //gameNumber = gameAvailable;
+                    gameNumber = gameEntered;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");
@@ -83,7 +94,7 @@ module.exports = function(app, passport){
   });
 
     router.post('/', function(req, res, next) {
-        cb.insertMessageForGameId(thisGameID, req.user.player_id, req.user.username, req.body.message, function(error, result) {
+        cb.insertMessageForGameId(gameNumber, req.user.player_id, req.user.username, req.body.message, function(error, result) {
             if (error) {
                 console.log("Error inserting message for game chat: " + error.statusCode)
             }
@@ -96,6 +107,7 @@ module.exports = function(app, passport){
                 console.log("Error loading game chat: " + error.statusCode)
             }
             chats = result.rows;
+            //callback(chats);
         });
         callback()
     }
