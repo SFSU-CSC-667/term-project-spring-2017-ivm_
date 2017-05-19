@@ -35,10 +35,15 @@ $( ".game-send-message" ).click(function() {
 
 socket.on('game_user_message', function( message ){
     if (message["game"] === $('#gameid').text()){
-        $( '#game-messages').append( "<li>" + message["message"] + "</li>" + '<br />')
+        $( '#game-message').append( "<li>" + message["message"] + "</li>" + '<br />')
+        autoScroll("#game-messages")
     }
 });
 
 function autoScroll(elementId){
     $(elementId).animate({ scrollTop: $(elementId).prop("scrollHeight")}, 500);
+}
+
+function addWinTotal(playerId){
+  $.post( "../player", {userid: $('#userid').val()});
 }

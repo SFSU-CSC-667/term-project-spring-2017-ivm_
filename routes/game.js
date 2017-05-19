@@ -12,6 +12,9 @@ module.exports = function(app, passport){
   var gameNumber;
   var chats = [];
 
+// <<<<<<< HEAD
+// =======
+
   router.get('/:id', user.isLoggedIn, function(req, res, next) {
     cb.getLobbyChats(function(error, result) {
         if (error) {
@@ -35,6 +38,7 @@ module.exports = function(app, passport){
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
   });
+
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
 
@@ -91,6 +95,48 @@ module.exports = function(app, passport){
 
       });
   });
+
+  // router.get('/exitAndJoin', user.isLoggedIn, function(req, res, next){
+  // res.redirect('/game/')
+  // });
+
+  // router.get('/:id', user.isLoggedIn, function(req, res, next) {
+  //   cb.getLobbyChats(function(error, result) {
+  //       if (error) {
+  //           console.log("Error loading game chat: " + error.statusCode)
+  //       }
+  //       game.loadGame(req.params.id, function(gameUsers) {
+  //         console.log("req.params: " + req.params);
+  //         // socket.on("leaveGame", function(data){
+  //         //   req.body.playerId = data.user;
+  //         //   req.body.gameId = data.game;
+  //         //   next();
+  //         // })
+  //         // game.id in game.pug will get the id of the game, through req.params.
+  //         res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', /*user: req.user,*/ chats: result.rows});
+  //       });
+  //       //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+  //   })
+  // });
+
+
+  // router.delete('/', function(req, res, next){
+  //     console.log(req.body.playerId + " game deleted")
+  //     game.deleteGameUserByPlayerIdAndGameId(req.body.playerId, req.body.gameId, function(err, result){
+  //       console.log('game has been deleted');
+  //       game.getGameById(req.gameId, function(result){
+  //         if(err)
+  //           console.log("ERROR DELETING GAME USER");
+  //         if(result.rows.length === 0){
+  //           game.deleteGameById(req.gameId, function(result){
+  //               console.log("DELETED GAME " + req.body.gameId )
+  //           });
+  //         } else {
+  //           console.log("DELETED GAME USER " + req.body.gameId  + " only.")
+  //         }
+  //       });
+  //     });
+  //   });
 
     router.post('/', function(req, res, next) {
         cb.insertMessageForGameId(gameNumber, req.user.player_id, req.user.username, req.body.message, function(error, result) {
