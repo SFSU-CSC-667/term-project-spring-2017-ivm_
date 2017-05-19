@@ -114,8 +114,8 @@ const init = function(app, server) {
             })
 
             socket.on('moveTank', function(data) {
-                console.log(data.user + " moved");
                 io.to(data.game).emit("playerMoved", data);
+                //console.log(data.user + " moved by " + data.force + ", now position is " + data.xc + ", " +data.yc);
             })
 
             //added 5/17

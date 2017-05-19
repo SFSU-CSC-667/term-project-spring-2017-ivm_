@@ -3,6 +3,7 @@
 // const shotTable = require('../.././model/tank.js');
 var socket = io();
 var players = [];
+var playerIndex;
 var tanks = [];
 var rifles = [];
 var ground = [];
@@ -18,7 +19,7 @@ var cos, sin;
 var player1Coordinates = [];
 var player2Coordinates = [];
 var mouseConstraint;
-
+var ball;
 var opposingPlayer;
 
 var playerId = $("#userid").text();
@@ -48,8 +49,8 @@ socket.on('gameEnter', function(data) {
         $('#players').find('p').each(function() {
             players.push($(this).text());
         });
-        initializeBackground()
-        ;
+        initializeBackground();
+
         console.log("gameGround: " + ground + ", gameCenterHeight: " + centerHeight + ", gameTheme: " +  theme )
         socket.emit('playerJoins', { game: $("#gameid").text(), playerArray: players, /*gameGround: ground, */ gameCenterHeight: centerHeight, gameTheme:  theme });
     }
@@ -81,6 +82,7 @@ if (parseInt($("#numberPlayers").text()) === 1) {
 
 // finally, game starts and tanks are initialized.
 socket.on('gameStart', function(data) {
+    playerIndex = players.indexOf(playerId);
     createBackground(data.theme);
     determineOpposingPlayer();
     initializeTanks();
@@ -91,6 +93,13 @@ socket.on('gameStart', function(data) {
     $('#game-stats').show()
     document.getElementById("playerChats").style.position = "fixed";
     document.getElementById("playerChats").style.bottom = "0%";
+    console.log("tanks 1: " + tanks[0].mass);
+    console.log("tanks 2: " + tanks[1].mass);
+
+    console.log("tanks rifle 1: " + rifles[0].mass);
+    console.log("tanks rifle 2: " + rifles[1].mass);
+
+
 });
 
 function reduceHealthFromPlayer(elementid){
@@ -192,43 +201,62 @@ function initializeTanks() {
     player1Tank = Bodies.rectangle(50, 235, 100, 25, {
         label: "player1",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player1Base = Bodies.rectangle(50, 215, 60, 25, {
         label: "player1",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player1Turret = Bodies.circle(50, 215, 20, {
         label: "player1",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player1rifle = Bodies.rectangle(100, 215, 10, 10, {
         label: "player1",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     sensor1 = Bodies.rectangle(150, 215, 49, 10, {
         label: "player1",
         density: 0,
-        friction: 0,
+        frictionStatic: 1,
+        friction: 1,
+        //frictionAir: 1,
+        //restitution: 0,
         isSensor: true
     });
 
-    player1rifleBody = Body.create({ parts: [player1rifle, player1Turret], friction: 0, isSensor: true });
+    player1rifleBody = Body.create({ parts: [player1rifle, player1Turret], friction: 1,  frictionStatic: 1, isSensor: true });
     player1rifleBody.render.fillStyle = 'DarkGreen';
 
-    player1Wheel = Bodies.circle(10, 250, 10, { density: 0, friction: 0 });
-    player1Wheel2 = Bodies.circle(90, 250, 10, { density: 0, friction: 0, opacity: 0.5 });
+    player1Wheel = Bodies.circle(10, 250, 10, { density: 0, friction: 1 });
+    player1Wheel2 = Bodies.circle(90, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
     player = Body.create({
         label: "player1",
         parts: [player1Tank, player1Base, player1rifleBody, player1Wheel, player1Wheel2],
-        friction: 0
+        friction: 1,
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        static: true
     });
 
     player1Base.render.fillStyle = player1Tank.render.fillStyle = 'green';
@@ -241,43 +269,62 @@ function initializeTanks() {
     player2Tank = Bodies.rectangle(pageWidth - 50, 235, 100, 25, {
         label: "player2",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player2Base = Bodies.rectangle(pageWidth - 50, 215, 60, 25, {
         label: "player2",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player2Turret = Bodies.circle(pageWidth - 50, 215, 20, {
         label: "player2",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     player2rifle = Bodies.rectangle(pageWidth - 100, 215, 10, 10, {
         label: "player2",
         density: 0.002,
-        friction: 0
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
+        friction: 1
     });
 
     sensor2 = Bodies.rectangle(pageWidth - 150, 215, 49, 10, {
         label: "player2",
         density: 0,
-        friction: 0,
+        friction: 1,
+        frictionStatic: 1,
+        //frictionAir: 1,
+        //restitution: 0,
         isSensor: true
     });
 
-    player2rifleBody = Body.create({ parts: [player2rifle, player2Turret], friction: 0, isSensor: true });
+    player2rifleBody = Body.create({ parts: [player2rifle, player2Turret], friction: 1, frictionStatic: 1, isSensor: true });
     player2rifleBody.render.fillStyle = 'Tan';
 
-    player2Wheel = Bodies.circle(pageWidth - 10, 250, 10, { density: 0, friction: 0 });
-    player2Wheel2 = Bodies.circle(pageWidth - 90, 250, 10, { density: 0, friction: 0, opacity: 0.5 });
+    player2Wheel = Bodies.circle(pageWidth - 10, 250, 10, { density: 0, friction: 1 });
+    player2Wheel2 = Bodies.circle(pageWidth - 90, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
     player2 = Body.create({
         label: "player2",
         parts: [player2Tank, player2Base, player2rifleBody, player2Wheel, player2Wheel2],
-        friction: 0
+        friction: 1,
+        frictionStatic: 1,
+        // frictionAir: 1,
+        // restitution: 0,
+        static: true
     });
 
     player2Base.render.fillStyle = player2Tank.render.fillStyle = 'Wheat';
@@ -291,15 +338,33 @@ function initializeTanks() {
     tanks.push(player2);
     rifles.push(player2rifleBody);
 
+    ball = Bodies.rectangle(300, 25, 30, 30);
     World.add(engine.world, [player, sensor1]);
     World.add(engine.world, [player2, sensor2]);
-
+    //World.add(engine.world, [ball]);
+    //var enableMovement = true;
     window.addEventListener("keydown", function(event) {
-        if (event.defaultPrevented) {
+        if (/*event.repeat ||*/ event.defaultPrevented /*|| (enableMovement = !enableMovement ? true : false)*/) {
             return; // Do nothing if the event was already processed
         }
 
+        // if(!enableMovement){
+        //   setInterval(function(){ enableMovement = true}, 2000)
+        // }
+
         switch (event.key) {
+            case "ArrowLeft":
+                socket.emit("moveTank", { game: $("#gameid").text(), tankIndex: playerIndex, /*xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y,*/ force: -0.015})
+                //enableMovement = false;
+                //Body.applyForce(ball,ball.position, { x: -2, y: 0, friction: 0 } );
+                //moveTankLeft();
+                break;
+            case "ArrowRight":
+                socket.emit("moveTank", { game: $("#gameid").text(), tankIndex: playerIndex, /*user: playerId, /*xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y,*/ force: 0.015})
+                //Body.applyForce(ball,ball.position, { x: 2, y: 0, friction: 0 } );
+                //enableMovement = false;
+                //moveTankRight();
+                break;
             case "ArrowDown":
                 barrelAngle -= 0.1;
                 Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
@@ -308,18 +373,18 @@ function initializeTanks() {
                 barrelAngle += 0.1;
                 Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
                 break;
-            case "ArrowLeft":
-                moveTankLeft();
-                break;
-            case "ArrowRight":
-                moveTankRight();
-                break;
+
                 // case " ":
                 //     shootTank();
                 //     break;
             default:
                 return;
         }
+        //
+        // if(enableMovement){
+        //   enableMovement = false;
+        //   setTimeout(function(){ enableMovement = true}, 2000)
+        // }
 
         event.preventDefault();
     }, true);
@@ -353,6 +418,8 @@ function initializeTanks() {
         }
     });
 }
+
+
 
 // Events.on(mouseConstraint, 'mousemove', function(event) {
 //     var mousePosition = event.mouse.position;
@@ -437,7 +504,8 @@ function createGround(theme) {
         World.add(engine.world, Bodies.rectangle((391 / 2) * groundCount, pageHeight - 30, groundWidth, groundHeight, {
             isStatic: true,
             frictionAir: 0,
-            friction: 0,
+            friction: 1,
+            frictionStatic: 1,
             label: "ground " + groundCount,
             render: {
                 sprite: {
@@ -553,20 +621,20 @@ function shootTank() {
 }
 
 function moveTankLeft() {
-    let force = (-0.0004 * player.mass);
+    let force = (-0.0001 * tanks[players.indexOf(playerId)].mass);
     let localPlayer = tanks[players.indexOf(playerId)];
     let localPleyerRifelBody = rifles[players.indexOf(playerId)];
-    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
-    Body.applyForce(localPleyerRifelBody, localPleyerRifelBody.position, { x: force, y: 0, friction: 0 });
+    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 1 });
+    Body.update(localPlayer, 1, 1, 1);
     socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
 }
 
 function moveTankRight() {
-    let force = (0.0004 * player.mass);
+    let force = (0.0001 * tanks[players.indexOf(playerId)].mass);
     let localPlayer = tanks[players.indexOf(playerId)];
     let localPleyerRifelBody = rifles[players.indexOf(playerId)];
-    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
-    Body.applyForce(localPleyerRifelBody, localPleyerRifelBody.position, { x: force, y: 0, friction: 0 });
+    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 1 });
+    //Body.applyForce(localPleyerRifelBody, localPleyerRifelBody.position, { x: force, y: 0, friction: 0 });
     socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
 }
 
@@ -602,10 +670,18 @@ socket.on("shootFromOpposingPlayer", function(data) {
     animateOpponentShot(data.user, data.cos, data.sin, data.xc, data.yc);
 });
 
+//   continue here
 socket.on("playerMoved", function(data) {
-    let force = (2 * data.force);
-    let localPlayer = tanks[players.indexOf(data.user)];
-    Body.applyForce(tanks[players.indexOf(data.user)], localPlayer.position, { x: force, y: 0, friction: 0 });
+    Body.applyForce(tanks[data.tankIndex], tanks[data.tankIndex].position, { x: data.force, y: Math.abs(data.force), friction: 1 , frictionStatic: 1});
+    //Body.applyForce(tanks[players.indexOf(data.user)], tanks[players.indexOf(data.user)].position, { x: data.force, y: 0, friction: 1 });
+    // let force = data.force;
+    // let localPlayer = tanks[players.indexOf(data.user)];
+    // let localPlayerRifleBody = rifles[players.indexOf(playerId)];
+    // //var xCoordinateFromOpponentScreen = data.xc;
+    // Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
+    // Body.applyForce(localPlayerRifleBody, localPlayerRifleBody.position, { x: force, y: 0, friction: 0 });
+    // //document.getElementById("check").innerHTML +="on opponent's screen: " + data.user + " moved by " + data.force + ", now position is " + data.xc + ", " +data.yc;
+    // Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 0 });
 });
 
 function animateOpponentShot(userId, cos, sin, xc, yc) {
