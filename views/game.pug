@@ -32,8 +32,8 @@ block content
   div.tank-city-talks(id = "playerChats")
     p.hidden #{user.player_id}!
     p(id="username").hidden #{user.username}
-    div.messages
-      ul(id="game-messages")
+    div(id="game-messages").messages
+      ul(id="game-message")
         each chat in chats
           li #{chat.username + ": " + chat.message + "\n"}
           br
