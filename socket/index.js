@@ -1,4 +1,3 @@
-var gameRoutes = require('.././routes/game.js');
 var game = require('.././model/game.js');
 const socketIo = new require('socket.io')
 
@@ -94,12 +93,13 @@ const init = function(app, server) {
             })
 
             socket.on('playerJoins', function(data) {
-                console.log('ready to go ' + data);
+                console.log('ready to go ' + data.gameTheme + " " + data.gameCenterHeight);
                 io.to(data.game).emit("anotherPlayerJoins", data);
             })
 
             socket.on('startGame', function(data) {
                 console.log("GAME STARTS NOW");
+                console.log("theme: " + data.theme + " | center: " + data.centerHeight + " | ground: " + data.ground );
                 io.to(data.game).emit("gameStart", data);
             })
 
@@ -121,6 +121,10 @@ const init = function(app, server) {
             //added 5/17
             socket.on('leftGame', function(data) {
                 io.to(data.game).emit("removePlayer", data);
+            });
+
+            socket.on('"backgroundInitialization"', function(data){
+              io.to(data.game).emit("backgroundCreation", data);
             });
 
         // socket.on('leaveGame', function(data){
