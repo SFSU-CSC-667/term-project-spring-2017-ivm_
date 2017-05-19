@@ -40,8 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // used to access matter.js, will be accessed as: script(src = '/scripts/')
 app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
+
 var index = require('./routes/index')(app, passport);
 var profile = require('./routes/profile')(app, passport);
+var player = require('./routes/player')(app, passport);
 var game = require('./routes/game')(app, passport);
 
 // This is where the routing happens
@@ -50,7 +52,9 @@ app.use('/lobby', lobby);
 app.use('/profile', profile);
 app.use('/scoreboard', scoreboard);
 app.use('/register', register);
+app.use('/player', player);
 app.use('/game', game);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

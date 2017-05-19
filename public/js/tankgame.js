@@ -113,11 +113,19 @@ function gameOver(elementid){
 
     // winning player emits his/her name to be displayed as winner
     if(elementid === '#left-player-life'){
-      if(playerId === players[1])
+      if(playerId === players[1]){
+        //addWinTotal(parseInt($("#userid").text()));
+        document.getElementById('playerUpdate').value = parseInt(playerId);
+        document.getElementById("winUpdateForm").submit();
         socket.emit('gameOver', {game: $("#gameid").text(), username: $("#username").text()});
+      }
     } else {
-      if(playerId === players[0])
+      if(playerId === players[0]){
+        //addWinTotal(parseInt($("#userid").text()));
+        document.getElementById('playerUpdate').value = parseInt(playerId);
+        document.getElementById("winUpdateForm").submit();
         socket.emit('gameOver', {game: $("#gameid").text(), username: $("#username").text()});
+      }
     }
       //$('#gameStatus').html("GAME OVER!!!")
 }

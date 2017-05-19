@@ -74,7 +74,7 @@ exports.getAll = function(callBack){
               if(err)
                   return callBack(err);
               else
-                  return callBack(result.rows); 
+                  return callBack(result.rows);
             });
 }
 
@@ -94,3 +94,12 @@ exports.updateUserProfile = function(user, updateComplete) {
     })
 }
 
+exports.addWin = function(userId, updateComplete) {
+  db.query('UPDATE Player SET wins = wins + 1 WHERE player_id = ' + userId + ';',
+            function(error, result){
+              if(error)
+                updateComplete(error);
+              else
+                updateComplete(0);    
+            });
+}
