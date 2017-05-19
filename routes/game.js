@@ -1,4 +1,3 @@
-
 module.exports = function(app, passport){
 
   var express = require('express');
@@ -12,13 +11,10 @@ module.exports = function(app, passport){
   // used to pass game id in /game/:id
   var gameNumber;
   var chats = [];
-  //var socket = require('socket.io');
-  //var socket = io();
-  //var socket = require('.././socket/index.js');
-
 
 // <<<<<<< HEAD
 // =======
+
   router.get('/:id', user.isLoggedIn, function(req, res, next) {
     cb.getLobbyChats(function(error, result) {
         if (error) {
@@ -42,7 +38,7 @@ module.exports = function(app, passport){
         //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
     })
   });
-// >>>>>>> f14aa9b86c7cf68e410cdbf24ab73adfd5408569
+
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
 
@@ -81,8 +77,7 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
-                    //gameNumber = gameAvailable;
-                    gameNumber = gameEntered;
+                    gameNumber = gameAvailable;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");
@@ -151,22 +146,12 @@ module.exports = function(app, passport){
         })
     });
 
-
-
-    //
-    // router.post('/gameDelete', function(req, res, next){
-    //   next();
-    // })
-
-
-
     function loadData(game_id, callback){
         cb.getAllChatsWithGameId(game_id, function (error, result) {
             if (error) {
                 console.log("Error loading game chat: " + error.statusCode)
             }
             chats = result.rows;
-            //callback(chats);
         });
         callback()
     }

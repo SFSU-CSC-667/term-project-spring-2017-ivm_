@@ -28,17 +28,15 @@ block content
   p.hidden Num: #{numberPlayers}
 
   div(id="check")
+
   div.tank-city-talks(id = "playerChats")
     p.hidden #{user.player_id}!
     p(id="username").hidden #{user.username}
     div.messages
-      table(id="game-messages")
-        tbody
-          each chat in chats
-            tr
-              td.lobby-message-username= chat.username + ":"
-              td.lobby-message= chat.message
-              td.hidden= chat.game_id
+      ul(id="game-messages")
+        each chat in chats
+          li #{chat.username + ": " + chat.message + "\n"}
+          br
     form(action="/game" method="post" style = "z-index: 0")
       .input-group
         input.form-control(class='user-message-input' type='text', placeholder='Enter message' id='user-message-input' name='msg' style = "z-index: 0")
