@@ -43,3 +43,7 @@ socket.on('game_user_message', function( message ){
 function autoScroll(elementId){
     $(elementId).animate({ scrollTop: $(elementId).prop("scrollHeight")}, 500);
 }
+
+function addWinTotal(playerId){
+  $.post( "../player", {userid: $('#userid').val()});
+}

@@ -40,6 +40,9 @@ html
               li
                 a(href="/register") REGISTER
           - }
+        form( id= "winUpdateForm" action="/player" method="post").hidden
+          input(id = 'playerUpdate' name = 'userid').hidden
+          input(id = 'win-update-button' type = 'submit' value='submit').hidden
     block content
 
     script(src='/socket.io/socket.io.js')
