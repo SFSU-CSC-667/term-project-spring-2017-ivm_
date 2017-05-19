@@ -1,4 +1,3 @@
-
 module.exports = function(app, passport){
 
   var express = require('express');
@@ -12,10 +11,33 @@ module.exports = function(app, passport){
   // used to pass game id in /game/:id
   var gameNumber;
   var chats = [];
-  //var socket = require('socket.io');
-  //var socket = io();
-  //var socket = require('.././socket/index.js');
 
+// <<<<<<< HEAD
+// =======
+
+  router.get('/:id', user.isLoggedIn, function(req, res, next) {
+    cb.getLobbyChats(function(error, result) {
+        if (error) {
+            console.log("Error loading game chat: " + error.statusCode)
+        }
+        game.loadGame(req.params.id, function(gameUsers) {
+            loadData(gameNumber, function() {
+                console.log("req.params: " + req.params);
+                // game.id in game.pug will get the id of the game, through req.params.
+                res.render('game', {
+                    user: req.user,
+                    game: req.params,
+                    gameUsers: gameUsers.rows,
+                    numberPlayers: gameUsers.rows.length,
+                    title: 'Tank City Talks',
+                    user: req.user,
+                    chats: chats
+                });
+            });
+        });
+        //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+    })
+  });
 
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
@@ -74,24 +96,28 @@ module.exports = function(app, passport){
       });
   });
 
-  router.get('/:id', user.isLoggedIn, function(req, res, next) {
-    cb.getLobbyChats(function(error, result) {
-        if (error) {
-            console.log("Error loading game chat: " + error.statusCode)
-        }
-        game.loadGame(req.params.id, function(gameUsers) {
-          console.log("req.params: " + req.params);
-          // socket.on("leaveGame", function(data){
-          //   req.body.playerId = data.user;
-          //   req.body.gameId = data.game;
-          //   next();
-          // })
-          // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', user: req.user, chats: result.rows});
-        });
-        //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
-    })
-  });
+  // router.get('/exitAndJoin', user.isLoggedIn, function(req, res, next){
+  // res.redirect('/game/')
+  // });
+
+  // router.get('/:id', user.isLoggedIn, function(req, res, next) {
+  //   cb.getLobbyChats(function(error, result) {
+  //       if (error) {
+  //           console.log("Error loading game chat: " + error.statusCode)
+  //       }
+  //       game.loadGame(req.params.id, function(gameUsers) {
+  //         console.log("req.params: " + req.params);
+  //         // socket.on("leaveGame", function(data){
+  //         //   req.body.playerId = data.user;
+  //         //   req.body.gameId = data.game;
+  //         //   next();
+  //         // })
+  //         // game.id in game.pug will get the id of the game, through req.params.
+  //         res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', /*user: req.user,*/ chats: result.rows});
+  //       });
+  //       //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+  //   })
+  // });
 
 
   // router.delete('/', function(req, res, next){
@@ -113,21 +139,12 @@ module.exports = function(app, passport){
   //   });
 
     router.post('/', function(req, res, next) {
-        cb.insertMessageForGameId(thisGameID, req.user.player_id, req.user.username, req.body.message, function(error, result) {
+        cb.insertMessageForGameId(gameNumber, req.user.player_id, req.user.username, req.body.message, function(error, result) {
             if (error) {
                 console.log("Error inserting message for game chat: " + error.statusCode)
             }
         })
     });
-
-
-
-    //
-    // router.post('/gameDelete', function(req, res, next){
-    //   next();
-    // })
-
-
 
     function loadData(game_id, callback){
         cb.getAllChatsWithGameId(game_id, function (error, result) {
@@ -138,7 +155,6 @@ module.exports = function(app, passport){
         });
         callback()
     }
-
 
   return router;
 }

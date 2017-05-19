@@ -1,4 +1,3 @@
-var gameRoutes = require('.././routes/game.js');
 var game = require('.././model/game.js');
 const socketIo = new require('socket.io')
 
@@ -88,18 +87,19 @@ const init = function(app, server) {
                         // });
 
                 });
-                console.log("userid: " + data.user + "enters game " + data.game + " through socket");
+                console.log("userid: " + data.username + "enters game " + data.game + " through socket");
                 console.log("room " + data.game + " joined")
                 io.to(data.game).emit("gameEnter", data);
             })
 
             socket.on('playerJoins', function(data) {
-                console.log('ready to go ' + data);
+                console.log('ready to go ' + data.gameTheme + " " + data.gameCenterHeight);
                 io.to(data.game).emit("anotherPlayerJoins", data);
             })
 
             socket.on('startGame', function(data) {
                 console.log("GAME STARTS NOW");
+                console.log("theme: " + data.theme + " | center: " + data.centerHeight + " | ground: " + data.ground );
                 io.to(data.game).emit("gameStart", data);
             })
 
@@ -114,8 +114,8 @@ const init = function(app, server) {
             })
 
             socket.on('moveTank', function(data) {
-                console.log(data.user + " moved");
                 io.to(data.game).emit("playerMoved", data);
+                //console.log(data.user + " moved by " + data.force + ", now position is " + data.xc + ", " +data.yc);
             })
 
             //added 5/17
@@ -123,14 +123,23 @@ const init = function(app, server) {
                 io.to(data.game).emit("removePlayer", data);
             });
 
-        })
-    }
-    // const game = function(gameId) {
-    //     var game = io.of('/game/' +  gameId)
-    //                   .on('connection', function(socket){
-    //                       socket.emit('gamePlayer', {message: 'player has joined game socket'});
-    //                   });
-    // }
+            socket.on('"backgroundInitialization"', function(data){
+              io.to(data.game).emit("backgroundCreation", data);
+            });
+
+        // socket.on('leaveGame', function(data){
+        //   //socket.leave(data.game);
+        // });
+
+    })
+}
+// const game = function(gameId) {
+//     var game = io.of('/game/' +  gameId)
+//                   .on('connection', function(socket){
+//                       socket.emit('gamePlayer', {message: 'player has joined game socket'});
+//                   });
+// }
+
 
 module.exports.init = init
     // module.exports.game = game
