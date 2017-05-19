@@ -73,8 +73,7 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
-                    //gameNumber = gameAvailable;
-                    gameNumber = gameEntered;
+                    gameNumber = gameAvailable;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");
@@ -107,11 +106,9 @@ module.exports = function(app, passport){
                 console.log("Error loading game chat: " + error.statusCode)
             }
             chats = result.rows;
-            //callback(chats);
         });
         callback()
     }
-
 
   return router;
 }
