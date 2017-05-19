@@ -17,6 +17,32 @@ module.exports = function(app, passport){
   //var socket = require('.././socket/index.js');
 
 
+// <<<<<<< HEAD
+// =======
+  router.get('/:id', user.isLoggedIn, function(req, res, next) {
+    cb.getLobbyChats(function(error, result) {
+        if (error) {
+            console.log("Error loading game chat: " + error.statusCode)
+        }
+        game.loadGame(req.params.id, function(gameUsers) {
+            loadData(gameNumber, function() {
+                console.log("req.params: " + req.params);
+                // game.id in game.pug will get the id of the game, through req.params.
+                res.render('game', {
+                    user: req.user,
+                    game: req.params,
+                    gameUsers: gameUsers.rows,
+                    numberPlayers: gameUsers.rows.length,
+                    title: 'Tank City Talks',
+                    user: req.user,
+                    chats: chats
+                });
+            });
+        });
+        //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+    })
+  });
+// >>>>>>> f14aa9b86c7cf68e410cdbf24ab73adfd5408569
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
 
@@ -55,7 +81,8 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
-                    gameNumber = gameAvailable;
+                    //gameNumber = gameAvailable;
+                    gameNumber = gameEntered;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");
@@ -78,24 +105,24 @@ module.exports = function(app, passport){
   // res.redirect('/game/')
   // });
 
-  router.get('/:id', user.isLoggedIn, function(req, res, next) {
-    cb.getLobbyChats(function(error, result) {
-        if (error) {
-            console.log("Error loading game chat: " + error.statusCode)
-        }
-        game.loadGame(req.params.id, function(gameUsers) {
-          console.log("req.params: " + req.params);
-          // socket.on("leaveGame", function(data){
-          //   req.body.playerId = data.user;
-          //   req.body.gameId = data.game;
-          //   next();
-          // })
-          // game.id in game.pug will get the id of the game, through req.params.
-          res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', /*user: req.user,*/ chats: result.rows});
-        });
-        //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
-    })
-  });
+  // router.get('/:id', user.isLoggedIn, function(req, res, next) {
+  //   cb.getLobbyChats(function(error, result) {
+  //       if (error) {
+  //           console.log("Error loading game chat: " + error.statusCode)
+  //       }
+  //       game.loadGame(req.params.id, function(gameUsers) {
+  //         console.log("req.params: " + req.params);
+  //         // socket.on("leaveGame", function(data){
+  //         //   req.body.playerId = data.user;
+  //         //   req.body.gameId = data.game;
+  //         //   next();
+  //         // })
+  //         // game.id in game.pug will get the id of the game, through req.params.
+  //         res.render('game', { user: req.user, game: req.params, gameUsers: gameUsers.rows, numberPlayers: gameUsers.rows.length, title: 'Tank City Talks', /*user: req.user,*/ chats: result.rows});
+  //       });
+  //       //res.render('game', { title: 'Tank City Talks', user: req.user, chats: result.rows.reverse() });
+  //   })
+  // });
 
 
   // router.delete('/', function(req, res, next){
@@ -117,7 +144,7 @@ module.exports = function(app, passport){
   //   });
 
     router.post('/', function(req, res, next) {
-        cb.insertMessageForGameId(thisGameID, req.user.player_id, req.user.username, req.body.message, function(error, result) {
+        cb.insertMessageForGameId(gameNumber, req.user.player_id, req.user.username, req.body.message, function(error, result) {
             if (error) {
                 console.log("Error inserting message for game chat: " + error.statusCode)
             }
@@ -139,6 +166,7 @@ module.exports = function(app, passport){
                 console.log("Error loading game chat: " + error.statusCode)
             }
             chats = result.rows;
+            //callback(chats);
         });
         callback()
     }

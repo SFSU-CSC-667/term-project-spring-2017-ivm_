@@ -25,7 +25,6 @@ socket.on('user_message', function( message ){
 
 // for game - client
 $( ".game-send-message" ).click(function() {
-    // if incoming game_id != url's game_id
     socket.emit('game_user_message', {game: $("#gameid").text(), message: $('#username').text() + ": " + $('.user-message-input').val()});
     $.post( "/game", {message: $('.user-message-input').val()});
 
@@ -36,7 +35,7 @@ $( ".game-send-message" ).click(function() {
 
 socket.on('game_user_message', function( message ){
     if (message["game"] === $('#gameid').text()){
-        $( '#game-messages').append( "<tr><td>" + message["message"] + "</td></tr>" + '<br />')
+        $( '#game-messages').append( "<li>" + message["message"] + "</li>" + '<br />')
     }
 });
 
