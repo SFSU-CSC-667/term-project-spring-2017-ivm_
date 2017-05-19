@@ -1,6 +1,3 @@
-// var gameSocket = require('../socket/index.js')
-// const tankTable = require('../.././model/tank.js');
-// const shotTable = require('../.././model/tank.js');
 var socket = io();
 var players = [];
 var playerIndex;
@@ -25,11 +22,7 @@ var opposingPlayer;
 var playerId = $("#userid").text();
 
 // sends user information and joins socket room associated with game id (req.params.id)
-// <<<<<<< HEAD
 socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text(), username: $("#userName").text()});
-// =======
-// socket.emit('game', { user: $("#userid").text(), game: $("#gameid").text(), numberPlayers: $("#numberPlayers").text() });
-// >>>>>>> b77f4a2418c3f06a98ddb265c32d52df8d761315
 
 var players = [];
 
@@ -107,18 +100,41 @@ function reduceHealthFromPlayer(elementid){
     var newHealth = currentHealth.slice(0, -1);
 
     if (newHealth.length <= 0){
-        gameOver()
+        gameOver(elementid)
     }
     $(elementid).html(newHealth)
 }
 
-function gameOver(){
+function gameOver(elementid){
     World.remove(engine.world, player);
     World.remove(engine.world, player2);
     $('#left-player-life').html("")
     $('#right-player-life').html("")
-    $('#gameStatus').html("GAME OVER!!!")
+
+    // winning player emits his/her name to be displayed as winner
+    if(elementid === '#left-player-life'){
+      if(playerId === players[1])
+        socket.emit('gameOver', {game: $("#gameid").text(), username: $("#username").text()});
+    } else {
+      if(playerId === players[0])
+        socket.emit('gameOver', {game: $("#gameid").text(), username: $("#username").text()});
+    }
+      //$('#gameStatus').html("GAME OVER!!!")
 }
+
+socket.on("displayWinner", function(data){
+  $('#gameStatus').html("GAME OVER!!! " + data.username + " wins");
+  var disconnectionMessage = document.getElementById("disconnectionMessage");
+  disconnectionMessage.style.display = "";
+  disconnectionMessage.style.top = "0%";
+  disconnectionMessage.style.left = "0%";
+  disconnectionMessage.zIndex = "100";
+  disconnectionMessage.style.width = "100%";
+  disconnectionMessage.style.height = "100%";
+  disconnectionMessage.style.textAlign = "center";
+  disconnectionMessage.innerHTML = '<p style = "position: relative; top: 50%; margin: auto; font-size: 2.5em; font-color: black; width: 60%; height: 70%" />' + data.username + " HAS WON THE GAME, CLICK TO RETURN TO LOBBY </p>";
+});
+
 
 // sets the index of opponent
 function determineOpposingPlayer() {
@@ -133,8 +149,6 @@ const startGame = function() {
 var pageWidth = document.documentElement.clientWidth;
 var pageHeight = 400;
 
-// var themeNumber = getRandomInt(1, 4);
-// var theme = "../images/gameThemes/theme" + themeNumber
 
 var Engine = Matter.Engine,
     Composites = Matter.Composites,
@@ -149,8 +163,7 @@ var Engine = Matter.Engine,
 
 // var themeNumber, theme;
 function createBackground(theme){
-  //var themeNumber = getRandomInt(1, 4);
-  //var theme = "../images/gameThemes/theme" + themeNumber
+
   engine = Engine.create(document.body, {
       render: {
           options: {
@@ -188,9 +201,6 @@ socket.on('otherPlayerLeft', function(data){
   Matter.World.remove(engine.world, [tanks[players.indexOf(data.user)]])
   //socket.emit("leaveGame", {user: playerId, game: data.game});//leave(data.game);
 });
-
-// var mouseConstraint = MouseConstraint.create(engine);
-// MouseConstraint.create(engine);
 
 var mouseIsDown;
 var barrelAngle;
@@ -419,40 +429,12 @@ function initializeTanks() {
     });
 }
 
-
-
-// Events.on(mouseConstraint, 'mousemove', function(event) {
-//     var mousePosition = event.mouse.position;
-//     mp = mousePosition;
-//
-//     var angleDifference = Matter.Vector.angle(rifles[players.indexOf(playerId)].position, event.mouse.position);
-//     cos = Math.cos(angleDifference), sin = Math.sin(angleDifference);
-//
-//     var point = { x: 0, y: 215 };
-//     var dx = rifles[players.indexOf(playerId)].position.x - point.x,
-//         dy = rifles[players.indexOf(playerId)].position.y - point.y;
-//
-//     if (players.indexOf(playerId) === 0) {
-//         barrelAngle = Matter.Vector.angle(rifles[players.indexOf(playerId)].position, event.mouse.position);
-//         Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
-//     } else {
-//         //second player's tank barrel moves to angle relative to left side, which it points to
-//         barrelAngle = Matter.Vector.angle(event.mouse.position, rifles[players.indexOf(playerId)].position);
-//         Body.setAngle(rifles[players.indexOf(playerId)], barrelAngle);
-//     }
-//
-//     mouseIsDown = false;
-// });
-
 // doesn't work currently
 socket.on("animateOpponentAngle", function(data) {
     //document.getElementById("check").innerHTML += "OPP: " + data.user + " & OPPANGLE: " + data.angle + " | ";
     if (parseInt(data.user) !== opposingPlayer)
         Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
 })
-
-// var mouseConstraint = MouseConstraint.create(engine);
-// MouseConstraint.create(engine);
 
 var mouseIsDown;
 var cos, sin;
@@ -468,31 +450,7 @@ function initializeBackground(){
     console.log("inside initializeBackground");
     var themeNumber = getRandomInt(1, 4);
     theme = "../images/gameThemes/theme" + themeNumber
-    // var groundLeftOver = pageWidth * 2;
-    // var groundCount = 1;
-    // while (groundLeftOver >= 0) {
-    //   ground.push(Bodies.rectangle((391 / 2) * groundCount, pageHeight - 30, groundWidth, groundHeight, {
-    //       isStatic: true,
-    //       frictionAir: 0,
-    //       friction: 0,
-    //       label: "ground " + groundCount,
-    //       render: {
-    //           sprite: {
-    //               texture: theme + '/platform.png'
-    //           }
-    //       }}));
-    //       groundLeftOver -= groundWidth;
-    //       groundCount++;
-    // }
-    //
-    // for(var index = 0; index < ground.length; index++ ){
-    //   console.log("ground entries: " + ground[index].label)
-    //   //World.add(engine.world, ground[index]);
-    // }
-
     centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
-
-    //socket.emit("backgroundInitialization", {game: $(".gameId").val(), ground: ground, centerHeight: centerHeight, themeNumber:  themeNumber});
 
 }
 
@@ -518,33 +476,6 @@ function createGround(theme) {
     }
 }
 
-
-// function createGround(ground) {
-//     var groundLeftOver = pageWidth * 2;
-//     var groundCount = 1;
-//
-//     for(var index = 0; index < ground.length; index++ ){
-//       World.add(engine.world, ground[index]);
-//     }
-//     // while (groundLeftOver >= 0) {
-//     //     World.add(engine.world, ground[])
-//         // World.add(engine.world, Bodies.rectangle((391 / 2) * groundCount, pageHeight - 30, groundWidth, groundHeight, {
-//         //     isStatic: true,
-//         //     frictionAir: 0,
-//         //     friction: 0,
-//         //     label: "ground " + groundCount,
-//         //     render: {
-//         //         sprite: {
-//         //             texture: theme + '/platform.png'
-//         //         }
-//         //     }
-//         // }))
-//         //}
-//     //     World.add(engine.world, ground);
-//     //     groundLeftOver -= groundWidth;
-//     //     groundCount++;
-//     // }
-// }
 
 function createObstacles(centerHeight, theme) {
     //const centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
@@ -638,12 +569,6 @@ function moveTankRight() {
     socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
 }
 
-// $(document).click(function(event) {
-//     if (event.button == 0) {
-//         shootTank()
-//     }
-// });
-
 socket.on("shootFromOpposingPlayer", function(data) {
     Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
     animateOpponentShot(data.user, data.cos, data.sin, data.xc, data.yc);
@@ -686,10 +611,6 @@ socket.on("playerMoved", function(data) {
 
 function animateOpponentShot(userId, cos, sin, xc, yc) {
     if (userId == players[opposingPlayer]) {
-
-        // var xc = player1rifleBody.position.x
-        // var yc = player1rifleBody.position.y
-        //document.getElementById("check").innerHTML += "HIT!!!!";
         cannonBall = Bodies.circle(xc, yc, 10, {
             label: "cannon ball",
             frictionAir: 0.019,
@@ -708,48 +629,3 @@ function animateOpponentShot(userId, cos, sin, xc, yc) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-// createGround();
-// createObstacles();
-
-// Events.on(engine, 'collisionActive', function(e) {
-//     var i, pair, length = e.pairs.length;
-//     console.log(e.pairs.length)
-//
-//     for (i = 0; i < length; i++) {
-//         pair = e.pairs[i];
-//
-//         if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player1') {
-//             World.remove(engine.world, pair.bodyA)
-//             reduceHealthFromPlayer("#left-player-life")
-//             console.log("player1")
-//             break;
-//         } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player1') {
-//             World.remove(engine.world, pair.bodyB)
-//             reduceHealthFromPlayer("#left-player-life")
-//             console.log("player1")
-//             break;
-//         }else if (pair.bodyB.label == 'cannon ball' && pair.bodyA.label == 'player2') {
-//             World.remove(engine.world, pair.bodyB)
-//             reduceHealthFromPlayer("#right-player-life")
-//             console.log("player2")
-//             break;
-//         } else if (pair.bodyA.label == 'cannon ball' && pair.bodyB.label == 'player2') {
-//             World.remove(engine.world, pair.bodyA)
-//             reduceHealthFromPlayer("#right-player-life")
-//             console.log("player2")
-//             break;
-//         } else if ((pair.bodyA.label === 'cannon ball')) {
-//             World.remove(engine.world, pair.bodyA)
-//             console.log("cannon ball A " + pair.bodyA.label + " " + pair.bodyB.label)
-//             break;
-//         } else if (pair.bodyB.label === 'cannon ball') {
-//             World.remove(engine.world, pair.bodyB)
-//             console.log("cannon ball B " + pair.bodyA.label + " " + pair.bodyB.label)
-//             break;
-//         }
-//     }
-// });
-
-// run the engine
-//Engine.run(engine);

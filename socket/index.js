@@ -127,6 +127,9 @@ const init = function(app, server) {
               io.to(data.game).emit("backgroundCreation", data);
             });
 
+            socket.on("gameOver", function(data){
+              io.to(data.game).emit("displayWinner", data);
+            });
         // socket.on('leaveGame', function(data){
         //   //socket.leave(data.game);
         // });
