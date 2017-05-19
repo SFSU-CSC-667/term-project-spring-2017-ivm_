@@ -73,7 +73,7 @@ module.exports = function(app, passport){
               game.newGame(req.user.player_id, tankMade, function(gameEntered){
                   if(gameEntered){
                     console.log("game " + gameEntered +" entered!!!");
-                    gameNumber = gameAvailable;
+                    gameNumber = gameEntered;
                     res.redirect('/game/' + gameEntered);
                   }else{
                     console.log("failed to enter new game, redirecting to lobby");
