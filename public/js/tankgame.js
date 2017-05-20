@@ -18,7 +18,7 @@ var player2Coordinates = [];
 var mouseConstraint;
 var ball;
 var opposingPlayer;
-var wall1, wall2;
+
 
 var playerId = $("#userid").text();
 
@@ -172,6 +172,9 @@ var Engine = Matter.Engine,
     Mouse = Matter.Mouse,
     Composites = Matter.Composites;
 
+
+var wall1 = Bodies.rectangle(10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true}),
+wall2 = Bodies.rectangle(pageWidth-10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true});
 // var themeNumber, theme;
 function createBackground(theme){
 
@@ -462,8 +465,7 @@ function initializeBackground(){
     var themeNumber = getRandomInt(1, 4);
     theme = "../images/gameThemes/theme" + themeNumber
     centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
-    wall1 = Bodies.rectangle(10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true});
-    wall2 = Bodies.rectangle(pageWidth-10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true});
+
 }
 
 function createGround(theme) {
