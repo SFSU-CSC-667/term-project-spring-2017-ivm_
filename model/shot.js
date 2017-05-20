@@ -1,16 +1,16 @@
 var db = require('.././server/db.js');
 
 exports.getShotByTankId = function(tankId, callBack) {
-  //var shot = req.body;
   db.query('SELECT * FROM Shot WHERE tank_id = ' + tankId + ';',
   function(err, result){
-    // if(result.rows.length!== 1 || err) return callBack(null);
-    // else return callBack(result.rows[0]); // else return the 1 and only row
-    if(err){ console.log("shot.js error"); return callBack(err);}
-    // callBack(0,..) means that no error occurred.
-    else if(result.rows.length!== 1){ return callBack(0, null);}
-    // 0 as first argument to callback means no error occurred.
-    else{ console.log("findname here"); return callBack(0, result.rows[0]);}
+    if(err){
+      console.log("shot.js error");
+      return callBack(err);
+    }else if(result.rows.length!== 1){
+      return callBack(0, null);
+    }else{
+      return callBack(0, result.rows[0]);
+    }
   });
 }
 
@@ -21,7 +21,6 @@ exports.insertShot = function(shot, updateComplete){
         if (error){
             console.log("Error insertMessageForGameId: " + error);
         }
-
         updateComplete(error, result);
     });
 }
@@ -40,12 +39,12 @@ exports.updateShot = function(shot, callBack) {
          + ' WHERE tank_id = ' + shot.tank_id + ';'
   ,
   function(err, result){
-    // if(result.rows.length!== 1 || err) return callBack(null);
-    // else return callBack(result.rows[0]); // else return the 1 and only row
     if(err){ return callBack(err);}
-    // callBack(0,..) means that no error occurred.
-    else if(result.rows.length!== 1){ return callBack(0, null);}
-    // 0 as first argument to callback means no error occurred.
-    else{ return callBack(err, result);}
+    else if(result.rows.length!== 1){
+      return callBack(0, null);
+    }
+    else{
+       return callBack(err, result);
+     }
   });
 }

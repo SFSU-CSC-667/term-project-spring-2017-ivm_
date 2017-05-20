@@ -11,3 +11,6 @@ Setup:
 4. npm run db
 5. npm start
 6. open browser localhost:3000/
+
+Production:
+tankcity.herokuapp.com

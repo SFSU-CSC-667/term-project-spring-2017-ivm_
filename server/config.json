@@ -1,8 +1,8 @@
 {
     "development": {
-       "username": "Vivian",
-       "password": "Vivian",
-       "database": "Vivian",
+       "username": "ivanyu",
+       "password": "ivanyu",
+       "database": "667testdb",
        "host": "127.0.0.1",
        "port": "5432",
        "dialect": "postgres",

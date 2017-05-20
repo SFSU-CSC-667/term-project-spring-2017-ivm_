@@ -40,8 +40,6 @@ router.post('/', function(req, res, next) {
         if (error) {
             console.log("Error inserting message for lobby: " + error.statusCode)
         }
-
-        console.log("lobby chat logged")
     })
 });
 

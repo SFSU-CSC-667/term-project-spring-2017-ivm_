@@ -21,7 +21,6 @@ exports.registerNewPlayer = function(res, reqBody, callBack) {
 exports.loginPlayer = function(reqBody, callBack) {
   const user = reqBody.body;
 
-  console.log("here");
   db.query('SELECT * FROM Player WHERE email = \'' + user.email + '\' AND password = \'' + user.password + '\';',
             function(err, result){
 
@@ -50,7 +49,6 @@ exports.findByUsername = function(username, callBack){
               }
 
               else{
-                  console.log("findname here");
                   return callBack(0, result.rows[0]);
               }
             });
@@ -100,6 +98,6 @@ exports.addWin = function(userId, updateComplete) {
               if(error)
                 updateComplete(error);
               else
-                updateComplete(0);    
+                updateComplete(0);
             });
 }

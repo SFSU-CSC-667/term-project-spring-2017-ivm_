@@ -9,7 +9,6 @@ var config = require(__dirname + '/config.json')[env];
 if(process.env.DATABASE_URL) {
   const configParameters = require('url').parse(process.env.DATABASE_URL);
   const credentials = configParameters.auth.split(':');
-  console.log("******config updated*****+++!@#!#");
   config = {
     user: credentials[0],
     password: credentials[1],
@@ -54,7 +53,6 @@ var query = function(sql, data){
                   return console.error('error running query', err);
               }
           });
-        // if data argument is a callback function, use that function for the query.
         } else {
           client.query(sql, data);
             done()
