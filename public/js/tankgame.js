@@ -18,6 +18,7 @@ var player2Coordinates = [];
 var mouseConstraint;
 var ball;
 var opposingPlayer;
+var wall1, wall2;
 
 var playerId = $("#userid").text();
 
@@ -82,6 +83,8 @@ socket.on('gameStart', function(data) {
     console.log("theme: " + data.theme + " | center: " + centerHeight + " | ground: " + ground );
     createObstacles(data.centerHeight, data.theme);
     createGround(data.theme);
+    World.add(engine.world, wall1);
+    World.add(engine.world, wall2);
     $('#loadingDiv').hide()
     $('#game-stats').show()
     document.getElementById("playerChats").style.position = "fixed";
@@ -216,7 +219,7 @@ var barrelAngle;
 function initializeTanks() {
     barrelAngle = 0;
     // create tank for player 1
-    player1Tank = Bodies.rectangle(50, 235, 100, 25, {
+    player1Tank = Bodies.rectangle(75, 235, 100, 25, {
         label: "player1",
         density: 0.002,
         frictionStatic: 1,
@@ -225,7 +228,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player1Base = Bodies.rectangle(50, 215, 60, 25, {
+    player1Base = Bodies.rectangle(75, 215, 60, 25, {
         label: "player1",
         density: 0.002,
         frictionStatic: 1,
@@ -234,7 +237,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player1Turret = Bodies.circle(50, 215, 20, {
+    player1Turret = Bodies.circle(75, 215, 20, {
         label: "player1",
         density: 0.002,
         frictionStatic: 1,
@@ -243,7 +246,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player1rifle = Bodies.rectangle(100, 215, 10, 10, {
+    player1rifle = Bodies.rectangle(125, 215, 10, 10, {
         label: "player1",
         density: 0.002,
         frictionStatic: 1,
@@ -252,7 +255,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    sensor1 = Bodies.rectangle(150, 215, 49, 10, {
+    sensor1 = Bodies.rectangle(175, 215, 49, 10, {
         label: "player1",
         density: 0,
         frictionStatic: 1,
@@ -265,8 +268,8 @@ function initializeTanks() {
     player1rifleBody = Body.create({ parts: [player1rifle, player1Turret], friction: 1,  frictionStatic: 1, isSensor: true });
     player1rifleBody.render.fillStyle = 'DarkGreen';
 
-    player1Wheel = Bodies.circle(10, 250, 10, { density: 0, friction: 1 });
-    player1Wheel2 = Bodies.circle(90, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
+    player1Wheel = Bodies.circle(35, 250, 10, { density: 0, friction: 1 });
+    player1Wheel2 = Bodies.circle(115, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
     player = Body.create({
         label: "player1",
         parts: [player1Tank, player1Base, player1rifleBody, player1Wheel, player1Wheel2],
@@ -284,7 +287,7 @@ function initializeTanks() {
     Body.setAngle(player1rifleBody, 0);
 
     // create tank for player 2
-    player2Tank = Bodies.rectangle(pageWidth - 50, 235, 100, 25, {
+    player2Tank = Bodies.rectangle(pageWidth - 75, 235, 100, 25, {
         label: "player2",
         density: 0.002,
         frictionStatic: 1,
@@ -293,7 +296,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player2Base = Bodies.rectangle(pageWidth - 50, 215, 60, 25, {
+    player2Base = Bodies.rectangle(pageWidth - 75, 215, 60, 25, {
         label: "player2",
         density: 0.002,
         frictionStatic: 1,
@@ -302,7 +305,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player2Turret = Bodies.circle(pageWidth - 50, 215, 20, {
+    player2Turret = Bodies.circle(pageWidth - 75, 215, 20, {
         label: "player2",
         density: 0.002,
         frictionStatic: 1,
@@ -311,7 +314,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    player2rifle = Bodies.rectangle(pageWidth - 100, 215, 10, 10, {
+    player2rifle = Bodies.rectangle(pageWidth - 125, 215, 10, 10, {
         label: "player2",
         density: 0.002,
         frictionStatic: 1,
@@ -320,7 +323,7 @@ function initializeTanks() {
         friction: 1
     });
 
-    sensor2 = Bodies.rectangle(pageWidth - 150, 215, 49, 10, {
+    sensor2 = Bodies.rectangle(pageWidth - 175, 215, 49, 10, {
         label: "player2",
         density: 0,
         friction: 1,
@@ -333,8 +336,8 @@ function initializeTanks() {
     player2rifleBody = Body.create({ parts: [player2rifle, player2Turret], friction: 1, frictionStatic: 1, isSensor: true });
     player2rifleBody.render.fillStyle = 'Tan';
 
-    player2Wheel = Bodies.circle(pageWidth - 10, 250, 10, { density: 0, friction: 1 });
-    player2Wheel2 = Bodies.circle(pageWidth - 90, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
+    player2Wheel = Bodies.circle(pageWidth - 35, 250, 10, { density: 0, friction: 1 });
+    player2Wheel2 = Bodies.circle(pageWidth - 115, 250, 10, { density: 0, friction: 1, opacity: 0.5 });
     player2 = Body.create({
         label: "player2",
         parts: [player2Tank, player2Base, player2rifleBody, player2Wheel, player2Wheel2],
@@ -459,7 +462,8 @@ function initializeBackground(){
     var themeNumber = getRandomInt(1, 4);
     theme = "../images/gameThemes/theme" + themeNumber
     centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
-
+    wall1 = Bodies.rectangle(10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true});
+    wall2 = Bodies.rectangle(pageWidth-10, 235, 15 ,pageHeight, {restitution: 0, isStatic: true});
 }
 
 function createGround(theme) {
