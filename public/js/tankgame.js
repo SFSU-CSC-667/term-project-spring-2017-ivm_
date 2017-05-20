@@ -157,7 +157,7 @@ const startGame = function() {
     // if ($("#userid").text() == players[i]) {}
 }
 
-var pageWidth = document.documentElement.clientWidth;
+var pageWidth = 1200;
 var pageHeight = 400;
 
 
