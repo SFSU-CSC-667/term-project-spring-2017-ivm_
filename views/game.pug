@@ -2,14 +2,19 @@ extends layout
 
 block content
   div( style="margin-top: 91px;")
-    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: black; margin-top: 91px;")
+    div.loading(id="loadingDiv" style="z-index: 10; position: relative; background: black; margin-top: 91px; margin-bottom: 0;")
       div.loader
       p(style="text-align: center; color: white;") Waiting for other player
-    div(id="game-stats" style="background: #eee; margin-bottom: 0; z-index=5; position: relative;")
-      div(id="stats-bar" style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333333;")
-        li(id="left-player-life" style="color: white; padding:16px;").pull-left =
-        li(id="gameStatus" style="color: white; padding:16px;") Game Starts Now! Shoot to kill!
-        li(id="right-player-life" style="color: white; padding:16px;").pull-right =
+    div(id="game-stats" style="background: black; margin-bottom: 0; z-index=5; position: relative;")
+      div(id="stats-bar" style="list-style-type:  none; padding: 0; overflow: hidden; background-color: black;").container
+        div
+          ul
+            li(id="left-player-life" style="color: white;") =====
+        div
+          p(id="gameStatus" style="color: white;") Game Starts Now! Shoot to kill!
+        div
+          ul
+            li(id="right-player-life" style="color: white;") =====
 
   p.hidden(id = "numberPlayers") #{numberPlayers}
   - var players = "";
