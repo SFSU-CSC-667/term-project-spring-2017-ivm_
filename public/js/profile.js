@@ -29,6 +29,6 @@ function editButton() {
                         "value=" + "\"" + email[1] +"\"" +
                         "aria-describedby=\"sizing-addon1\"></div><br>");
 
-    $("#editButton").hide();
-    $("#saveButton").show();
+    $("#editProfile").hide();
+    $("#saveProfile").show();
 }
