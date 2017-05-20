@@ -200,7 +200,7 @@ td {
     background-color: #f2f2f2
 }*/
 
-.container{
+.status-container{
     display: flex;
     flex-flow: row nowrap; /* Align on the same line */
     justify-content: space-between;

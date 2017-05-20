@@ -99,7 +99,7 @@ function reduceHealthFromPlayer(elementid){
     var currentHealth = $(elementid).text()
     var newHealth = currentHealth.slice(0, -1);
 
-    if (newHealth.length <= 0){
+    if (newHealth.length <= 1){
         gameOver(elementid)
     }
     $(elementid).html(newHealth)
@@ -140,7 +140,7 @@ socket.on("displayWinner", function(data){
   disconnectionMessage.style.width = "100%";
   disconnectionMessage.style.height = "100%";
   disconnectionMessage.style.textAlign = "center";
-  disconnectionMessage.innerHTML = '<p style = "position: relative; top: 50%; margin: auto; font-size: 2.5em; font-color: black; width: 60%; height: 70%" />' + data.username + " HAS WON THE GAME, CLICK TO RETURN TO LOBBY </p>";
+  disconnectionMessage.innerHTML = '<p style = "position: relative; top: 50%; margin: auto; font-size: 2.5em; font-color: black; width: 60%; height: 70%" />' + data.username + " has won the game, click to return to the Lobby! </p>";
 });
 
 

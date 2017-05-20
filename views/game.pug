@@ -6,15 +6,15 @@ block content
       div.loader
       p(style="text-align: center; color: white;") Waiting for other player
     div(id="game-stats" style="background: black; margin-bottom: 0; z-index=5; position: relative;")
-      div(id="stats-bar" style="list-style-type:  none; padding: 0; overflow: hidden; background-color: black;").container
+      div(id="stats-bar" style="list-style-type:  none; padding: 0; overflow: hidden; background-color: black;").status-container.container
         div
           ul
-            li(id="left-player-life" style="color: white;") =====
+            li(id="left-player-life" style="color: white;") O
         div
           p(id="gameStatus" style="color: white;") Game Starts Now! Shoot to kill!
         div
           ul
-            li(id="right-player-life" style="color: white;") =====
+            li(id="right-player-life" style="color: white;") O
 
   p.hidden(id = "numberPlayers") #{numberPlayers}
   - var players = "";

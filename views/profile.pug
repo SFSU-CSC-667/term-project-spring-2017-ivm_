@@ -17,14 +17,14 @@ block content
           br
           div
             form(method='POST' action='/profile' style='width: 70%; margin: auto;')
-              p(id='a') First Name: #{firstName}
-              p(id='b') Last Name: #{lastName}
-              p(id='c') Password: #{password}
-              p(id='d') Email: #{email}
+              p(id='firstNameField') First Name: #{firstName}
+              p(id='lastNameField') Last Name: #{lastName}
+              p(id='passwordField') Password: #{password}
+              p(id='emailField') Email: #{email}
               p
-                button(id='button' type= 'button' onclick='editButton()'
+                button(id='editButton' type= 'button' onclick='editButton()'
                        class='btn btn-default' style='padding: 2px 11px;') EDIT
-                button(id='button2' type= 'submit'
+                button(id='saveButton' type= 'submit'
                        class='btn btn-default' style='padding: 2px 11px; display:none') SAVE
           //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})"
             in profile.js)
