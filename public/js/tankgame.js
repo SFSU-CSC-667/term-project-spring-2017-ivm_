@@ -365,8 +365,6 @@ var groundHeight = 67;
 
 var centerHeight, theme;
 function initializeBackground(){
-  var groundWidth = 391;
-  var groundHeight = 67;
   var themeNumber = getRandomInt(1, 4);
   theme = "../images/gameThemes/theme" + themeNumber
   centerHeight = getRandomInt(pageHeight - 100, pageHeight - 20);
@@ -483,20 +481,6 @@ socket.on("shootFromOpposingPlayer", function(data) {
     animateOpponentShot(data.user, data.cos, data.sin, data.xc, data.yc);
 });
 
-function animateOpponentShot(userId, cos, sin, xc, yc) {
-    if (userId == players[opposingPlayer]) {
-        cannonBall = Bodies.circle(xc, yc, 10, {
-            label: "cannon ball",
-            frictionAir: 0.019,
-            friction: 0,
-            restitution: 0,
-            inertia: Infinity,
-            mass: 10,
-            mask: 1
-        });
-        World.add(engine.world, cannonBall)
-    }
-}
 
 socket.on("shootFromOpposingPlayer", function(data) {
     Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
