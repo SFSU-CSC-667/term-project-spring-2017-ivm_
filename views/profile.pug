@@ -22,20 +22,7 @@ block content
               p(id='passwordField') Password: #{password}
               p(id='emailField') Email: #{email}
               p
-                button(id='editButton' type= 'button' onclick='editButton()'
+                button(id='editProfile' type= 'button' onclick='editButton()'
                        class='btn btn-default' style='padding: 2px 11px;') EDIT
-                button(id='saveButton' type= 'submit'
+                button(id='saveProfile' type= 'submit'
                        class='btn btn-default' style='padding: 2px 11px; display:none') SAVE
-          //-this is how to access logged in user. ("res.redirect("profile", {userName: req.user.username})"
-            in profile.js)
-          //p
-          //table
-            tbody
-              each val in query_rows
-                  td= val.username
-                  td= val.first_name
-                  td= val.last_name
-                  td= val.email
-              else
-                li No values
-      //a(href="/logout") Logout
