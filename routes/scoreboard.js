@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var sb = require('.././model/scoreboard.js');
 
-/* GET scoreboard page. */
 router.get('/', function(req, res, next) {
     if (!req.isAuthenticated()) {
         res.render('index', { error: 'Log in to view scoreboard' })

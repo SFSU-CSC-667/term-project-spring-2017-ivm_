@@ -8,9 +8,10 @@ module.exports = function(app, passport) {
     var userID = 0;
 
     router.get('/', user.isLoggedIn, function (req, res, next) {
-        // allows all users to be rendered in profile.pug
         var result = db.query('SELECT * FROM Player WHERE username = \'' + req.user.username + '\';', function (err, result) {
-            if (err) console.log(err);
+            if (err) {
+               console.log(err);
+            }
             userID = req.user.player_id;
             res.render('profile', {
                 query_rows: result.rows, userName: req.user.username,
@@ -25,7 +26,6 @@ module.exports = function(app, passport) {
     router.post('/', function(req, res, next) {
         req.body.id = userID;
         const user = req.body;
-        console.log(user);
         process.nextTick(function() {
             player.updateUserProfile(user, function (error, result) {
                 res.render('profile', {

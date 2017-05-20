@@ -3,7 +3,6 @@ var router = express.Router();
 
 var player = require('.././model/player.js');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('register', { title: 'Register', invalid_registration: '' });
 });

@@ -1,30 +1,13 @@
-/*passport.use(new Strategy(
-  function(token, done) {
-    player.loginPlayer(token, function (err, user) {
-      if (err) { console.log("err"); return done(err); }
-      if (!user) { console.log("!user"); return done(null, false); }
-      console.log("done");
-      return done(null, user, { scope: 'all' });
-    });
-  }
-));*/
-//var app = require('.././app.js');
 module.exports = function(app, passport) {
 
   var express = require('express');
   var router = express.Router();
   var flash = require('connect-flash');
-  //var passport = require('passport');
-
-  // //var Strategy = require('passport-http-bearer').Strategy;
-  // var Strategy = require('passport-http').BasicStrategy;
-  // var LocalStrategy = require('passport-local').Strategy;
   var player = require('../model/player.js');
   var app = express();
   app.use(flash());
   router.use(flash());
 
-  /* GET home page. */
   router.get('/', function(req, res, next) {
       if(req.query.registration === 'complete'){
         res.render('index', { title: 'Tank City', register_message: 'Registration Successful!', userName: '' });
@@ -32,26 +15,6 @@ module.exports = function(app, passport) {
         res.render('index', { title: 'Tank City', register_message: '', userName: '' });
       }
   });
-
-  /*router.post('/', function(req, res, next) {
-
-      player.loginPlayer(req, function(status){
-        if(status) {
-          console.log('success');
-          res.redirect('../profile');
-        }else {
-          console.log('fail');
-          res.redirect('../register');
-        }
-      });
-  })*/
-
-  /*router.post('/', passport.authenticate('local', { session: false }),
-  function(req, res){
-    res.redirect('lobby');
-  });*/
-
-  // passport = app.passport;
 
   router.post('/', passport.authenticate('local', {
     successRedirect: '/lobby',
@@ -64,6 +27,5 @@ module.exports = function(app, passport) {
    res.redirect('/');
  })
 
-  // replaces exports.router = router;
   return router;
 }
