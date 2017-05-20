@@ -19,7 +19,8 @@ block content
             form(method='POST' action='/profile' style='width: 70%; margin: auto;')
               p(id='firstNameField') First Name: #{firstName}
               p(id='lastNameField') Last Name: #{lastName}
-              p(id='passwordField') Password: #{password}
+              p(id='passwordField') Password:
+                i(style='-webkit-text-security: disc;') #{password}
               p(id='emailField') Email: #{email}
               p
                 button(id='editProfile' type= 'button' onclick='editButton()'
