@@ -32,8 +32,6 @@ module.exports = function(app, passport){
 
   router.get('/',  user.isLoggedIn, function(req, res, next) {
 
-      // gameAvailable callback argument is the game_id of the avaiable game.
-      // it becomes 0 if there are no games available.
       game.getGameAvailable(req.user.player_id, function( gameAvailable){
         if(gameAvailable) {
           // if a row exists in GameUser table that has a unique game_id than all other row, this if-block executes.

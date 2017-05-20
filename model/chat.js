@@ -13,7 +13,7 @@ exports.getLobbyChats = function(dataStream){
 
 exports.getAllChatsWithGameId = function(gid, dataStream){
     db.query('SELECT * FROM Chat WHERE game_id=' + gid, function(error, result){
-        console.log("Getting chats where game_id=" + gid);
+
         if (error){
             console.log('getChatById = ' + gid + ' error: ' + error);
         }
@@ -25,7 +25,6 @@ exports.getAllChatsWithGameId = function(gid, dataStream){
 exports.insertMessageForGameId = function(gid, pid, username, message, updateComplete){
     db.query('INSERT INTO Chat (game_id, player_id, username, message) VALUES (' + gid + ', ' + pid + ', ' + '\'' + username + '\'' + ', ' + '\'' + message + '\'' + ');',
         function(error, result){
-            console.log('Insert chat with gid: ' + gid + ' username:' + username);
 
             if (error){
                 console.log("Error insertMessageForGameId: " + error);
