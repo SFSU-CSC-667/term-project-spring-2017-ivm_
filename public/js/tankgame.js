@@ -82,8 +82,7 @@ function reduceHealthFromPlayer(elementid){
 }
 
 function gameOver(elementid){
-    World.remove(engine.world, player);
-    World.remove(engine.world, player2);
+
     $('#left-player-life').html("")
     $('#right-player-life').html("")
 
@@ -103,6 +102,8 @@ function gameOver(elementid){
 }
 
 socket.on("displayWinner", function(data){
+  World.remove(engine.world, player);
+  World.remove(engine.world, player2);
   $('#gameStatus').html("GAME OVER!!! " + data.username + " wins");
   var disconnectionMessage = document.getElementById("disconnectionMessage");
   disconnectionMessage.style.display = "";
@@ -458,29 +459,6 @@ function shootTank() {
     Body.applyForce(cannonBall, rifles[players.indexOf(playerId)].position, { x: cos, y: sin })
     socket.emit("shoot", { game: $("#gameid").text(), user: playerId, cos: cos, sin: sin, xc: rifles[players.indexOf(playerId)].position.x, yc: rifles[players.indexOf(playerId)].position.y, angle: barrelAngle });
 }
-
-function moveTankLeft() {
-    let force = (-0.0001 * tanks[players.indexOf(playerId)].mass);
-    let localPlayer = tanks[players.indexOf(playerId)];
-    let localPleyerRifelBody = rifles[players.indexOf(playerId)];
-    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 1 });
-    Body.update(localPlayer, 1, 1, 1);
-    socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
-}
-
-function moveTankRight() {
-    let force = (0.0001 * tanks[players.indexOf(playerId)].mass);
-    let localPlayer = tanks[players.indexOf(playerId)];
-    let localPleyerRifelBody = rifles[players.indexOf(playerId)];
-    Body.applyForce(localPlayer, localPlayer.position, { x: force, y: 0, friction: 1 });
-    socket.emit("moveTank", { game: $("#gameid").text(), user: playerId, xc: tanks[players.indexOf(playerId)].position.x, yc: tanks[players.indexOf(playerId)].position.y, force: force });
-}
-
-socket.on("shootFromOpposingPlayer", function(data) {
-    Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
-    animateOpponentShot(data.user, data.cos, data.sin, data.xc, data.yc);
-});
-
 
 socket.on("shootFromOpposingPlayer", function(data) {
     Body.setAngle(rifles[players.indexOf(data.user)], data.angle);
