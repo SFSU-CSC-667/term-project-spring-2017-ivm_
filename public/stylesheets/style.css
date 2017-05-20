@@ -86,9 +86,16 @@ img.game-section-image {
     min-width: 100%;
     margin-left: 0px;
     margin-right: 0px;
-    padding-top: 10px;
     padding-bottom: 15px;
-    /*overflow: hidden;*/
+}
+
+.tank-city-talks-game {
+    text-align: left;
+    min-width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-bottom: 15px;
+    background-color: white;
 }
 
 h2.tank-city-talks-title {
